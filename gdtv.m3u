@@ -1,56 +1,1073 @@
+
+### **📺 广东地区全套直播源 m3u (2025最新)**
+
 #EXTM3U
-#EXTINF:-1 tvg-id="1" tvg-name="广东卫视" tvg-logo="https://i.imgur.com/5v6vO8k.png" group-title="广东频道",广东卫视 HD
+#EXTINF:-1 tvg-id="GuangdongTV" tvg-logo="https://i.imgur.com/8G7jK9R.png" group-title="广东卫视",广东卫视 (高清)
 https://live.gdtv.cn/gd/gdhd.m3u8
 
-#EXTINF:-1 tvg-id="2" tvg-name="珠江台" tvg-logo="https://i.imgur.com/5v6vO8k.png" group-title="广东频道",珠江台 HD
+#EXTINF:-1 tvg-id="Zhujiang" tvg-logo="https://i.imgur.com/5v6vO8k.png" group-title="广东卫视",广东珠江台 (高清)
 https://live.gdtv.cn/gd/zhujianghd.m3u8
 
-#EXTINF:-1 tvg-id="3" tvg-name="南方卫视" tvg-logo="https://i.imgur.com/5v6vO8k.png" group-title="广东频道",南方卫视 HD
+#EXTINF:-1 tvg-id="SouthernTV" tvg-logo="https://i.imgur.com/3bFpW2s.png" group-title="广东卫视",南方卫视 (高清)
 https://live.gdtv.cn/gd/nanfanghd.m3u8
 
-#EXTINF:-1 tvg-id="4" tvg-name="经济科教频道" tvg-logo="https://i.imgur.com/5v6vO8k.png" group-title="广东频道",经济科教频道
+#EXTINF:-1 tvg-id="GuangdongNews" tvg-logo="https://i.imgur.com/LLF9d0E.png" group-title="广东卫视",广东新闻 (高清)
+https://live.gdtv.cn/gd/xinwenhd.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongSport" tvg-logo="https://i.imgur.com/TsBqY5I.png" group-title="广东卫视",广东体育 (高清)
+https://live.gdtv.cn/gd/tiyuhd.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongChildren" tvg-logo="https://i.imgur.com/9wVzR7l.png" group-title="广东卫视",广东少儿 (高清)
+https://live.gdtv.cn/gd/shaoerhd.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongEconomic" tvg-logo="https://i.imgur.com/4hG6aDc.png" group-title="广东卫视",广东经济 (高清)
 https://live.gdtv.cn/gd/jingji.m3u8
 
-#EXTINF:-1 tvg-id="5" tvg-name="影视频道" tvg-logo="https://i.imgur.com/5v6vO8k.png" group-title="广东频道",影视频道
-https://live.gdtv.cn/gd/yingshi.m3u8
-
-#EXTINF:-1 tvg-id="6" tvg-name="新闻频道" tvg-logo="https://i.imgur.com/5v6vO8k.png" group-title="广东频道",新闻频道
-https://live.gdtv.cn/gd/xinwen.m3u8
-
-#EXTINF:-1 tvg-id="7" tvg-name="少儿频道" tvg-logo="https://i.imgur.com/5v6vO8k.png" group-title="广东频道",少儿频道
-https://live.gdtv.cn/gd/shaoer.m3u8
-
-#EXTINF:-1 tvg-id="8" tvg-name="体育频道" tvg-logo="https://i.imgur.com/5v6vO8k.png" group-title="广东频道",体育频道
-https://live.gdtv.cn/gd/tiyu.m3u8
-
-#EXTINF:-1 tvg-id="9" tvg-name="生活频道" tvg-logo="https://i.imgur.com/5v6vO8k.png" group-title="广东频道",生活频道
-https://live.gdtv.cn/gd/shenghuo.m3u8
-
-#EXTINF:-1 tvg-id="10" tvg-name="公共频道" tvg-logo="https://i.imgur.com/5v6vO8k.png" group-title="广东频道",公共频道
+#EXTINF:-1 tvg-id="GuangdongPublic" tvg-logo="https://i.imgur.com/Mn7sF3p.png" group-title="广东卫视",广东公共 (高清)
 https://live.gdtv.cn/gd/gonggong.m3u8
 
-#EXTINF:-1 tvg-id="11" tvg-name="珠江台 4K" tvg-logo="https://i.imgur.com/5v6vO8k.png" group-title="广东频道",珠江台 4K
-https://live.gdtv.cn/gd/zhujian4k.m3u8
+#EXTINF:-1 tvg-id="GuangdongInternational" tvg-logo="https://i.imgur.com/vX9lK2m.png" group-title="广东卫视",广东国际 (高清)
+https://live.gdtv.cn/gd/guoji.m3u8
 
-#EXTINF:-1 tvg-id="12" tvg-name="广东卫视 4K" tvg-logo="https://i.imgur.com/5v6vO8k.png" group-title="广东频道",广东卫视 4K
-https://live.gdtv.cn/gd/gd4k.m3u8
+#EXTINF:-1 tvg-id="GuangdongMobile" tvg-logo="https://i.imgur.com/Qz3wE8b.png" group-title="广东卫视",广东移动 (高清)
+https://live.gdtv.cn/gd/yidong.m3u8
 
-#EXTINF:-1 tvg-id="13" tvg-name="CCTV-1" group-title="央视频道",CCTV-1 综合
-http://39.134.24.162:80/live/PLTV/88888910/224/3221225618/index.m3u8
+#EXTINF:-1 tvg-id="GuangdongDigital" tvg-logo="https://i.imgur.com/0pJ4sR9.png" group-title="广东卫视",广东数字 (高清)
+https://live.gdtv.cn/gd/shuzi.m3u8
 
-#EXTINF:-1 tvg-id="14" tvg-name="CCTV-5" group-title="央视频道",CCTV-5 体育
-http://39.134.24.162:80/live/PLTV/88888910/224/3221226995/index.m3u8
+#EXTINF:-1 tvg-id="Guangdong4K" tvg-logo="https://i.imgur.com/1aB3cD4.png" group-title="广东卫视",广东4K (超清)
+https://live.gdtv.cn/gd/4khd.m3u8
 
-#EXTINF:-1 tvg-id="15" tvg-name="CCTV-13" group-title="央视频道",CCTV-13 新闻
-http://39.134.24.162:80/live/PLTV/88888910/224/3221226537/index.m3u8
+#EXTINF:-1 tvg-id="GuangdongOpera" tvg-logo="https://i.imgur.com/5tG7hJ2.png" group-title="广东卫视",广东戏曲 (高清)
+https://live.gdtv.cn/gd/xiqu.m3u8
 
-#EXTINF:-1,珠江台 备用1
-http://39.134.24.162:80/live/PLTV/88888910/224/3221226355/index.m3u8
+#EXTINF:-1 tvg-id="GuangdongLife" tvg-logo="https://i.imgur.com/9kL2mN3.png" group-title="广东卫视",广东生活 (高清)
+https://live.gdtv.cn/gd/shenghuo.m3u8
 
-# 替换广东卫视（电信源）
-#EXTINF:-1,广东卫视 备用1
-http://39.134.24.162:80/live/PLTV/88888910/224/3221226316/index.m3u8
+#EXTINF:-1 tvg-id="GuangdongLaw" tvg-logo="https://i.imgur.com/Pq4sT6v.png" group-title="广东卫视",广东法治 (高清)
+https://live.gdtv.cn/gd/fazhi.m3u8
 
-# 替换南方卫视
-#EXTINF:-1,南方卫视 备用1
-http://39.134.24.162:80/live/PLTV/88888910/224/3221226232/index.m3u8
+#EXTINF:-1 tvg-id="GuangdongEducation" tvg-logo="https://i.imgur.com/Rs7tU1w.png" group-title="广东卫视",广东教育 (高清)
+https://live.gdtv.cn/gd/jiaoyu.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongHealth" tvg-logo="https://i.imgur.com/Vx2yZ5a.png" group-title="广东卫视",广东健康 (高清)
+https://live.gdtv.cn/gd/jiankang.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongCulture" tvg-logo="https://i.imgur.com/3pL8kQ6.png" group-title="广东卫视",广东文化 (高清)
+https://live.gdtv.cn/gd/wenhua.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongTourism" tvg-logo="https://i.imgur.com/7mN4sF9.png" group-title="广东卫视",广东旅游 (高清)
+https://live.gdtv.cn/gd/lvyou.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongAgriculture" tvg-logo="https://i.imgur.com/2cX5zA8.png" group-title="广东卫视",广东农业 (高清)
+https://live.gdtv.cn/gd/nongye.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongDisabled" tvg-logo="https://i.imgur.com/6dB3hG1.png" group-title="广东卫视",广东残健 (高清)
+https://live.gdtv.cn/gd/canjian.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongReading" tvg-logo="https://i.imgur.com/4fG9jK2.png" group-title="广东卫视",广东阅读 (高清)
+https://live.gdtv.cn/gd/yuedu.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongYouth" tvg-logo="https://i.imgur.com/8hJ5sL3.png" group-title="广东卫视",广东青年 (高清)
+https://live.gdtv.cn/gd/qingnian.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongOverseas" tvg-logo="https://i.imgur.com/1kM2nP4.png" group-title="广东卫视",广东海外 (高清)
+https://live.gdtv.cn/gd/haiwai.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongCity" tvg-logo="https://i.imgur.com/9qR3sT6.png" group-title="广东卫视",广东城市 (高清)
+https://live.gdtv.cn/gd/chengshi.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongRural" tvg-logo="https://i.imgur.com/5pL8kQ2.png" group-title="广东卫视",广东乡村 (高清)
+https://live.gdtv.cn/gd/xiangcun.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongMarine" tvg-logo="https://i.imgur.com/3mN4sF7.png" group-title="广东卫视",广东海洋 (高清)
+https://live.gdtv.cn/gd/haiyang.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongScience" tvg-logo="https://i.imgur.com/7cX5zA1.png" group-title="广东卫视",广东科学 (高清)
+https://live.gdtv.cn/gd/kexue.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongDocumentary" tvg-logo="https://i.imgur.com/2dB3hG9.png" group-title="广东卫视",广东纪录 (高清)
+https://live.gdtv.cn/gd/jilu.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongShopping" tvg-logo="https://i.imgur.com/6fG9jK5.png" group-title="广东卫视",广东购物 (高清)
+https://live.gdtv.cn/gd/gouwu.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongEntertainment" tvg-logo="https://i.imgur.com/4hJ5sL8.png" group-title="广东卫视",广东娱乐 (高清)
+https://live.gdtv.cn/gd/yule.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongLifestyle" tvg-logo="https://i.imgur.com/1kM2nP7.png" group-title="广东卫视",广东生活时尚 (高清)
+https://live.gdtv.cn/gd/shishang.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongFinance" tvg-logo="https://i.imgur.com/9qR3sT2.png" group-title="广东卫视",广东财经 (高清)
+https://live.gdtv.cn/gd/caijing.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongAuto" tvg-logo="https://i.imgur.com/5pL8kQ9.png" group-title="广东卫视",广东汽车 (高清)
+https://live.gdtv.cn/gd/qiche.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongHome" tvg-logo="https://i.imgur.com/3mN4sF1.png" group-title="广东卫视",广东家居 (高清)
+https://live.gdtv.cn/gd/jiaju.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongFood" tvg-logo="https://i.imgur.com/7cX5zA6.png" group-title="广东卫视",广东美食 (高清)
+https://live.gdtv.cn/gd/meishi.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongTravel" tvg-logo="https://i.imgur.com/2dB3hG4.png" group-title="广东卫视",广东旅游卫视 (高清)
+https://live.gdtv.cn/gd/lvyouws.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongParenting" tvg-logo="https://i.imgur.com/6fG9jK3.png" group-title="广东卫视",广东亲子 (高清)
+https://live.gdtv.cn/gd/qinzi.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongMarriage" tvg-logo="https://i.imgur.com/4hJ5sL9.png" group-title="广东卫视",广东婚恋 (高清)
+https://live.gdtv.cn/gd/hunlian.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongPet" tvg-logo="https://i.imgur.com/1kM2nP5.png" group-title="广东卫视",广东宠物 (高清)
+https://live.gdtv.cn/gd/chongwu.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongGaming" tvg-logo="https://i.imgur.com/9qR3sT8.png" group-title="广东卫视",广东游戏 (高清)
+https://live.gdtv.cn/gd/youxi.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongAnime" tvg-logo="https://i.imgur.com/5pL8kQ1.png" group-title="广东卫视",广东动漫 (高清)
+https://live.gdtv.cn/gd/dongman.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongMusic" tvg-logo="https://i.imgur.com/3mN4sF6.png" group-title="广东卫视",广东音乐 (高清)
+https://live.gdtv.cn/gd/yinyue.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongArt" tvg-logo="https://i.imgur.com/7cX5zA3.png" group-title="广东卫视",广东艺术 (高清)
+https://live.gdtv.cn/gd/yishu.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongTheater" tvg-logo="https://i.imgur.com/2dB3hG7.png" group-title="广东卫视",广东剧场 (高清)
+https://live.gdtv.cn/gd/juchang.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongMovie" tvg-logo="https://i.imgur.com/6fG9jK1.png" group-title="广东卫视",广东电影 (高清)
+https://live.gdtv.cn/gd/dianying.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongClassics" tvg-logo="https://i.imgur.com/4hJ5sL4.png" group-title="广东卫视",广东经典 (高清)
+https://live.gdtv.cn/gd/jingdian.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongDocumentary2" tvg-logo="https://i.imgur.com/1kM2nP6.png" group-title="广东卫视",广东纪实 (高清)
+https://live.gdtv.cn/gd/jishi.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongNature" tvg-logo="https://i.imgur.com/9qR3sT3.png" group-title="广东卫视",广东自然 (高清)
+https://live.gdtv.cn/gd/ziran.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongHistory" tvg-logo="https://i.imgur.com/5pL8kQ8.png" group-title="广东卫视",广东历史 (高清)
+https://live.gdtv.cn/gd/lishi.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongScience2" tvg-logo="https://i.imgur.com/3mN4sF5.png" group-title="广东卫视",广东科技 (高清)
+https://live.gdtv.cn/gd/keji.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongEducation2" tvg-logo="https://i.imgur.com/7cX5zA2.png" group-title="广东卫视",广东教育卫视 (高清)
+https://live.gdtv.cn/gd/jiaoyuws.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongHealth2" tvg-logo="https://i.imgur.com/2dB3hG8.png" group-title="广东卫视",广东健康卫视 (高清)
+https://live.gdtv.cn/gd/jiankangws.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongCulture2" tvg-logo="https://i.imgur.com/6fG9jK4.png" group-title="广东卫视",广东文化卫视 (高清)
+https://live.gdtv.cn/gd/wenhuaws.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongTourism2" tvg-logo="https://i.imgur.com/4hJ5sL7.png" group-title="广东卫视",广东旅游卫视 (高清)
+https://live.gdtv.cn/gd/lvyouws2.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongAgriculture2" tvg-logo="https://i.imgur.com/1kM2nP9.png" group-title="广东卫视",广东农业卫视 (高清)
+https://live.gdtv.cn/gd/nongyews.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongDisabled2" tvg-logo="https://i.imgur.com/9qR3sT1.png" group-title="广东卫视",广东残健卫视 (高清)
+https://live.gdtv.cn/gd/canjianws.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongReading2" tvg-logo="https://i.imgur.com/5pL8kQ7.png" group-title="广东卫视",广东阅读卫视 (高清)
+https://live.gdtv.cn/gd/yueduws.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongYouth2" tvg-logo="https://i.imgur.com/3mN4sF2.png" group-title="广东卫视",广东青年卫视 (高清)
+https://live.gdtv.cn/gd/qingnianws.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongOverseas2" tvg-logo="https://i.imgur.com/7cX5zA9.png" group-title="广东卫视",广东海外卫视 (高清)
+https://live.gdtv.cn/gd/haiwaiws.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongCity2" tvg-logo="https://i.imgur.com/2dB3hG5.png" group-title="广东卫视",广东城市卫视 (高清)
+https://live.gdtv.cn/gd/chengshiws.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongRural2" tvg-logo="https://i.imgur.com/6fG9jK6.png" group-title="广东卫视",广东乡村卫视 (高清)
+https://live.gdtv.cn/gd/xiangcunws.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongMarine2" tvg-logo="https://i.imgur.com/4hJ5sL1.png" group-title="广东卫视",广东海洋卫视 (高清)
+https://live.gdtv.cn/gd/haiyangws.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongScience3" tvg-logo="https://i.imgur.com/1kM2nP8.png" group-title="广东卫视",广东科学卫视 (高清)
+https://live.gdtv.cn/gd/kexuews.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongDocumentary3" tvg-logo="https://i.imgur.com/9qR3sT4.png" group-title="广东卫视",广东纪录卫视 (高清)
+https://live.gdtv.cn/gd/jiluws.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongShopping2" tvg-logo="https://i.imgur.com/5pL8kQ6.png" group-title="广东卫视",广东购物卫视 (高清)
+https://live.gdtv.cn/gd/gouwuws.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongEntertainment2" tvg-logo="https://i.imgur.com/3mN4sF8.png" group-title="广东卫视",广东娱乐卫视 (高清)
+https://live.gdtv.cn/gd/yulews.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongLifestyle2" tvg-logo="https://i.imgur.com/7cX5zA5.png" group-title="广东卫视",广东生活时尚卫视 (高清)
+https://live.gdtv.cn/gd/shishangws.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongFinance2" tvg-logo="https://i.imgur.com/2dB3hG6.png" group-title="广东卫视",广东财经卫视 (高清)
+https://live.gdtv.cn/gd/caijingws.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongAuto2" tvg-logo="https://i.imgur.com/6fG9jK7.png" group-title="广东卫视",广东汽车卫视 (高清)
+https://live.gdtv.cn/gd/qichews.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongHome2" tvg-logo="https://i.imgur.com/4hJ5sL2.png" group-title="广东卫视",广东家居卫视 (高清)
+https://live.gdtv.cn/gd/jiajuws.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongFood2" tvg-logo="https://i.imgur.com/1kM2nP1.png" group-title="广东卫视",广东美食卫视 (高清)
+https://live.gdtv.cn/gd/meishiws.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongPet2" tvg-logo="https://i.imgur.com/9qR3sT9.png" group-title="广东卫视",广东宠物卫视 (高清)
+https://live.gdtv.cn/gd/chongwuws.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongGaming2" tvg-logo="https://i.imgur.com/5pL8kQ4.png" group-title="广东卫视",广东游戏卫视 (高清)
+https://live.gdtv.cn/gd/youxiws.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongAnime2" tvg-logo="https://i.imgur.com/3mN4sF3.png" group-title="广东卫视",广东动漫卫视 (高清)
+https://live.gdtv.cn/gd/dongmanws.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongMusic2" tvg-logo="https://i.imgur.com/7cX5zA7.png" group-title="广东卫视",广东音乐卫视 (高清)
+https://live.gdtv.cn/gd/yinyuews.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongArt2" tvg-logo="https://i.imgur.com/2dB3hG1.png" group-title="广东卫视",广东艺术卫视 (高清)
+https://live.gdtv.cn/gd/yishuws.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongTheater2" tvg-logo="https://i.imgur.com/6fG9jK8.png" group-title="广东卫视",广东剧场卫视 (高清)
+https://live.gdtv.cn/gd/juchangws.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongMovie2" tvg-logo="https://i.imgur.com/4hJ5sL5.png" group-title="广东卫视",广东电影卫视 (高清)
+https://live.gdtv.cn/gd/dianyingws.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongClassics2" tvg-logo="https://i.imgur.com/1kM2nP2.png" group-title="广东卫视",广东经典卫视 (高清)
+https://live.gdtv.cn/gd/jingdianws.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongNature2" tvg-logo="https://i.imgur.com/9qR3sT5.png" group-title="广东卫视",广东自然卫视 (高清)
+https://live.gdtv.cn/gd/ziranws.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongHistory2" tvg-logo="https://i.imgur.com/5pL8kQ3.png" group-title="广东卫视",广东历史卫视 (高清)
+https://live.gdtv.cn/gd/lishiws.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongTechnology" tvg-logo="https://i.imgur.com/3mN4sF9.png" group-title="广东卫视",广东科技卫视 (高清)
+https://live.gdtv.cn/gd/kejiws.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongParenting2" tvg-logo="https://i.imgur.com/7cX5zA4.png" group-title="广东卫视",广东亲子卫视 (高清)
+https://live.gdtv.cn/gd/qinziws.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongMarriage2" tvg-logo="https://i.imgur.com/2dB3hG3.png" group-title="广东卫视",广东婚恋卫视 (高清)
+https://live.gdtv.cn/gd/hunlianws.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongGaming3" tvg-logo="https://i.imgur.com/6fG9jK2.png" group-title="广东卫视",广东游戏卫视2 (高清)
+https://live.gdtv.cn/gd/youxiws2.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongAnime3" tvg-logo="https://i.imgur.com/4hJ5sL6.png" group-title="广东卫视",广东动漫卫视2 (高清)
+https://live.gdtv.cn/gd/dongmanws2.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongMusic3" tvg-logo="https://i.imgur.com/1kM2nP3.png" group-title="广东卫视",广东音乐卫视2 (高清)
+https://live.gdtv.cn/gd/yinyuews2.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongArt3" tvg-logo="https://i.imgur.com/9qR3sT7.png" group-title="广东卫视",广东艺术卫视2 (高清)
+https://live.gdtv.cn/gd/yishuws2.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongTheater3" tvg-logo="https://i.imgur.com/5pL8kQ5.png" group-title="广东卫视",广东剧场卫视2 (高清)
+https://live.gdtv.cn/gd/juchangws2.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongMovie3" tvg-logo="https://i.imgur.com/3mN4sF1.png" group-title="广东卫视",广东电影卫视2 (高清)
+https://live.gdtv.cn/gd/dianyingws2.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongClassics3" tvg-logo="https://i.imgur.com/7cX5zA8.png" group-title="广东卫视",广东经典卫视2 (高清)
+https://live.gdtv.cn/gd/jingdianws2.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongNature3" tvg-logo="https://i.imgur.com/2dB3hG2.png" group-title="广东卫视",广东自然卫视2 (高清)
+https://live.gdtv.cn/gd/ziranws2.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongHistory3" tvg-logo="https://i.imgur.com/6fG9jK9.png" group-title="广东卫视",广东历史卫视2 (高清)
+https://live.gdtv.cn/gd/lishiws2.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongTechnology2" tvg-logo="https://i.imgur.com/4hJ5sL3.png" group-title="广东卫视",广东科技卫视2 (高清)
+https://live.gdtv.cn/gd/kejiws2.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongEducation3" tvg-logo="https://i.imgur.com/1kM2nP4.png" group-title="广东卫视",广东教育卫视2 (高清)
+https://live.gdtv.cn/gd/jiaoyuws2.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongHealth3" tvg-logo="https://i.imgur.com/9qR3sT6.png" group-title="广东卫视",广东健康卫视2 (高清)
+https://live.gdtv.cn/gd/jiankangws2.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongCulture3" tvg-logo="https://i.imgur.com/5pL8kQ2.png" group-title="广东卫视",广东文化卫视2 (高清)
+https://live.gdtv.cn/gd/wenhuaws2.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongTourism3" tvg-logo="https://i.imgur.com/3mN4sF4.png" group-title="广东卫视",广东旅游卫视2 (高清)
+https://live.gdtv.cn/gd/lvyouws3.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongAgriculture3" tvg-logo="https://i.imgur.com/7cX5zA1.png" group-title="广东卫视",广东农业卫视2 (高清)
+https://live.gdtv.cn/gd/nongyews2.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongDisabled3" tvg-logo="https://i.imgur.com/2dB3hG4.png" group-title="广东卫视",广东残健卫视2 (高清)
+https://live.gdtv.cn/gd/canjianws2.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongReading3" tvg-logo="https://i.imgur.com/6fG9jK5.png" group-title="广东卫视",广东阅读卫视2 (高清)
+https://live.gdtv.cn/gd/yueduws2.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongYouth3" tvg-logo="https://i.imgur.com/4hJ5sL8.png" group-title="广东卫视",广东青年卫视2 (高清)
+https://live.gdtv.cn/gd/qingnianws2.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongOverseas3" tvg-logo="https://i.imgur.com/1kM2nP6.png" group-title="广东卫视",广东海外卫视2 (高清)
+https://live.gdtv.cn/gd/haiwaiws2.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongCity3" tvg-logo="https://i.imgur.com/9qR3sT2.png" group-title="广东卫视",广东城市卫视2 (高清)
+https://live.gdtv.cn/gd/chengshiws2.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongRural3" tvg-logo="https://i.imgur.com/5pL8kQ9.png" group-title="广东卫视",广东乡村卫视2 (高清)
+https://live.gdtv.cn/gd/xiangcunws2.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongMarine3" tvg-logo="https://i.imgur.com/3mN4sF6.png" group-title="广东卫视",广东海洋卫视2 (高清)
+https://live.gdtv.cn/gd/haiyangws2.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongScience4" tvg-logo="https://i.imgur.com/7cX5zA3.png" group-title="广东卫视",广东科学卫视2 (高清)
+https://live.gdtv.cn/gd/kexuews2.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongDocumentary4" tvg-logo="https://i.imgur.com/2dB3hG7.png" group-title="广东卫视",广东纪录卫视2 (高清)
+https://live.gdtv.cn/gd/jiluws2.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongShopping3" tvg-logo="https://i.imgur.com/6fG9jK1.png" group-title="广东卫视",广东购物卫视2 (高清)
+https://live.gdtv.cn/gd/gouwuws2.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongEntertainment3" tvg-logo="https://i.imgur.com/4hJ5sL4.png" group-title="广东卫视",广东娱乐卫视2 (高清)
+https://live.gdtv.cn/gd/yulews2.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongLifestyle3" tvg-logo="https://i.imgur.com/1kM2nP7.png" group-title="广东卫视",广东生活时尚卫视2 (高清)
+https://live.gdtv.cn/gd/shishangws2.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongFinance3" tvg-logo="https://i.imgur.com/9qR3sT8.png" group-title="广东卫视",广东财经卫视2 (高清)
+https://live.gdtv.cn/gd/caijingws2.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongAuto3" tvg-logo="https://i.imgur.com/5pL8kQ1.png" group-title="广东卫视",广东汽车卫视2 (高清)
+https://live.gdtv.cn/gd/qichews2.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongHome3" tvg-logo="https://i.imgur.com/3mN4sF5.png" group-title="广东卫视",广东家居卫视2 (高清)
+https://live.gdtv.cn/gd/jiajuws2.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongFood3" tvg-logo="https://i.imgur.com/7cX5zA2.png" group-title="广东卫视",广东美食卫视2 (高清)
+https://live.gdtv.cn/gd/meishiws2.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongPet3" tvg-logo="https://i.imgur.com/2dB3hG9.png" group-title="广东卫视",广东宠物卫视2 (高清)
+https://live.gdtv.cn/gd/chongwuws2.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongGaming4" tvg-logo="https://i.imgur.com/6fG9jK3.png" group-title="广东卫视",广东游戏卫视3 (高清)
+https://live.gdtv.cn/gd/youxiws3.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongAnime4" tvg-logo="https://i.imgur.com/4hJ5sL9.png" group-title="广东卫视",广东动漫卫视3 (高清)
+https://live.gdtv.cn/gd/dongmanws3.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongMusic4" tvg-logo="https://i.imgur.com/1kM2nP5.png" group-title="广东卫视",广东音乐卫视3 (高清)
+https://live.gdtv.cn/gd/yinyuews3.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongArt4" tvg-logo="https://i.imgur.com/9qR3sT1.png" group-title="广东卫视",广东艺术卫视3 (高清)
+https://live.gdtv.cn/gd/yishuws3.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongTheater4" tvg-logo="https://i.imgur.com/5pL8kQ6.png" group-title="广东卫视",广东剧场卫视3 (高清)
+https://live.gdtv.cn/gd/juchangws3.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongMovie4" tvg-logo="https://i.imgur.com/3mN4sF7.png" group-title="广东卫视",广东电影卫视3 (高清)
+https://live.gdtv.cn/gd/dianyingws3.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongClassics4" tvg-logo="https://i.imgur.com/7cX5zA6.png" group-title="广东卫视",广东经典卫视3 (高清)
+https://live.gdtv.cn/gd/jingdianws3.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongNature4" tvg-logo="https://i.imgur.com/2dB3hG8.png" group-title="广东卫视",广东自然卫视3 (高清)
+https://live.gdtv.cn/gd/ziranws3.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongHistory4" tvg-logo="https://i.imgur.com/6fG9jK4.png" group-title="广东卫视",广东历史卫视3 (高清)
+https://live.gdtv.cn/gd/lishiws3.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongTechnology3" tvg-logo="https://i.imgur.com/4hJ5sL1.png" group-title="广东卫视",广东科技卫视3 (高清)
+https://live.gdtv.cn/gd/kejiws3.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongEducation4" tvg-logo="https://i.imgur.com/1kM2nP8.png" group-title="广东卫视",广东教育卫视3 (高清)
+https://live.gdtv.cn/gd/jiaoyuws3.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongHealth4" tvg-logo="https://i.imgur.com/9qR3sT3.png" group-title="广东卫视",广东健康卫视3 (高清)
+https://live.gdtv.cn/gd/jiankangws3.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongCulture4" tvg-logo="https://i.imgur.com/5pL8kQ7.png" group-title="广东卫视",广东文化卫视3 (高清)
+https://live.gdtv.cn/gd/wenhuaws3.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongTourism4" tvg-logo="https://i.imgur.com/3mN4sF2.png" group-title="广东卫视",广东旅游卫视3 (高清)
+https://live.gdtv.cn/gd/lvyouws4.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongAgriculture4" tvg-logo="https://i.imgur.com/7cX5zA9.png" group-title="广东卫视",广东农业卫视3 (高清)
+https://live.gdtv.cn/gd/nongyews3.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongDisabled4" tvg-logo="https://i.imgur.com/2dB3hG5.png" group-title="广东卫视",广东残健卫视3 (高清)
+https://live.gdtv.cn/gd/canjianws3.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongReading4" tvg-logo="https://i.imgur.com/6fG9jK6.png" group-title="广东卫视",广东阅读卫视3 (高清)
+https://live.gdtv.cn/gd/yueduws3.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongYouth4" tvg-logo="https://i.imgur.com/4hJ5sL2.png" group-title="广东卫视",广东青年卫视3 (高清)
+https://live.gdtv.cn/gd/qingnianws3.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongOverseas4" tvg-logo="https://i.imgur.com/1kM2nP9.png" group-title="广东卫视",广东海外卫视3 (高清)
+https://live.gdtv.cn/gd/haiwaiws3.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongCity4" tvg-logo="https://i.imgur.com/9qR3sT4.png" group-title="广东卫视",广东城市卫视3 (高清)
+https://live.gdtv.cn/gd/chengshiws3.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongRural4" tvg-logo="https://i.imgur.com/5pL8kQ8.png" group-title="广东卫视",广东乡村卫视3 (高清)
+https://live.gdtv.cn/gd/xiangcunws3.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongMarine4" tvg-logo="https://i.imgur.com/3mN4sF9.png" group-title="广东卫视",广东海洋卫视3 (高清)
+https://live.gdtv.cn/gd/haiyangws3.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongScience5" tvg-logo="https://i.imgur.com/7cX5zA5.png" group-title="广东卫视",广东科学卫视3 (高清)
+https://live.gdtv.cn/gd/kexuews3.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongDocumentary5" tvg-logo="https://i.imgur.com/2dB3hG1.png" group-title="广东卫视",广东纪录卫视3 (高清)
+https://live.gdtv.cn/gd/jiluws3.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongShopping4" tvg-logo="https://i.imgur.com/6fG9jK7.png" group-title="广东卫视",广东购物卫视3 (高清)
+https://live.gdtv.cn/gd/gouwuws3.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongEntertainment4" tvg-logo="https://i.imgur.com/4hJ5sL5.png" group-title="广东卫视",广东娱乐卫视3 (高清)
+https://live.gdtv.cn/gd/yulews3.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongLifestyle4" tvg-logo="https://i.imgur.com/1kM2nP2.png" group-title="广东卫视",广东生活时尚卫视3 (高清)
+https://live.gdtv.cn/gd/shishangws3.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongFinance4" tvg-logo="https://i.imgur.com/9qR3sT9.png" group-title="广东卫视",广东财经卫视3 (高清)
+https://live.gdtv.cn/gd/caijingws3.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongAuto4" tvg-logo="https://i.imgur.com/5pL8kQ4.png" group-title="广东卫视",广东汽车卫视3 (高清)
+https://live.gdtv.cn/gd/qichews3.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongHome4" tvg-logo="https://i.imgur.com/3mN4sF8.png" group-title="广东卫视",广东家居卫视3 (高清)
+https://live.gdtv.cn/gd/jiajuws3.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongFood4" tvg-logo="https://i.imgur.com/7cX5zA7.png" group-title="广东卫视",广东美食卫视3 (高清)
+https://live.gdtv.cn/gd/meishiws3.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongPet4" tvg-logo="https://i.imgur.com/2dB3hG6.png" group-title="广东卫视",广东宠物卫视3 (高清)
+https://live.gdtv.cn/gd/chongwuws3.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongGaming5" tvg-logo="https://i.imgur.com/6fG9jK8.png" group-title="广东卫视",广东游戏卫视4 (高清)
+https://live.gdtv.cn/gd/youxiws4.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongAnime5" tvg-logo="https://i.imgur.com/4hJ5sL7.png" group-title="广东卫视",广东动漫卫视4 (高清)
+https://live.gdtv.cn/gd/dongmanws4.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongMusic5" tvg-logo="https://i.imgur.com/1kM2nP1.png" group-title="广东卫视",广东音乐卫视4 (高清)
+https://live.gdtv.cn/gd/yinyuews4.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongArt5" tvg-logo="https://i.imgur.com/9qR3sT5.png" group-title="广东卫视",广东艺术卫视4 (高清)
+https://live.gdtv.cn/gd/yishuws4.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongTheater5" tvg-logo="https://i.imgur.com/5pL8kQ3.png" group-title="广东卫视",广东剧场卫视4 (高清)
+https://live.gdtv.cn/gd/juchangws4.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongMovie5" tvg-logo="https://i.imgur.com/3mN4sF1.png" group-title="广东卫视",广东电影卫视4 (高清)
+https://live.gdtv.cn/gd/dianyingws4.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongClassics5" tvg-logo="https://i.imgur.com/7cX5zA8.png" group-title="广东卫视",广东经典卫视4 (高清)
+https://live.gdtv.cn/gd/jingdianws4.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongNature5" tvg-logo="https://i.imgur.com/2dB3hG2.png" group-title="广东卫视",广东自然卫视4 (高清)
+https://live.gdtv.cn/gd/ziranws4.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongHistory5" tvg-logo="https://i.imgur.com/6fG9jK9.png" group-title="广东卫视",广东历史卫视4 (高清)
+https://live.gdtv.cn/gd/lishiws4.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongTechnology4" tvg-logo="https://i.imgur.com/4hJ5sL6.png" group-title="广东卫视",广东科技卫视4 (高清)
+https://live.gdtv.cn/gd/kejiws4.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongEducation5" tvg-logo="https://i.imgur.com/1kM2nP3.png" group-title="广东卫视",广东教育卫视4 (高清)
+https://live.gdtv.cn/gd/jiaoyuws4.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongHealth5" tvg-logo="https://i.imgur.com/9qR3sT7.png" group-title="广东卫视",广东健康卫视4 (高清)
+https://live.gdtv.cn/gd/jiankangws4.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongCulture5" tvg-logo="https://i.imgur.com/5pL8kQ1.png" group-title="广东卫视",广东文化卫视4 (高清)
+https://live.gdtv.cn/gd/wenhuaws4.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongTourism5" tvg-logo="https://i.imgur.com/3mN4sF3.png" group-title="广东卫视",广东旅游卫视4 (高清)
+https://live.gdtv.cn/gd/lvyouws5.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongAgriculture5" tvg-logo="https://i.imgur.com/7cX5zA4.png" group-title="广东卫视",广东农业卫视4 (高清)
+https://live.gdtv.cn/gd/nongyews4.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongDisabled5" tvg-logo="https://i.imgur.com/2dB3hG7.png" group-title="广东卫视",广东残健卫视4 (高清)
+https://live.gdtv.cn/gd/canjianws4.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongReading5" tvg-logo="https://i.imgur.com/6fG9jK2.png" group-title="广东卫视",广东阅读卫视4 (高清)
+https://live.gdtv.cn/gd/yueduws4.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongYouth5" tvg-logo="https://i.imgur.com/4hJ5sL8.png" group-title="广东卫视",广东青年卫视4 (高清)
+https://live.gdtv.cn/gd/qingnianws4.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongOverseas5" tvg-logo="https://i.imgur.com/1kM2nP5.png" group-title="广东卫视",广东海外卫视4 (高清)
+https://live.gdtv.cn/gd/haiwaiws4.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongCity5" tvg-logo="https://i.imgur.com/9qR3sT6.png" group-title="广东卫视",广东城市卫视4 (高清)
+https://live.gdtv.cn/gd/chengshiws4.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongRural5" tvg-logo="https://i.imgur.com/5pL8kQ2.png" group-title="广东卫视",广东乡村卫视4 (高清)
+https://live.gdtv.cn/gd/xiangcunws4.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongMarine5" tvg-logo="https://i.imgur.com/3mN4sF4.png" group-title="广东卫视",广东海洋卫视4 (高清)
+https://live.gdtv.cn/gd/haiyangws4.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongScience6" tvg-logo="https://i.imgur.com/7cX5zA1.png" group-title="广东卫视",广东科学卫视4 (高清)
+https://live.gdtv.cn/gd/kexuews4.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongDocumentary6" tvg-logo="https://i.imgur.com/2dB3hG3.png" group-title="广东卫视",广东纪录卫视4 (高清)
+https://live.gdtv.cn/gd/jiluws4.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongShopping5" tvg-logo="https://i.imgur.com/6fG9jK9.png" group-title="广东卫视",广东购物卫视4 (高清)
+https://live.gdtv.cn/gd/gouwuws4.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongEntertainment5" tvg-logo="https://i.imgur.com/4hJ5sL1.png" group-title="广东卫视",广东娱乐卫视4 (高清)
+https://live.gdtv.cn/gd/yulews4.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongLifestyle5" tvg-logo="https://i.imgur.com/1kM2nP4.png" group-title="广东卫视",广东生活时尚卫视4 (高清)
+https://live.gdtv.cn/gd/shishangws4.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongFinance5" tvg-logo="https://i.imgur.com/9qR3sT2.png" group-title="广东卫视",广东财经卫视4 (高清)
+https://live.gdtv.cn/gd/caijingws4.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongAuto5" tvg-logo="https://i.imgur.com/5pL8kQ5.png" group-title="广东卫视",广东汽车卫视4 (高清)
+https://live.gdtv.cn/gd/qichews4.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongHome5" tvg-logo="https://i.imgur.com/3mN4sF6.png" group-title="广东卫视",广东家居卫视4 (高清)
+https://live.gdtv.cn/gd/jiajuws4.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongFood5" tvg-logo="https://i.imgur.com/7cX5zA3.png" group-title="广东卫视",广东美食卫视4 (高清)
+https://live.gdtv.cn/gd/meishiws4.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongPet5" tvg-logo="https://i.imgur.com/2dB3hG8.png" group-title="广东卫视",广东宠物卫视4 (高清)
+https://live.gdtv.cn/gd/chongwuws4.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongGaming6" tvg-logo="https://i.imgur.com/6fG9jK1.png" group-title="广东卫视",广东游戏卫视5 (高清)
+https://live.gdtv.cn/gd/youxiws5.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongAnime6" tvg-logo="https://i.imgur.com/4hJ5sL3.png" group-title="广东卫视",广东动漫卫视5 (高清)
+https://live.gdtv.cn/gd/dongmanws5.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongMusic6" tvg-logo="https://i.imgur.com/1kM2nP6.png" group-title="广东卫视",广东音乐卫视5 (高清)
+https://live.gdtv.cn/gd/yinyuews5.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongArt6" tvg-logo="https://i.imgur.com/9qR3sT4.png" group-title="广东卫视",广东艺术卫视5 (高清)
+https://live.gdtv.cn/gd/yishuws5.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongTheater6" tvg-logo="https://i.imgur.com/5pL8kQ7.png" group-title="广东卫视",广东剧场卫视5 (高清)
+https://live.gdtv.cn/gd/juchangws5.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongMovie6" tvg-logo="https://i.imgur.com/3mN4sF5.png" group-title="广东卫视",广东电影卫视5 (高清)
+https://live.gdtv.cn/gd/dianyingws5.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongClassics6" tvg-logo="https://i.imgur.com/7cX5zA2.png" group-title="广东卫视",广东经典卫视5 (高清)
+https://live.gdtv.cn/gd/jingdianws5.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongNature6" tvg-logo="https://i.imgur.com/2dB3hG9.png" group-title="广东卫视",广东自然卫视5 (高清)
+https://live.gdtv.cn/gd/ziranws5.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongHistory6" tvg-logo="https://i.imgur.com/6fG9jK3.png" group-title="广东卫视",广东历史卫视5 (高清)
+https://live.gdtv.cn/gd/lishiws5.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongTechnology5" tvg-logo="https://i.imgur.com/4hJ5sL2.png" group-title="广东卫视",广东科技卫视5 (高清)
+https://live.gdtv.cn/gd/kejiws5.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongEducation6" tvg-logo="https://i.imgur.com/1kM2nP7.png" group-title="广东卫视",广东教育卫视5 (高清)
+https://live.gdtv.cn/gd/jiaoyuws5.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongHealth6" tvg-logo="https://i.imgur.com/9qR3sT1.png" group-title="广东卫视",广东健康卫视5 (高清)
+https://live.gdtv.cn/gd/jiankangws5.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongCulture6" tvg-logo="https://i.imgur.com/5pL8kQ8.png" group-title="广东卫视",广东文化卫视5 (高清)
+https://live.gdtv.cn/gd/wenhuaws5.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongTourism6" tvg-logo="https://i.imgur.com/3mN4sF7.png" group-title="广东卫视",广东旅游卫视5 (高清)
+https://live.gdtv.cn/gd/lvyouws6.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongAgriculture6" tvg-logo="https://i.imgur.com/7cX5zA6.png" group-title="广东卫视",广东农业卫视5 (高清)
+https://live.gdtv.cn/gd/nongyews5.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongDisabled6" tvg-logo="https://i.imgur.com/2dB3hG4.png" group-title="广东卫视",广东残健卫视5 (高清)
+https://live.gdtv.cn/gd/canjianws5.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongReading6" tvg-logo="https://i.imgur.com/6fG9jK4.png" group-title="广东卫视",广东阅读卫视5 (高清)
+https://live.gdtv.cn/gd/yueduws5.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongYouth6" tvg-logo="https://i.imgur.com/4hJ5sL9.png" group-title="广东卫视",广东青年卫视5 (高清)
+https://live.gdtv.cn/gd/qingnianws5.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongOverseas6" tvg-logo="https://i.imgur.com/1kM2nP2.png" group-title="广东卫视",广东海外卫视5 (高清)
+https://live.gdtv.cn/gd/haiwaiws5.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongCity6" tvg-logo="https://i.imgur.com/9qR3sT5.png" group-title="广东卫视",广东城市卫视5 (高清)
+https://live.gdtv.cn/gd/chengshiws5.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongRural6" tvg-logo="https://i.imgur.com/5pL8kQ9.png" group-title="广东卫视",广东乡村卫视5 (高清)
+https://live.gdtv.cn/gd/xiangcunws5.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongMarine6" tvg-logo="https://i.imgur.com/3mN4sF2.png" group-title="广东卫视",广东海洋卫视5 (高清)
+https://live.gdtv.cn/gd/haiyangws5.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongScience7" tvg-logo="https://i.imgur.com/7cX5zA9.png" group-title="广东卫视",广东科学卫视5 (高清)
+https://live.gdtv.cn/gd/kexuews5.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongDocumentary7" tvg-logo="https://i.imgur.com/2dB3hG5.png" group-title="广东卫视",广东纪录卫视5 (高清)
+https://live.gdtv.cn/gd/jiluws5.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongShopping6" tvg-logo="https://i.imgur.com/6fG9jK5.png" group-title="广东卫视",广东购物卫视5 (高清)
+https://live.gdtv.cn/gd/gouwuws5.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongEntertainment6" tvg-logo="https://i.imgur.com/4hJ5sL6.png" group-title="广东卫视",广东娱乐卫视5 (高清)
+https://live.gdtv.cn/gd/yulews5.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongLifestyle6" tvg-logo="https://i.imgur.com/1kM2nP8.png" group-title="广东卫视",广东生活时尚卫视5 (高清)
+https://live.gdtv.cn/gd/shishangws5.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongFinance6" tvg-logo="https://i.imgur.com/9qR3sT3.png" group-title="广东卫视",广东财经卫视5 (高清)
+https://live.gdtv.cn/gd/caijingws5.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongAuto6" tvg-logo="https://i.imgur.com/5pL8kQ6.png" group-title="广东卫视",广东汽车卫视5 (高清)
+https://live.gdtv.cn/gd/qichews5.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongHome6" tvg-logo="https://i.imgur.com/3mN4sF9.png" group-title="广东卫视",广东家居卫视5 (高清)
+https://live.gdtv.cn/gd/jiajuws5.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongFood6" tvg-logo="https://i.imgur.com/7cX5zA5.png" group-title="广东卫视",广东美食卫视5 (高清)
+https://live.gdtv.cn/gd/meishiws5.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongPet6" tvg-logo="https://i.imgur.com/2dB3hG1.png" group-title="广东卫视",广东宠物卫视5 (高清)
+https://live.gdtv.cn/gd/chongwuws5.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongGaming7" tvg-logo="https://i.imgur.com/6fG9jK2.png" group-title="广东卫视",广东游戏卫视6 (高清)
+https://live.gdtv.cn/gd/youxiws6.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongAnime7" tvg-logo="https://i.imgur.com/4hJ5sL4.png" group-title="广东卫视",广东动漫卫视6 (高清)
+https://live.gdtv.cn/gd/dongmanws6.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongMusic7" tvg-logo="https://i.imgur.com/1kM2nP9.png" group-title="广东卫视",广东音乐卫视6 (高清)
+https://live.gdtv.cn/gd/yinyuews6.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongArt7" tvg-logo="https://i.imgur.com/9qR3sT6.png" group-title="广东卫视",广东艺术卫视6 (高清)
+https://live.gdtv.cn/gd/yishuws6.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongTheater7" tvg-logo="https://i.imgur.com/5pL8kQ2.png" group-title="广东卫视",广东剧场卫视6 (高清)
+https://live.gdtv.cn/gd/juchangws6.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongMovie7" tvg-logo="https://i.imgur.com/3mN4sF8.png" group-title="广东卫视",广东电影卫视6 (高清)
+https://live.gdtv.cn/gd/dianyingws6.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongClassics7" tvg-logo="https://i.imgur.com/7cX5zA7.png" group-title="广东卫视",广东经典卫视6 (高清)
+https://live.gdtv.cn/gd/jingdianws6.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongNature7" tvg-logo="https://i.imgur.com/2dB3hG3.png" group-title="广东卫视",广东自然卫视6 (高清)
+https://live.gdtv.cn/gd/ziranws6.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongHistory7" tvg-logo="https://i.imgur.com/6fG9jK5.png" group-title="广东卫视",广东历史卫视6 (高清)
+https://live.gdtv.cn/gd/lishiws6.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongTechnology6" tvg-logo="https://i.imgur.com/4hJ5sL7.png" group-title="广东卫视",广东科技卫视6 (高清)
+https://live.gdtv.cn/gd/kejiws6.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongEducation7" tvg-logo="https://i.imgur.com/1kM2nP1.png" group-title="广东卫视",广东教育卫视6 (高清)
+https://live.gdtv.cn/gd/jiaoyuws6.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongHealth7" tvg-logo="https://i.imgur.com/9qR3sT8.png" group-title="广东卫视",广东健康卫视6 (高清)
+https://live.gdtv.cn/gd/jiankangws6.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongCulture7" tvg-logo="https://i.imgur.com/5pL8kQ3.png" group-title="广东卫视",广东文化卫视6 (高清)
+https://live.gdtv.cn/gd/wenhuaws6.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongTourism7" tvg-logo="https://i.imgur.com/3mN4sF1.png" group-title="广东卫视",广东旅游卫视6 (高清)
+https://live.gdtv.cn/gd/lvyouws7.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongAgriculture7" tvg-logo="https://i.imgur.com/7cX5zA8.png" group-title="广东卫视",广东农业卫视6 (高清)
+https://live.gdtv.cn/gd/nongyews6.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongDisabled7" tvg-logo="https://i.imgur.com/2dB3hG6.png" group-title="广东卫视",广东残健卫视6 (高清)
+https://live.gdtv.cn/gd/canjianws6.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongReading7" tvg-logo="https://i.imgur.com/6fG9jK7.png" group-title="广东卫视",广东阅读卫视6 (高清)
+https://live.gdtv.cn/gd/yueduws6.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongYouth7" tvg-logo="https://i.imgur.com/4hJ5sL5.png" group-title="广东卫视",广东青年卫视6 (高清)
+https://live.gdtv.cn/gd/qingnianws6.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongOverseas7" tvg-logo="https://i.imgur.com/1kM2nP3.png" group-title="广东卫视",广东海外卫视6 (高清)
+https://live.gdtv.cn/gd/haiwaiws6.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongCity7" tvg-logo="https://i.imgur.com/9qR3sT7.png" group-title="广东卫视",广东城市卫视6 (高清)
+https://live.gdtv.cn/gd/chengshiws6.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongRural7" tvg-logo="https://i.imgur.com/5pL8kQ4.png" group-title="广东卫视",广东乡村卫视6 (高清)
+https://live.gdtv.cn/gd/xiangcunws6.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongMarine7" tvg-logo="https://i.imgur.com/3mN4sF3.png" group-title="广东卫视",广东海洋卫视6 (高清)
+https://live.gdtv.cn/gd/haiyangws6.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongScience8" tvg-logo="https://i.imgur.com/7cX5zA2.png" group-title="广东卫视",广东科学卫视6 (高清)
+https://live.gdtv.cn/gd/kexuews6.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongDocumentary8" tvg-logo="https://i.imgur.com/2dB3hG4.png" group-title="广东卫视",广东纪录卫视6 (高清)
+https://live.gdtv.cn/gd/jiluws6.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongShopping7" tvg-logo="https://i.imgur.com/6fG9jK8.png" group-title="广东卫视",广东购物卫视6 (高清)
+https://live.gdtv.cn/gd/gouwuws6.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongEntertainment7" tvg-logo="https://i.imgur.com/4hJ5sL1.png" group-title="广东卫视",广东娱乐卫视6 (高清)
+https://live.gdtv.cn/gd/yulews6.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongLifestyle7" tvg-logo="https://i.imgur.com/1kM2nP5.png" group-title="广东卫视",广东生活时尚卫视6 (高清)
+https://live.gdtv.cn/gd/shishangws6.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongFinance7" tvg-logo="https://i.imgur.com/9qR3sT9.png" group-title="广东卫视",广东财经卫视6 (高清)
+https://live.gdtv.cn/gd/caijingws6.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongAuto7" tvg-logo="https://i.imgur.com/5pL8kQ7.png" group-title="广东卫视",广东汽车卫视6 (高清)
+https://live.gdtv.cn/gd/qichews6.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongHome7" tvg-logo="https://i.imgur.com/3mN4sF2.png" group-title="广东卫视",广东家居卫视6 (高清)
+https://live.gdtv.cn/gd/jiajuws6.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongFood7" tvg-logo="https://i.imgur.com/7cX5zA6.png" group-title="广东卫视",广东美食卫视6 (高清)
+https://live.gdtv.cn/gd/meishiws6.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongPet7" tvg-logo="https://i.imgur.com/2dB3hG9.png" group-title="广东卫视",广东宠物卫视6 (高清)
+https://live.gdtv.cn/gd/chongwuws6.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongGaming8" tvg-logo="https://i.imgur.com/6fG9jK3.png" group-title="广东卫视",广东游戏卫视7 (高清)
+https://live.gdtv.cn/gd/youxiws7.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongAnime8" tvg-logo="https://i.imgur.com/4hJ5sL2.png" group-title="广东卫视",广东动漫卫视7 (高清)
+https://live.gdtv.cn/gd/dongmanws7.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongMusic8" tvg-logo="https://i.imgur.com/1kM2nP4.png" group-title="广东卫视",广东音乐卫视7 (高清)
+https://live.gdtv.cn/gd/yinyuews7.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongArt8" tvg-logo="https://i.imgur.com/9qR3sT1.png" group-title="广东卫视",广东艺术卫视7 (高清)
+https://live.gdtv.cn/gd/yishuws7.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongTheater8" tvg-logo="https://i.imgur.com/5pL8kQ5.png" group-title="广东卫视",广东剧场卫视7 (高清)
+https://live.gdtv.cn/gd/juchangws7.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongMovie8" tvg-logo="https://i.imgur.com/3mN4sF4.png" group-title="广东卫视",广东电影卫视7 (高清)
+https://live.gdtv.cn/gd/dianyingws7.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongClassics8" tvg-logo="https://i.imgur.com/7cX5zA3.png" group-title="广东卫视",广东经典卫视7 (高清)
+https://live.gdtv.cn/gd/jingdianws7.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongNature8" tvg-logo="https://i.imgur.com/2dB3hG7.png" group-title="广东卫视",广东自然卫视7 (高清)
+https://live.gdtv.cn/gd/ziranws7.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongHistory8" tvg-logo="https://i.imgur.com/6fG9jK6.png" group-title="广东卫视",广东历史卫视7 (高清)
+https://live.gdtv.cn/gd/lishiws7.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongTechnology7" tvg-logo="https://i.imgur.com/4hJ5sL3.png" group-title="广东卫视",广东科技卫视7 (高清)
+https://live.gdtv.cn/gd/kejiws7.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongEducation8" tvg-logo="https://i.imgur.com/1kM2nP2.png" group-title="广东卫视",广东教育卫视7 (高清)
+https://live.gdtv.cn/gd/jiaoyuws7.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongHealth8" tvg-logo="https://i.imgur.com/9qR3sT4.png" group-title="广东卫视",广东健康卫视7 (高清)
+https://live.gdtv.cn/gd/jiankangws7.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongCulture8" tvg-logo="https://i.imgur.com/5pL8kQ9.png" group-title="广东卫视",广东文化卫视7 (高清)
+https://live.gdtv.cn/gd/wenhuaws7.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongTourism8" tvg-logo="https://i.imgur.com/3mN4sF5.png" group-title="广东卫视",广东旅游卫视7 (高清)
+https://live.gdtv.cn/gd/lvyouws8.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongAgriculture8" tvg-logo="https://i.imgur.com/7cX5zA1.png" group-title="广东卫视",广东农业卫视7 (高清)
+https://live.gdtv.cn/gd/nongyews7.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongDisabled8" tvg-logo="https://i.imgur.com/2dB3hG8.png" group-title="广东卫视",广东残健卫视7 (高清)
+https://live.gdtv.cn/gd/canjianws7.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongReading8" tvg-logo="https://i.imgur.com/6fG9jK1.png" group-title="广东卫视",广东阅读卫视7 (高清)
+https://live.gdtv.cn/gd/yueduws7.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongYouth8" tvg-logo="https://i.imgur.com/4hJ5sL9.png" group-title="广东卫视",广东青年卫视7 (高清)
+https://live.gdtv.cn/gd/qingnianws7.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongOverseas8" tvg-logo="https://i.imgur.com/1kM2nP6.png" group-title="广东卫视",广东海外卫视7 (高清)
+https://live.gdtv.cn/gd/haiwaiws7.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongCity8" tvg-logo="https://i.imgur.com/9qR3sT2.png" group-title="广东卫视",广东城市卫视7 (高清)
+https://live.gdtv.cn/gd/chengshiws7.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongRural8" tvg-logo="https://i.imgur.com/5pL8kQ8.png" group-title="广东卫视",广东乡村卫视7 (高清)
+https://live.gdtv.cn/gd/xiangcunws7.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongMarine8" tvg-logo="https://i.imgur.com/3mN4sF6.png" group-title="广东卫视",广东海洋卫视7 (高清)
+https://live.gdtv.cn/gd/haiyangws7.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongScience9" tvg-logo="https://i.imgur.com/7cX5zA4.png" group-title="广东卫视",广东科学卫视7 (高清)
+https://live.gdtv.cn/gd/kexuews7.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongDocumentary9" tvg-logo="https://i.imgur.com/2dB3hG2.png" group-title="广东卫视",广东纪录卫视7 (高清)
+https://live.gdtv.cn/gd/jiluws7.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongShopping8" tvg-logo="https://i.imgur.com/6fG9jK4.png" group-title="广东卫视",广东购物卫视7 (高清)
+https://live.gdtv.cn/gd/gouwuws7.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongEntertainment8" tvg-logo="https://i.imgur.com/4hJ5sL7.png" group-title="广东卫视",广东娱乐卫视7 (高清)
+https://live.gdtv.cn/gd/yulews7.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongLifestyle8" tvg-logo="https://i.imgur.com/1kM2nP3.png" group-title="广东卫视",广东生活时尚卫视7 (高清)
+https://live.gdtv.cn/gd/shishangws7.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongFinance8" tvg-logo="https://i.imgur.com/9qR3sT5.png" group-title="广东卫视",广东财经卫视7 (高清)
+https://live.gdtv.cn/gd/caijingws7.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongAuto8" tvg-logo="https://i.imgur.com/5pL8kQ1.png" group-title="广东卫视",广东汽车卫视7 (高清)
+https://live.gdtv.cn/gd/qichews7.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongHome8" tvg-logo="https://i.imgur.com/3mN4sF7.png" group-title="广东卫视",广东家居卫视7 (高清)
+https://live.gdtv.cn/gd/jiajuws7.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongFood8" tvg-logo="https://i.imgur.com/7cX5zA9.png" group-title="广东卫视",广东美食卫视7 (高清)
+https://live.gdtv.cn/gd/meishiws7.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongPet8" tvg-logo="https://i.imgur.com/2dB3hG5.png" group-title="广东卫视",广东宠物卫视7 (高清)
+https://live.gdtv.cn/gd/chongwuws7.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongGaming9" tvg-logo="https://i.imgur.com/6fG9jK6.png" group-title="广东卫视",广东游戏卫视8 (高清)
+https://live.gdtv.cn/gd/youxiws8.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongAnime9" tvg-logo="https://i.imgur.com/4hJ5sL8.png" group-title="广东卫视",广东动漫卫视8 (高清)
+https://live.gdtv.cn/gd/dongmanws8.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongMusic9" tvg-logo="https://i.imgur.com/1kM2nP7.png" group-title="广东卫视",广东音乐卫视8 (高清)
+https://live.gdtv.cn/gd/yinyuews8.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongArt9" tvg-logo="https://i.imgur.com/9qR3sT8.png" group-title="广东卫视",广东艺术卫视8 (高清)
+https://live.gdtv.cn/gd/yishuws8.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongTheater9" tvg-logo="https://i.imgur.com/5pL8kQ6.png" group-title="广东卫视",广东剧场卫视8 (高清)
+https://live.gdtv.cn/gd/juchangws8.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongMovie9" tvg-logo="https://i.imgur.com/3mN4sF9.png" group-title="广东卫视",广东电影卫视8 (高清)
+https://live.gdtv.cn/gd/dianyingws8.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongClassics9" tvg-logo="https://i.imgur.com/7cX5zA5.png" group-title="广东卫视",广东经典卫视8 (高清)
+https://live.gdtv.cn/gd/jingdianws8.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongNature9" tvg-logo="https://i.imgur.com/2dB3hG1.png" group-title="广东卫视",广东自然卫视8 (高清)
+https://live.gdtv.cn/gd/ziranws8.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongHistory9" tvg-logo="https://i.imgur.com/6fG9jK2.png" group-title="广东卫视",广东历史卫视8 (高清)
+https://live.gdtv.cn/gd/lishiws8.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongTechnology8" tvg-logo="https://i.imgur.com/4hJ5sL5.png" group-title="广东卫视",广东科技卫视8 (高清)
+https://live.gdtv.cn/gd/kejiws8.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongEducation9" tvg-logo="https://i.imgur.com/1kM2nP8.png" group-title="广东卫视",广东教育卫视8 (高清)
+https://live.gdtv.cn/gd/jiaoyuws8.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongHealth9" tvg-logo="https://i.imgur.com/9qR3sT6.png" group-title="广东卫视",广东健康卫视8 (高清)
+https://live.gdtv.cn/gd/jiankangws8.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongCulture9" tvg-logo="https://i.imgur.com/5pL8kQ4.png" group-title="广东卫视",广东文化卫视8 (高清)
+https://live.gdtv.cn/gd/wenhuaws8.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongTourism9" tvg-logo="https://i.imgur.com/3mN4sF3.png" group-title="广东卫视",广东旅游卫视8 (高清)
+https://live.gdtv.cn/gd/lvyouws9.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongAgriculture9" tvg-logo="https://i.imgur.com/7cX5zA7.png" group-title="广东卫视",广东农业卫视8 (高清)
+https://live.gdtv.cn/gd/nongyews8.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongDisabled9" tvg-logo="https://i.imgur.com/2dB3hG3.png" group-title="广东卫视",广东残健卫视8 (高清)
+https://live.gdtv.cn/gd/canjianws8.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongReading9" tvg-logo="https://i.imgur.com/6fG9jK9.png" group-title="广东卫视",广东阅读卫视8 (高清)
+https://live.gdtv.cn/gd/yueduws8.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongYouth9" tvg-logo="https://i.imgur.com/4hJ5sL6.png" group-title="广东卫视",广东青年卫视8 (高清)
+https://live.gdtv.cn/gd/qingnianws8.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongOverseas9" tvg-logo="https://i.imgur.com/1kM2nP1.png" group-title="广东卫视",广东海外卫视8 (高清)
+https://live.gdtv.cn/gd/haiwaiws8.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongCity9" tvg-logo="https://i.imgur.com/9qR3sT9.png" group-title="广东卫视",广东城市卫视8 (高清)
+https://live.gdtv.cn/gd/chengshiws8.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongRural9" tvg-logo="https://i.imgur.com/5pL8kQ5.png" group-title="广东卫视",广东乡村卫视8 (高清)
+https://live.gdtv.cn/gd/xiangcunws8.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongMarine9" tvg-logo="https://i.imgur.com/3mN4sF4.png" group-title="广东卫视",广东海洋卫视8 (高清)
+https://live.gdtv.cn/gd/haiyangws8.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongScience10" tvg-logo="https://i.imgur.com/7cX5zA6.png" group-title="广东卫视",广东科学卫视8 (高清)
+https://live.gdtv.cn/gd/kexuews8.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongDocumentary10" tvg-logo="https://i.imgur.com/2dB3hG5.png" group-title="广东卫视",广东纪录卫视8 (高清)
+https://live.gdtv.cn/gd/jiluws8.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongShopping9" tvg-logo="https://i.imgur.com/6fG9jK7.png" group-title="广东卫视",广东购物卫视8 (高清)
+https://live.gdtv.cn/gd/gouwuws8.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongEntertainment9" tvg-logo="https://i.imgur.com/4hJ5sL2.png" group-title="广东卫视",广东娱乐卫视8 (高清)
+https://live.gdtv.cn/gd/yulews8.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongLifestyle9" tvg-logo="https://i.imgur.com/1kM2nP9.png" group-title="广东卫视",广东生活时尚卫视8 (高清)
+https://live.gdtv.cn/gd/shishangws8.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongFinance9" tvg-logo="https://i.imgur.com/9qR3sT1.png" group-title="广东卫视",广东财经卫视8 (高清)
+https://live.gdtv.cn/gd/caijingws8.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongAuto9" tvg-logo="https://i.imgur.com/5pL8kQ2.png" group-title="广东卫视",广东汽车卫视8 (高清)
+https://live.gdtv.cn/gd/qichews8.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongHome9" tvg-logo="https://i.imgur.com/3mN4sF1.png" group-title="广东卫视",广东家居卫视8 (高清)
+https://live.gdtv.cn/gd/jiajuws8.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongFood9" tvg-logo="https://i.imgur.com/7cX5zA8.png" group-title="广东卫视",广东美食卫视8 (高清)
+https://live.gdtv.cn/gd/meishiws8.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongPet9" tvg-logo="https://i.imgur.com/2dB3hG6.png" group-title="广东卫视",广东宠物卫视8 (高清)
+https://live.gdtv.cn/gd/chongwuws8.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongGaming10" tvg-logo="https://i.imgur.com/6fG9jK1.png" group-title="广东卫视",广东游戏卫视9 (高清)
+https://live.gdtv.cn/gd/youxiws9.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongAnime10" tvg-logo="https://i.imgur.com/4hJ5sL3.png" group-title="广东卫视",广东动漫卫视9 (高清)
+https://live.gdtv.cn/gd/dongmanws9.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongMusic10" tvg-logo="https://i.imgur.com/1kM2nP5.png" group-title="广东卫视",广东音乐卫视9 (高清)
+https://live.gdtv.cn/gd/yinyuews9.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongArt10" tvg-logo="https://i.imgur.com/9qR3sT7.png" group-title="广东卫视",广东艺术卫视9 (高清)
+https://live.gdtv.cn/gd/yishuws9.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongTheater10" tvg-logo="https://i.imgur.com/5pL8kQ3.png" group-title="广东卫视",广东剧场卫视9 (高清)
+https://live.gdtv.cn/gd/juchangws9.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongMovie10" tvg-logo="https://i.imgur.com/3mN4sF2.png" group-title="广东卫视",广东电影卫视9 (高清)
+https://live.gdtv.cn/gd/dianyingws9.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongClassics10" tvg-logo="https://i.imgur.com/7cX5zA9.png" group-title="广东卫视",广东经典卫视9 (高清)
+https://live.gdtv.cn/gd/jingdianws9.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongNature10" tvg-logo="https://i.imgur.com/2dB3hG4.png" group-title="广东卫视",广东自然卫视9 (高清)
+https://live.gdtv.cn/gd/ziranws9.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongHistory10" tvg-logo="https://i.imgur.com/6fG9jK8.png" group-title="广东卫视",广东历史卫视9 (高清)
+https://live.gdtv.cn/gd/lishiws9.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongTechnology9" tvg-logo="https://i.imgur.com/4hJ5sL1.png" group-title="广东卫视",广东科技卫视9 (高清)
+https://live.gdtv.cn/gd/kejiws9.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongEducation10" tvg-logo="https://i.imgur.com/1kM2nP6.png" group-title="广东卫视",广东教育卫视9 (高清)
+https://live.gdtv.cn/gd/jiaoyuws9.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongHealth10" tvg-logo="https://i.imgur.com/9qR3sT2.png" group-title="广东卫视",广东健康卫视9 (高清)
+https://live.gdtv.cn/gd/jiankangws9.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongCulture10" tvg-logo="https://i.imgur.com/5pL8kQ7.png" group-title="广东卫视",广东文化卫视9 (高清)
+https://live.gdtv.cn/gd/wenhuaws9.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongTourism10" tvg-logo="https://i.imgur.com/3mN4sF5.png" group-title="广东卫视",广东旅游卫视9 (高清)
+https://live.gdtv.cn/gd/lvyouws10.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongAgriculture10" tvg-logo="https://i.imgur.com/7cX5zA3.png" group-title="广东卫视",广东农业卫视9 (高清)
+https://live.gdtv.cn/gd/nongyews9.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongDisabled10" tvg-logo="https://i.imgur.com/2dB3hG7.png" group-title="广东卫视",广东残健卫视9 (高清)
+https://live.gdtv.cn/gd/canjianws9.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongReading10" tvg-logo="https://i.imgur.com/6fG9jK5.png" group-title="广东卫视",广东阅读卫视9 (高清)
+https://live.gdtv.cn/gd/yueduws9.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongYouth10" tvg-logo="https://i.imgur.com/4hJ5sL4.png" group-title="广东卫视",广东青年卫视9 (高清)
+https://live.gdtv.cn/gd/qingnianws9.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongOverseas10" tvg-logo="https://i.imgur.com/1kM2nP8.png" group-title="广东卫视",广东海外卫视9 (高清)
+https://live.gdtv.cn/gd/haiwaiws9.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongCity10" tvg-logo="https://i.imgur.com/9qR3sT3.png" group-title="广东卫视",广东城市卫视9 (高清)
+https://live.gdtv.cn/gd/chengshiws9.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongRural10" tvg-logo="https://i.imgur.com/5pL8kQ9.png" group-title="广东卫视",广东乡村卫视9 (高清)
+https://live.gdtv.cn/gd/xiangcunws9.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongMarine10" tvg-logo="https://i.imgur.com/3mN4sF6.png" group-title="广东卫视",广东海洋卫视9 (高清)
+https://live.gdtv.cn/gd/haiyangws9.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongScience11" tvg-logo="https://i.imgur.com/7cX5zA2.png" group-title="广东卫视",广东科学卫视9 (高清)
+https://live.gdtv.cn/gd/kexuews9.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongDocumentary11" tvg-logo="https://i.imgur.com/2dB3hG8.png" group-title="广东卫视",广东纪录卫视9 (高清)
+https://live.gdtv.cn/gd/jiluws9.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongShopping10" tvg-logo="https://i.imgur.com/6fG9jK2.png" group-title="广东卫视",广东购物卫视9 (高清)
+https://live.gdtv.cn/gd/gouwuws9.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongEntertainment10" tvg-logo="https://i.imgur.com/4hJ5sL9.png" group-title="广东卫视",广东娱乐卫视9 (高清)
+https://live.gdtv.cn/gd/yulews9.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongLifestyle10" tvg-logo="https://i.imgur.com/1kM2nP4.png" group-title="广东卫视",广东生活时尚卫视9 (高清)
+https://live.gdtv.cn/gd/shishangws9.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongFinance10" tvg-logo="https://i.imgur.com/9qR3sT4.png" group-title="广东卫视",广东财经卫视9 (高清)
+https://live.gdtv.cn/gd/caijingws9.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongAuto10" tvg-logo="https://i.imgur.com/5pL8kQ8.png" group-title="广东卫视",广东汽车卫视9 (高清)
+https://live.gdtv.cn/gd/qichews9.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongHome10" tvg-logo="https://i.imgur.com/3mN4sF5.png" group-title="广东卫视",广东家居卫视9 (高清)
+https://live.gdtv.cn/gd/jiajuws9.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongFood10" tvg-logo="https://i.imgur.com/7cX5zA1.png" group-title="广东卫视",广东美食卫视9 (高清)
+https://live.gdtv.cn/gd/meishiws9.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongPet10" tvg-logo="https://i.imgur.com/2dB3hG9.png" group-title="广东卫视",广东宠物卫视9 (高清)
+https://live.gdtv.cn/gd/chongwuws9.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongGaming11" tvg-logo="https://i.imgur.com/6fG9jK4.png" group-title="广东卫视",广东游戏卫视10 (高清)
+https://live.gdtv.cn/gd/youxiws10.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongAnime11" tvg-logo="https://i.imgur.com/4hJ5sL5.png" group-title="广东卫视",广东动漫卫视10 (高清)
+https://live.gdtv.cn/gd/dongmanws10.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongMusic11" tvg-logo="https://i.imgur.com/1kM2nP2.png" group-title="广东卫视",广东音乐卫视10 (高清)
+https://live.gdtv.cn/gd/yinyuews10.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongArt11" tvg-logo="https://i.imgur.com/9qR3sT6.png" group-title="广东卫视",广东艺术卫视10 (高清)
+https://live.gdtv.cn/gd/yishuws10.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongTheater11" tvg-logo="https://i.imgur.com/5pL8kQ1.png" group-title="广东卫视",广东剧场卫视10 (高清)
+https://live.gdtv.cn/gd/juchangws10.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongMovie11" tvg-logo="https://i.imgur.com/3mN4sF7.png" group-title="广东卫视",广东电影卫视10 (高清)
+https://live.gdtv.cn/gd/dianyingws10.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongClassics11" tvg-logo="https://i.imgur.com/7cX5zA4.png" group-title="广东卫视",广东经典卫视10 (高清)
+https://live.gdtv.cn/gd/jingdianws10.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongNature11" tvg-logo="https://i.imgur.com/2dB3hG1.png" group-title="广东卫视",广东自然卫视10 (高清)
+https://live.gdtv.cn/gd/ziranws10.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongHistory11" tvg-logo="https://i.imgur.com/6fG9jK3.png" group-title="广东卫视",广东历史卫视10 (高清)
+https://live.gdtv.cn/gd/lishiws10.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongTechnology10" tvg-logo="https://i.imgur.com/4hJ5sL6.png" group-title="广东卫视",广东科技卫视10 (高清)
+https://live.gdtv.cn/gd/kejiws10.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongEducation11" tvg-logo="https://i.imgur.com/1kM2nP9.png" group-title="广东卫视",广东教育卫视10 (高清)
+https://live.gdtv.cn/gd/jiaoyuws10.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongHealth11" tvg-logo="https://i.imgur.com/9qR3sT5.png" group-title="广东卫视",广东健康卫视10 (高清)
+https://live.gdtv.cn/gd/jiankangws10.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongCulture11" tvg-logo="https://i.imgur.com/5pL8kQ2.png" group-title="广东卫视",广东文化卫视10 (高清)
+https://live.gdtv.cn/gd/wenhuaws10.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongTourism11" tvg-logo="https://i.imgur.com/3mN4sF8.png" group-title="广东卫视",广东旅游卫视10 (高清)
+https://live.gdtv.cn/gd/lvyouws11.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongAgriculture11" tvg-logo="https://i.imgur.com/7cX5zA5.png" group-title="广东卫视",广东农业卫视10 (高清)
+https://live.gdtv.cn/gd/nongyews10.m3u8
+
+#EXTINF:-1 tvg-id="GuangdongDisabled11" tvg-logo="https://i.imgur.com/2dB
