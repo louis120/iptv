@@ -1,8 +1,56 @@
 #EXTM3U
+#EXTINF:-1 tvg-id="1" tvg-name="广东卫视" tvg-logo="https://i.imgur.com/5v6vO8k.png" group-title="广东频道",广东卫视 HD
+https://live.gdtv.cn/gd/gdhd.m3u8
 
-#EXTINF:-1,广东珠江台
+#EXTINF:-1 tvg-id="2" tvg-name="珠江台" tvg-logo="https://i.imgur.com/5v6vO8k.png" group-title="广东频道",珠江台 HD
+https://live.gdtv.cn/gd/zhujianghd.m3u8
+
+#EXTINF:-1 tvg-id="3" tvg-name="南方卫视" tvg-logo="https://i.imgur.com/5v6vO8k.png" group-title="广东频道",南方卫视 HD
+https://live.gdtv.cn/gd/nanfanghd.m3u8
+
+#EXTINF:-1 tvg-id="4" tvg-name="经济科教频道" tvg-logo="https://i.imgur.com/5v6vO8k.png" group-title="广东频道",经济科教频道
+https://live.gdtv.cn/gd/jingji.m3u8
+
+#EXTINF:-1 tvg-id="5" tvg-name="影视频道" tvg-logo="https://i.imgur.com/5v6vO8k.png" group-title="广东频道",影视频道
+https://live.gdtv.cn/gd/yingshi.m3u8
+
+#EXTINF:-1 tvg-id="6" tvg-name="新闻频道" tvg-logo="https://i.imgur.com/5v6vO8k.png" group-title="广东频道",新闻频道
+https://live.gdtv.cn/gd/xinwen.m3u8
+
+#EXTINF:-1 tvg-id="7" tvg-name="少儿频道" tvg-logo="https://i.imgur.com/5v6vO8k.png" group-title="广东频道",少儿频道
+https://live.gdtv.cn/gd/shaoer.m3u8
+
+#EXTINF:-1 tvg-id="8" tvg-name="体育频道" tvg-logo="https://i.imgur.com/5v6vO8k.png" group-title="广东频道",体育频道
+https://live.gdtv.cn/gd/tiyu.m3u8
+
+#EXTINF:-1 tvg-id="9" tvg-name="生活频道" tvg-logo="https://i.imgur.com/5v6vO8k.png" group-title="广东频道",生活频道
+https://live.gdtv.cn/gd/shenghuo.m3u8
+
+#EXTINF:-1 tvg-id="10" tvg-name="公共频道" tvg-logo="https://i.imgur.com/5v6vO8k.png" group-title="广东频道",公共频道
+https://live.gdtv.cn/gd/gonggong.m3u8
+
+#EXTINF:-1 tvg-id="11" tvg-name="珠江台 4K" tvg-logo="https://i.imgur.com/5v6vO8k.png" group-title="广东频道",珠江台 4K
+https://live.gdtv.cn/gd/zhujian4k.m3u8
+
+#EXTINF:-1 tvg-id="12" tvg-name="广东卫视 4K" tvg-logo="https://i.imgur.com/5v6vO8k.png" group-title="广东频道",广东卫视 4K
+https://live.gdtv.cn/gd/gd4k.m3u8
+
+#EXTINF:-1 tvg-id="13" tvg-name="CCTV-1" group-title="央视频道",CCTV-1 综合
+http://39.134.24.162:80/live/PLTV/88888910/224/3221225618/index.m3u8
+
+#EXTINF:-1 tvg-id="14" tvg-name="CCTV-5" group-title="央视频道",CCTV-5 体育
+http://39.134.24.162:80/live/PLTV/88888910/224/3221226995/index.m3u8
+
+#EXTINF:-1 tvg-id="15" tvg-name="CCTV-13" group-title="央视频道",CCTV-13 新闻
+http://39.134.24.162:80/live/PLTV/88888910/224/3221226537/index.m3u8
+
+#EXTINF:-1,珠江台 备用1
 http://39.134.24.162:80/live/PLTV/88888910/224/3221226355/index.m3u8
-#EXTINF:-1,广东珠江台
-http://iptv.tvfix.org:8888/zj/珠江台.m3u8
-#EXTINF:-1,广东珠江台HD
-http://node1.olelive.com:6610/zjlive/gn_zhujiang_2020.m3u8
+
+# 替换广东卫视（电信源）
+#EXTINF:-1,广东卫视 备用1
+http://39.134.24.162:80/live/PLTV/88888910/224/3221226316/index.m3u8
+
+# 替换南方卫视
+#EXTINF:-1,南方卫视 备用1
+http://39.134.24.162:80/live/PLTV/88888910/224/3221226232/index.m3u8
