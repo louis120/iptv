@@ -1,14 +1,31 @@
 import { getAllChannels, updateExternalSources, updateBuiltInSources, externalSourceManager } from "./channelMerger.js"
 import { appendFile, appendFileSync, copyFileSync, renameFileSync, writeFile, writeFileSync } from "./fileUtil.js"
 import { updatePlaybackData } from "./playback.js"
-import { /* refreshToken as mrefreshToken, */ host, pass, token, userId } from "../config.js"
+import { aggregateExternalEpg } from "./epgAggregator.js"
+import { normalizeKey, logoMatchName } from "./channelNormalize.js"
+import { refreshToken as enableTokenRefresh, host, pass, token, userId, enableMigu, externalLogoBase } from "../config.js"
 import refreshToken from "./refreshToken.js"
 import { printGreen, printRed, printYellow, printBlue } from "./colorOut.js"
 import { getDateString } from "./time.js"
 import { fetchUrl } from "./net.js"
+import { dataPath } from "./paths.js"
 import { readFileSync, existsSync } from "node:fs"
 
-const PE_CACHE_PATH = `${process.cwd()}/pe-cache.json`
+const PE_CACHE_PATH = dataPath('pe-cache.json')
+
+// 本地台标支持的扩展名（按优先级查找）
+export const LOGO_EXTS = ['png', 'jpg', 'jpeg', 'webp']
+
+// 查找本地台标 data/logos/<频道名>.<ext>（用户在后台上传或手动放），命中返回可写入 m3u 的相对 URL，否则 ''
+export function findLocalLogo(name) {
+  if (!name) return ''
+  for (const ext of LOGO_EXTS) {
+    if (existsSync(dataPath(`logos/${name}.${ext}`))) {
+      return `\${replace}/logos/${encodeURIComponent(name)}.${ext}`
+    }
+  }
+  return ''
+}
 
 /**
  * @param {Number} hours -更新小时数
@@ -66,22 +83,36 @@ async function updateTV(hours, options = {}) {
   let datas = await getAllChannels({ skipMigu, useCachedMigu: regenerateOnly })
   printGreen("电视频道-获取成功")
 
-  interfacePath = `${process.cwd()}/interface.txt.bak`
+  // 守卫：本次获取到 0 个频道（基本只会在咪咕/网络不可达时发生）。
+  // 此时绝不能用空结果覆盖上一次的好文件，否则「我的频道」会被清空且不自愈。
+  // 返回 false 通知上层 update() 跳过后续 PE 步骤，避免把体育缓存追加到旧文件造成污染。
+  const totalChannels = datas.reduce((sum, g) => sum + (g.dataList?.length || 0), 0)
+  if (totalChannels === 0) {
+    // 咪咕启用时：0 频道基本只会在咪咕/网络不可达时发生，绝不能用空结果覆盖上一次的好文件。
+    if (enableMigu) {
+      printRed("本次获取到 0 个频道（疑似咪咕/网络不可达），保留现有播放列表，不覆盖")
+      return false
+    }
+    // 咪咕已禁用：0/少 频道是合法状态（纯外部源用户、或尚未添加任何源），允许按空白/纯外部源生成，避免卡在旧文件且不自愈。
+    printYellow("咪咕已禁用，本次按空白 / 纯外部源处理（生成的播放列表可能为空）")
+  }
+
+  interfacePath = dataPath('interface.txt.bak')
   // txt
-  interfaceTXTPath = `${process.cwd()}/interfaceTXT.txt.bak`
+  interfaceTXTPath = dataPath('interfaceTXT.txt.bak')
   // 创建写入空内容
   writeFileSync(interfacePath, "")
   // txt
   writeFileSync(interfaceTXTPath, "")
 
-  if (!(hours % 720)) {
-    // 每720小时(一个月)刷新token
+  if (enableMigu && !(hours % 720)) {
+    // 每720小时(一个月)刷新token（咪咕禁用时无需刷新）
     if (userId != "" && token != "") {
-      // if (mrefreshToken) {
-      await refreshToken(userId, token) ? printGreen("token刷新成功") : printRed("token刷新失败")
-      // } else {
-      // printGreen(`跳过token刷新`)
-      // }
+      if (enableTokenRefresh) {
+        await refreshToken(userId, token) ? printGreen("token刷新成功") : printRed("token刷新失败")
+      } else {
+        printYellow("已关闭token刷新（refreshToken=false），跳过")
+      }
     }
   }
   appendFileSync(interfacePath, `#EXTM3U x-tvg-url="\${replace}/playback.xml" catchup="append" catchup-source="?playbackbegin=\${(b)yyyyMMddHHmmss}&playbackend=\${(e)yyyyMMddHHmmss}"\n`)
@@ -90,7 +121,7 @@ async function updateTV(hours, options = {}) {
   // 回放数据：regenerateOnly模式下跳过playback更新
   let playbackFile = ""
   if (!regenerateOnly) {
-    playbackFile = `${process.cwd()}/playback.xml.bak`
+    playbackFile = dataPath('playback.xml.bak')
     writeFileSync(playbackFile,
       `<?xml version="1.0" encoding="UTF-8"?>\n` +
       `<tv generator-info-name="iFansClub" generator-info-url="https://github.com/akiralereal/iPTV">\n`)
@@ -98,6 +129,9 @@ async function updateTV(hours, options = {}) {
 
   // 分组列表
   const includeExternalInPlaylists = externalSourceManager.sources?.includeInPlaylists !== false
+  // EPG 聚合（issue #38）用：本次写入播放列表的频道原始名 + 已由咪咕给到 EPG 的频道归一 key
+  const playlistChannelNames = []
+  const epgCoveredKeys = new Set()
   for (let i = 0; i < datas.length; i++) {
 
     const data = datas[i].dataList
@@ -109,7 +143,21 @@ async function updateTV(hours, options = {}) {
       
       const isBuiltIn = channelItem.source === 'built-in'
       const isExternal = channelItem.source === 'external' || !!channelItem.url
-      const logoUrl = channelItem.pics?.highResolutionH || channelItem.logo || ""
+      // 台标优先级：本地 logos/<频道名>.<ext>（用户后台上传或手动放，最高、仅查本地不联网）
+      //   > 源自带台标（咪咕 pics / m3u 手写）> fanmingming 兜底（仅外部/内置）> 空。
+      // 取图用「台标匹配名」做 key（issue #40）：CCTV1高清（电信）→ CCTV1、湖南卫视（电信）→ 湖南卫视，
+      // 让特殊命名的常见频道也能命中本地/公共库；频道显示名不变。本地查找仍以显示名优先、规范名兜底。
+      const logoKey = logoMatchName(channelItem.name)
+      let logoUrl = findLocalLogo(channelItem.name)
+      if (!logoUrl && logoKey && logoKey !== channelItem.name) {
+        logoUrl = findLocalLogo(logoKey)
+      }
+      if (!logoUrl) {
+        logoUrl = channelItem.pics?.highResolutionH || channelItem.logo || ""
+      }
+      if (!logoUrl && (isExternal || isBuiltIn) && externalLogoBase) {
+        logoUrl = `${externalLogoBase}${encodeURIComponent(logoKey || channelItem.name)}.png`
+      }
       
       // 内置源使用playURL字段，外部源使用url字段，咪咕源构造URL
       let playUrl
@@ -125,14 +173,27 @@ async function updateTV(hours, options = {}) {
         continue
       }
 
+      // 记录实际进入播放列表的频道名，供 EPG 聚合配对
+      playlistChannelNames.push(channelItem.name)
+
       // regenerateOnly模式下跳过playback更新（仅更新播放列表）
       // 内置源和外部源不需要playback数据
       if (!isExternal && !isBuiltIn && !regenerateOnly) {
-        await updatePlaybackData(channelItem, playbackFile)
+        // 咪咕成功写入 EPG 的频道记为「已覆盖」，外部 EPG 不再为其重复补充
+        if (await updatePlaybackData(channelItem, playbackFile)) {
+          epgCoveredKeys.add(normalizeKey(channelItem.name))
+        }
       }
 
+      // 源归属属性（issue #29/#68 按档过滤源）：主来源 + 去重并入的多源归属；
+      // 咪咕频道无 sourceId、以 pID 隐式识别为 'migu'。播放器输出前会剥离该内部属性。
+      const ownSourceId = channelItem.sourceId || (!isBuiltIn && !isExternal ? 'migu' : '')
+      const allSourceIds = [...new Set([ownSourceId, ...(channelItem.sourceIds || [])].filter(Boolean))]
+      // 多源用分号分隔——EXTINF 频道名按「第一个逗号」解析，属性值里出现逗号会破坏频道名提取
+      const sourceAttr = allSourceIds.length ? ` source-ids="${allSourceIds.join(';')}"` : ''
+
       // 写入节目
-      appendFileSync(interfacePath, `#EXTINF:-1 tvg-id="${channelItem.name}" tvg-name="${channelItem.name}" tvg-logo="${logoUrl}" group-title="${datas[i].name}",${channelItem.name}\n${playUrl}\n`)
+      appendFileSync(interfacePath, `#EXTINF:-1 tvg-id="${channelItem.name}" tvg-name="${channelItem.name}" tvg-logo="${logoUrl}"${sourceAttr} group-title="${datas[i].name}",${channelItem.name}\n${playUrl}\n`)
       // txt
       appendFileSync(interfaceTXTPath, `${channelItem.name},${playUrl}\n`)
       // printGreen(`    节目链接更新成功`)
@@ -142,6 +203,12 @@ async function updateTV(hours, options = {}) {
 
   // regenerateOnly模式下跳过playback文件生成
   if (!regenerateOnly) {
+    // EPG 聚合（issue #38）：为咪咕未覆盖的频道，从外部 XMLTV 源补节目单。失败不影响基础节目单。
+    try {
+      await aggregateExternalEpg(playbackFile, playlistChannelNames, epgCoveredKeys)
+    } catch (e) {
+      printYellow(`EPG 聚合失败（不影响基础节目单）: ${e.message}`)
+    }
     appendFileSync(playbackFile, `</tv>\n`)
     renameFileSync(playbackFile, playbackFile.replace(".bak", ""))
   }
@@ -165,11 +232,11 @@ async function updatePE(hours) {
   printGreen("体育直播频道获取成功")
   // console.dir(datas, { depth: null })
 
-  copyFileSync(`${process.cwd()}/interface.txt`, `${process.cwd()}/interface.txt.bak`, 0)
-  copyFileSync(`${process.cwd()}/interfaceTXT.txt`, `${process.cwd()}/interfaceTXT.txt.bak`, 0)
+  copyFileSync(dataPath('interface.txt'), dataPath('interface.txt.bak'), 0)
+  copyFileSync(dataPath('interfaceTXT.txt'), dataPath('interfaceTXT.txt.bak'), 0)
 
-  const interfacePath = `${process.cwd()}/interface.txt.bak`
-  const interfaceTXTPath = `${process.cwd()}/interfaceTXT.txt.bak`
+  const interfacePath = dataPath('interface.txt.bak')
+  const interfaceTXTPath = dataPath('interfaceTXT.txt.bak')
 
   printYellow("开始更新体育直播频道...")
 
@@ -223,7 +290,7 @@ async function updatePE(hours) {
                 timeStr = peResultStartTimeStr.substring(11, 16)
               }
               const competitionDesc = `${data.competitionName} ${pkInfoTitle} ${replay.name} ${timeStr}`
-              const m3uLine = `#EXTINF:-1 tvg-id="${pkInfoTitle}" tvg-name="${competitionDesc}" tvg-logo="${data.competitionLogo}" group-title="体育-${relativeDate}",${competitionDesc}\n\${replace}/${replay.pID}\n`
+              const m3uLine = `#EXTINF:-1 tvg-id="${pkInfoTitle}" tvg-name="${competitionDesc}" tvg-logo="${data.competitionLogo}" source-ids="migu" group-title="体育-${relativeDate}",${competitionDesc}\n\${replace}/${replay.pID}\n`
               const txtLine = `${competitionDesc},\${replace}/${replay.pID}\n`
               // 写入赛事
               appendFileSync(interfacePath, m3uLine)
@@ -241,7 +308,7 @@ async function updatePE(hours) {
             continue
           }
           const competitionDesc = `${data.competitionName} ${pkInfoTitle} ${live.name} ${live.startTimeStr.substring(11, 16)}`
-          const m3uLine = `#EXTINF:-1 tvg-id="${pkInfoTitle}" tvg-name="${competitionDesc}" tvg-logo="${data.competitionLogo}" group-title="体育-${relativeDate}",${competitionDesc}\n\${replace}/${live.pID}\n`
+          const m3uLine = `#EXTINF:-1 tvg-id="${pkInfoTitle}" tvg-name="${competitionDesc}" tvg-logo="${data.competitionLogo}" source-ids="migu" group-title="体育-${relativeDate}",${competitionDesc}\n\${replace}/${live.pID}\n`
           const txtLine = `${competitionDesc},\${replace}/${live.pID}\n`
           // 写入赛事
           appendFileSync(interfacePath, m3uLine)
@@ -278,11 +345,18 @@ async function updatePE(hours) {
  * @param {boolean} options.startupMode - 启动模式
  * @param {boolean} options.regenerateOnly - 仅重新生成播放列表，跳过PE更新
  */
-async function update(hours, options = {}) {
+async function runUpdate(hours, options = {}) {
   const { regenerateOnly = false } = options
-  await updateTV(hours, options)
-  
-  if (!regenerateOnly) {
+  const generated = await updateTV(hours, options)
+
+  // updateTV 因 0 频道（网络不可达）已保留旧文件并跳过生成 → 不再追加 PE，避免污染旧文件
+  if (generated === false) {
+    return
+  }
+
+  if (!enableMigu) {
+    // 咪咕已禁用：体育赛事为纯咪咕 API，整体跳过；也不回填 pe-cache，避免分发指向失效 pID 的旧赛事
+  } else if (!regenerateOnly) {
     await updatePE(hours)
   } else {
     // regenerateOnly 模式：updateTV 已重建 interface.txt，需将上次缓存的体育赛事内容追加回去
@@ -291,10 +365,10 @@ async function update(hours, options = {}) {
       try {
         const cache = JSON.parse(readFileSync(PE_CACHE_PATH, 'utf-8'))
         if (cache.m3u) {
-          appendFileSync(`${process.cwd()}/interface.txt`, cache.m3u)
+          appendFileSync(dataPath('interface.txt'), cache.m3u)
         }
         if (cache.txt) {
-          appendFileSync(`${process.cwd()}/interfaceTXT.txt`, cache.txt)
+          appendFileSync(dataPath('interfaceTXT.txt'), cache.txt)
         }
         printGreen(`快速模式：已从缓存恢复体育赛事频道（${cache.updatedAt || '时间未知'}）`)
       } catch (e) {
@@ -304,6 +378,18 @@ async function update(hours, options = {}) {
       printYellow("快速模式：尚无PE缓存，体育赛事频道本次暂缺（等待下次完整更新）")
     }
   }
+}
+
+// 单飞锁：串行化所有 update() 调用。
+// 多个触发源（启动、每 N 小时定时任务、每小时源刷新、后台保存外部源）可能并发调用，
+// 而 updateTV/updatePE 都写同一批固定的 .bak 文件再 rename；并发执行会交叉写入导致
+// interface.txt / interfaceTXT.txt / playback.xml 损坏。这里用 Promise 链保证逐个执行。
+let updateQueue = Promise.resolve()
+function update(hours, options = {}) {
+  const result = updateQueue.then(() => runUpdate(hours, options))
+  // 保证队列不被单次失败中断（调用方仍能拿到本次的真实结果/异常）
+  updateQueue = result.then(() => {}, () => {})
+  return result
 }
 
 export default update

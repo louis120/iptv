@@ -2,6 +2,7 @@ import { getStringMD5 } from "./EncryUtils.js";
 import { getddCalcuURL, getddCalcuURL720p } from "./ddCalcuURL.js";
 import { printDebug, printGreen, printRed, printYellow } from "./colorOut.js";
 import { fetchUrl } from "./net.js";
+import { delay } from "./fetchList.js";
 import { enableH265, enableHDR } from "../config.js";
 import fetch from 'node-fetch';
 
@@ -65,11 +66,11 @@ async function getAndroidURL(userId, token, pid, rateType) {
   const result = getSaltAndSign(md5)
 
   let enableHDRStr = ""
-  if (enableHDR != "false") {
+  if (enableHDR) {
     enableHDRStr = "&4kvivid=true&2Kvivid=true&vivid=2"
   }
   let enableH265Str = ""
-  if (enableH265 != "false") {
+  if (enableH265) {
     enableH265Str = "&h265N=true"
   }
   // 请求
@@ -165,11 +166,11 @@ async function getAndroidURL720p(pid) {
 
   let rateType = 3
   let enableHDRStr = ""
-  if (enableHDR != "false") {
+  if (enableHDR) {
     enableHDRStr = "&4kvivid=true&2Kvivid=true&vivid=2"
   }
   let enableH265Str = ""
-  if (enableH265 != "false") {
+  if (enableH265) {
     enableH265Str = "&h265N=true"
   }
   // 请求

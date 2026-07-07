@@ -18,7 +18,7 @@
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1760px;
             margin: 0 auto;
         }
 
@@ -372,6 +372,44 @@
             display: flex;
             gap: 10px;
             justify-content: flex-end;
+        }
+
+        /* 配置档管理弹窗的档列表 */
+        .profile-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 14px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        .profile-row.active {
+            border-color: #1890ff;
+            background: #f0f7ff;
+        }
+        .profile-row-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex-shrink: 0;
+            align-items: stretch;
+            min-width: 64px;
+        }
+        .profile-url {
+            margin-top: 4px;
+            font-size: 12px;
+            color: #888;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .profile-url code {
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            word-break: break-all;
         }
 
         .status {
@@ -729,6 +767,22 @@
             font-weight: 500;
         }
 
+        /* 设置页二级标签（issue #72）：按钮复用 .mode-switch-btn，子面板显隐同 .panel */
+        .settings-subtabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid #e8e8e8;
+        }
+        .settings-subpanel {
+            display: none;
+        }
+        .settings-subpanel.active {
+            display: block;
+        }
+
         .external-item-body {
             padding: 16px;
             flex: 1;
@@ -940,6 +994,69 @@
             margin-bottom: 15px;
             color: #ad6800;
             font-size: 13px;
+        }
+
+        /* 核心内容开关：默认开启，单独成组并强调谨慎关闭 */
+        .content-switches {
+            border: 1px solid #ffccc7;
+            border-radius: 8px;
+            background: #fff;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .content-switches-header {
+            background: #fff1f0;
+            border-bottom: 1px solid #ffccc7;
+            padding: 12px 16px;
+        }
+
+        .content-switches-header .cs-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #cf1322;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .content-switches-header .cs-tip {
+            font-size: 12px;
+            color: #ad6800;
+            margin-top: 6px;
+            line-height: 1.6;
+        }
+
+        .content-switch-item {
+            padding: 14px 16px;
+            border-bottom: 1px solid #f7e0de;
+        }
+
+        .content-switch-item:last-child {
+            border-bottom: none;
+        }
+
+        .content-switch-item > label {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            cursor: pointer;
+            margin-bottom: 4px;
+        }
+
+        .content-switch-item input[type="checkbox"] {
+            margin-right: 8px;
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .content-switch-item .system-config-hint {
+            margin-left: 24px;
+            margin-top: 2px;
         }
 
         .bookmarklet-section {
@@ -1395,7 +1512,7 @@
 
         .my-playlist-channels {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
             gap: 10px;
         }
 
@@ -1415,6 +1532,33 @@
             cursor: default;
         }
 
+        .my-playlist-channel.dragging {
+            opacity: 0.4;
+        }
+
+        /* 拖拽落点指示线：落在目标行上半→线在上方，下半→线在下方 */
+        .my-playlist-channel.drag-over-top {
+            box-shadow: inset 0 3px 0 0 #1890ff;
+        }
+
+        .my-playlist-channel.drag-over-bottom {
+            box-shadow: inset 0 -3px 0 0 #1890ff;
+        }
+
+        .channel-drag-handle {
+            margin-right: 8px;
+            color: #bbb;
+            cursor: grab;
+            -webkit-user-select: none;
+            user-select: none;
+            font-size: 14px;
+            flex: 0 0 auto;
+        }
+
+        .my-playlist-channel:hover .channel-drag-handle {
+            color: #1890ff;
+        }
+
         .my-playlist-channel-checkbox {
             margin-right: 8px;
             cursor: pointer;
@@ -1423,6 +1567,20 @@
         .my-playlist-channel:hover {
             background: #f0f8ff;
             border-color: #1890ff;
+        }
+
+        /* 刚编辑过的频道临时高亮（issue #50）：小清新绿色描边 + 一次性脉冲，约 4s 后由 JS 移除。
+           复用项目成功提示的 Ant 绿（#f6ffed/#52c41a）。
+           background/border-color 须 !important，否则 :hover 的浅蓝背景会盖掉高亮。 */
+        .my-playlist-channel.recently-edited {
+            background: #f6ffed !important;
+            border-color: #52c41a !important;
+            box-shadow: 0 0 0 2px rgba(82, 196, 26, 0.35);
+            animation: editPulse 1.2s ease-out;
+        }
+        @keyframes editPulse {
+            0% { box-shadow: 0 0 0 0 rgba(82, 196, 26, 0.6); }
+            100% { box-shadow: 0 0 0 2px rgba(82, 196, 26, 0.35); }
         }
 
         .my-playlist-channel-name {
@@ -1449,6 +1607,7 @@
         .my-playlist-channel-actions {
             display: flex;
             gap: 4px;
+            margin-left: 12px;   /* 与频道名之间留间距，避免「隐藏」按钮贴太近（issue #62） */
             opacity: 0;
             transition: opacity 0.3s;
         }
@@ -1486,6 +1645,44 @@
             background: #f5f5f5;
         }
 
+        /* 频道列表「配对状态」双圆点（issue #62）：左=节目单 右=台标，绿=已匹配 红=未匹配。
+           常驻图例（下方 .ch-status-legend）说明含义，避免「光放图标看不懂」。 */
+        .ch-status { flex: 0 0 auto; margin-right: 9px; display: inline-flex; gap: 4px; align-items: center; }
+        .ch-status .dot { width: 8px; height: 8px; border-radius: 50%; flex: 0 0 auto; }
+        .dot.ok { background: #3cb95a; }
+        .dot.no { background: #f0676a; }
+        /* 配对状态图例：常驻在频道列表上方 */
+        .ch-status-legend {
+            display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+            font-size: 12px; color: #8a8a8a; background: #fafafa;
+            border: 1px solid #f0f0f0; border-radius: 6px; padding: 6px 12px; margin-bottom: 10px;
+        }
+        .ch-status-legend b { color: #666; font-weight: 500; }
+        .ch-status-legend .seg { display: inline-flex; align-items: center; gap: 5px; }
+        .ch-status-legend .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+
+        /* 顶部内联订阅地址栏（issue #38：免点编辑即可复制） */
+        .subscribe-bar {
+            display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+            background: #f0f7ff; border: 1px solid #d6e8ff; border-radius: 6px;
+            padding: 8px 12px; margin: 10px 0 0;
+        }
+        .subscribe-bar .sb-label { font-size: 12px; color: #1890ff; font-weight: 500; white-space: nowrap; }
+        .subscribe-bar code {
+            flex: 1; min-width: 160px; font-size: 12px; background: #fff;
+            border: 1px solid #e6e6e6; border-radius: 4px; padding: 4px 8px; color: #444;
+            overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+        }
+        .subscribe-bar .sb-sep { font-size: 12px; color: #999; white-space: nowrap; border-left: 1px solid #d6e8ff; padding-left: 10px; }
+        .subscribe-bar code.sb-epg { flex: 0 1 auto; min-width: 0; color: #666; }
+        .sb-copy {
+            border: 1px solid #1890ff; background: #fff; color: #1890ff;
+            padding: 4px 10px; border-radius: 4px; font-size: 12px; cursor: pointer; white-space: nowrap;
+        }
+        .sb-copy:hover { background: #e6f2ff; }
+        .sb-copy.sb-copy-muted { border-color: #bbb; color: #666; }
+        .sb-copy.sb-copy-muted:hover { background: #f5f5f5; }
+
     </style>
 </head>
 <body>
@@ -1504,8 +1701,8 @@
     <!-- 重置选项弹窗 -->
     <div class="modal" id="resetModal">
         <div class="modal-content" style="width: 420px; max-width: 90%;">
-            <h3>🔄 重置配置</h3>
-            <p style="color: #666; font-size: 13px; margin-bottom: 16px;">选择要重置的配置项，未选中的配置将保留不变。</p>
+            <h3 id="resetModalTitle">🔄 重置配置</h3>
+            <p style="color: #666; font-size: 13px; margin-bottom: 16px;" id="resetModalHint">选择要重置的配置项，未选中的配置将保留不变。</p>
             <div class="reset-options">
                 <label class="reset-option">
                     <input type="checkbox" id="resetRename" checked>
@@ -1536,14 +1733,51 @@
         </div>
     </div>
 
+    <!-- 多套配置档管理弹窗 -->
+    <div class="modal" id="profileModal">
+        <div class="modal-content" style="width: 580px; max-width: 92%;">
+            <h3>📺 多套配置档（大分组）</h3>
+            <p style="color: #666; font-size: 13px; line-height: 1.7; margin-bottom: 16px;">
+                给家里不同电视各维护<strong>一套独立的频道编排</strong>——大厅给老人、卧室给年轻人、茶室……
+                每套档单独保存隐藏 / 分组 / 排序 / 重命名，<strong>用各自的地址访问、互不影响</strong>。
+                底层频道与节目单（EPG）多档共享，新增一台电视不增加任何抓取成本。
+                <br>用法：在这里「切换」到某一档后，下方「我的频道」编辑的就是该档；把每档的地址分别填到对应电视即可。
+            </p>
+            <div id="profileListBox" style="max-height: 50vh; overflow-y: auto; margin-bottom: 16px;"></div>
+            <div class="modal-actions" style="justify-content: space-between;">
+                <button class="btn btn-primary" onclick="closeProfileModal(); createProfilePrompt();" title="复制当前档为新的一档">➕ 新建配置档</button>
+                <button class="btn btn-success" onclick="closeProfileModal()">关闭</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 新建配置档弹窗 -->
+    <div class="modal" id="createProfileModal">
+        <div class="modal-content" style="width: 440px; max-width: 90%;">
+            <h3>➕ 新建配置档</h3>
+            <p style="color: #666; font-size: 13px; margin-bottom: 16px;" id="createProfileHint">将复制当前档的设置，作为新的一档。</p>
+            <label style="display:block; font-size:13px; color:#333; margin-bottom:6px;">显示名称（如：卧室、茶室）</label>
+            <input type="text" id="newProfileName" placeholder="卧室" autocomplete="off" maxlength="20"
+                   onkeydown="if(event.key==='Enter'){document.getElementById('newProfileId').focus();}">
+            <label style="display:block; font-size:13px; color:#333; margin-bottom:6px;">访问地址短名（选填，英文/数字）</label>
+            <input type="text" id="newProfileId" placeholder="woshi　→　/interface.m3u?profile=woshi" autocomplete="off"
+                   onkeydown="if(event.key==='Enter'){confirmCreateProfile();}">
+            <p style="color:#8a8a8a; font-size:12px; margin: -6px 0 4px;">💡 留空会自动生成短名（中文无法转拼音）。</p>
+            <div class="modal-actions" style="margin-top: 20px;">
+                <button class="btn" onclick="closeCreateProfileModal()">取消</button>
+                <button class="btn btn-primary" onclick="confirmCreateProfile()">确定新建</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Toast 通知 -->
     <div class="status" id="status"></div>
     
     <!-- 频道详情弹窗 -->
     <div class="modal" id="channelDetailModal">
-        <div class="modal-content" style="width: 600px; max-width: 90%;">
+        <div class="modal-content" style="width: 720px; max-width: 92%;">
             <h3 id="channelDetailTitle">频道详情</h3>
-            <div id="channelDetailContent" style="max-height: 500px; overflow-y: auto;">
+            <div id="channelDetailContent" style="max-height: 72vh; overflow-y: auto;">
                 <!-- 动态内容将在这里插入 -->
             </div>
             <div class="modal-actions" style="margin-top: 20px;">
@@ -1616,7 +1850,7 @@
                 <div class="tabs-left">
                     <button class="tab active" onclick="switchTab(0)">📺 我的频道</button>
                     <button class="tab" onclick="switchTab(1)">🌐 源管理</button>
-                    <button class="tab" onclick="switchTab(2)">⚙️ 系统配置</button>
+                    <button class="tab" onclick="switchTab(2)">⚙️ 设置</button>
                     <button class="tab" onclick="switchTab(3)">ℹ️ 关于我们</button>
                 </div>
                 <div class="tabs-right">
@@ -1629,13 +1863,15 @@
             <div class="panel active">
                 <div class="my-playlist-header">
                     <div class="my-playlist-info">
-                        <h3>📺 我的频道</h3>
+                        <h3>📺 我的频道 <span id="myChannelTotal" style="font-size: 14px; font-weight: normal; color: #1890ff;"></span></h3>
                         <p class="my-playlist-hint">💡 点击频道名称可查看详情，并一键用 VLC / IINA / PotPlayer 打开播放</p>
                     </div>
-                    <div class="my-playlist-actions">
-                        <button class="btn btn-warning" onclick="resetMyPlaylist()">🔄 重置</button>
+                    <div class="my-playlist-actions" style="flex-wrap: wrap; align-items: center;">
+                        <span style="font-size: 14px; color: #333;">当前档：<strong id="currentProfileLabel">默认</strong></span>
+                        <button class="btn btn-primary" onclick="openProfileModal()" title="管理多套配置档：切换 / 新建 / 改名 / 删除 / 重置">✏️ 编辑</button>
                     </div>
                 </div>
+                <div class="subscribe-bar" id="subscribeBar"></div>
                 <div class="my-playlist-container">
                     <div class="my-playlist-left">
                         <div class="my-playlist-section">
@@ -1650,6 +1886,12 @@
                         <div class="my-playlist-detail-header" id="detailHeader" style="display: none;">
                             <div class="my-playlist-detail-title" id="detailTitle"></div>
                             <div class="my-playlist-detail-actions" id="detailActions"></div>
+                        </div>
+                        <div class="ch-status-legend">
+                            <b>配对状态</b>
+                            <span class="seg"><span class="dot ok"></span><span class="dot ok"></span> 左=节目单　右=台标</span>
+                            <span class="seg"><span class="dot ok"></span> 绿 已匹配</span>
+                            <span class="seg"><span class="dot no"></span> 红 未匹配（点开频道详情可设别名修正）</span>
                         </div>
                         <div class="my-playlist-groups" id="myPlaylistGroups"></div>
                     </div>
@@ -1694,10 +1936,21 @@
             </div>
 
             <div class="panel">
+                <!-- 设置页二级标签（issue #72）：功能卡片分区，免长页滚动 -->
+                <div class="settings-subtabs">
+                    <button class="mode-switch-btn active" onclick="switchSettingsTab(0)">⚙️ 系统配置</button>
+                    <button class="mode-switch-btn" onclick="switchSettingsTab(1)">🔤 频道别名</button>
+                    <button class="mode-switch-btn" onclick="switchSettingsTab(2)">🗂️ 自动分组</button>
+                    <button class="mode-switch-btn" onclick="switchSettingsTab(3)">📅 EPG 聚合</button>
+                    <button class="mode-switch-btn" onclick="switchSettingsTab(4)">👤 用户管理</button>
+                </div>
+
+                <div class="settings-subpanel active" id="settingsSub0">
                 <div class="system-config-warning">
                     ⚠️ 修改系统配置后需要<strong>重启服务</strong>才能生效
                 </div>
-                
+                <div id="envOverrideWarning" style="display: none; margin: 10px 0; padding: 12px 14px; background: #fff7e6; border: 1px solid #ffd591; border-left: 4px solid #fa8c16; border-radius: 6px; color: #874d00; font-size: 13px; line-height: 1.7;"></div>
+
                 <div class="bookmarklet-section">
                     <div class="bookmarklet-title">
                         <span>📖</span>
@@ -1717,12 +1970,12 @@
                     <div class="system-config-item">
                         <label>咪咕用户ID</label>
                         <input type="text" id="sysUserId" placeholder="留空为游客模式">
-                        <div class="system-config-hint">VIP用户填写，游客模式可留空</div>
+                        <div class="system-config-hint">填咪咕账号可解锁更高画质：免费账号即到 720p；游客不填最高 540p，1080p+ 需 VIP</div>
                     </div>
                     <div class="system-config-item">
                         <label>咪咕Token</label>
                         <input type="text" id="sysToken" placeholder="留空为游客模式">
-                        <div class="system-config-hint">VIP用户填写，游客模式可留空</div>
+                        <div class="system-config-hint">填咪咕账号可解锁更高画质：免费账号即到 720p；游客不填最高 540p，1080p+ 需 VIP</div>
                     </div>
                     <div class="system-config-item">
                         <label>画质</label>
@@ -1733,7 +1986,7 @@
                             <option value="7">原画 (1080p+ · 需VIP)</option>
                             <option value="9">4K (2160p · 需VIP)</option>
                         </select>
-                        <div class="system-config-hint">720p及以下免费，更高画质需要VIP</div>
+                        <div class="system-config-hint">实际画质受咪咕账号档位限制：游客（不填账号）最高 540p；填免费咪咕账号可到 720p；蓝光 1080p / 原画 / 4K 需 VIP</div>
                     </div>
                     <div class="system-config-item">
                         <label>服务端口</label>
@@ -1749,9 +2002,15 @@
                         <input type="text" id="sysPass" placeholder="留空表示无密码">
                         <div class="system-config-hint">设置后访问格式：http://ip:port/密码/...</div>
                     </div>
-                    <div class="system-config-item" style="display: none;">
+                    <div class="system-config-item">
+                        <label>管理页面路径</label>
+                        <input type="text" id="sysAdminPath" placeholder="admin">
+                        <div class="system-config-hint">自定义后台地址（默认 admin），如填 <code>console</code> 则用 <code>/console</code> 访问，<code>/admin</code> 将失效；保存后需用新地址访问（api / player / favicon.ico 为保留字）</div>
+                    </div>
+                    <div class="system-config-item">
                         <label>节目单更新间隔（小时）</label>
-                        <input type="number" id="sysProgramInterval" placeholder="6">
+                        <input type="number" id="sysProgramInterval" placeholder="8">
+                        <div class="system-config-hint" style="color:#d4380d;">⚠️ 咪咕频道 / EPG / 体育的全量更新间隔。<strong>如果填写了咪咕 Token（登录账号），建议设置 8 小时以上</strong>——过于频繁请求可能触发风控、影响账号；修改后需点顶部「重启服务」才生效。</div>
                     </div>
                     <div class="system-config-item" style="display: none;">
                         <label>
@@ -1759,21 +2018,176 @@
                             启用 HDR
                         </label>
                     </div>
-                    <div class="system-config-item" style="display: none;">
+                    <div class="system-config-item">
                         <label>
                             <input type="checkbox" id="sysEnableH265">
-                            启用 H.265（可能存在兼容性问题）
+                            启用 H.265 原画（可能存在兼容性问题）
                         </label>
+                        <div class="system-config-hint">💡 若部分频道<strong>只有声音、没有画面</strong>，多是播放器/设备不支持 H.265(HEVC) 编码——<strong>关闭本项</strong>即可回落到兼容性最好的 H.264。（个别频道关掉后仍只有声音，可能是 HDR/Vivid 导致，可用环境变量 <code>menableHDR=false</code> 关闭）</div>
+                    </div>
+                    <div class="system-config-item">
+                        <label>
+                            <input type="checkbox" id="sysEnableDisplayNameUnify">
+                            统一频道显示名（合并不同源的同台命名）
+                        </label>
+                        <div class="system-config-hint">开启后，把不同订阅源里同一个台的不同写法（如 <code>CCTV1</code> / <code>CCTV-1</code> / <code>CCTV1综合</code>）<strong>按内置规则自动统一成同一个显示名</strong>（CCTV 系列、清晰度后缀等已内置）。默认关；手动重命名优先级更高；规则兜不住的写法可在下方「🔤 频道别名」里加规则。保存后即时生效。</div>
+                    </div>
+                </div>
+                <div class="content-switches">
+                    <div class="content-switches-header">
+                        <div class="cs-title">🔑 核心内容开关（默认开启）</div>
+                        <div class="cs-tip">以下三项默认开启，是平台的主要内容来源。关闭后对应内容将不再加载，可能导致频道大幅减少甚至空白平台，请确认了解影响后再谨慎关闭。</div>
+                    </div>
+                    <div class="content-switch-item">
+                        <label>
+                            <input type="checkbox" id="sysEnableMigu">
+                            启用咪咕源（核心）
+                        </label>
+                        <div class="system-config-hint">关闭后不抓取咪咕频道 / 体育赛事 / EPG，仅用内置与外部源（适合纯自定义源、空白部署）</div>
+                    </div>
+                    <div class="content-switch-item">
+                        <label>
+                            <input type="checkbox" id="sysEnableBuiltInSources">
+                            启用内置单频道源
+                        </label>
+                        <div class="system-config-hint">自带的 纬来体育 / Red Bull / 4K卫视 等；关闭后不加载也不抓取（省启动资源）</div>
+                    </div>
+                    <div class="content-switch-item">
+                        <label>
+                            <input type="checkbox" id="sysEnableBuiltInSubscriptions">
+                            启用内置订阅源
+                        </label>
+                        <div class="system-config-hint">自带的 精选频道（央视 / 港澳台 / 地方 / 国际）；关闭后不加入（已添加的可在"源管理"删除，删后不再复活）</div>
                     </div>
                 </div>
                 <div class="system-config-actions">
                     <button class="btn btn-success" onclick="saveSystemConfig()">💾 保存系统配置</button>
+                    <button class="btn btn-primary" onclick="saveAndRestartService()" title="保存成功后自动重启服务，让需重启的配置一步生效">💾🔄 保存并重启</button>
                 </div>
                 <div style="margin-top: 12px; padding: 10px; background: #f0f0f0; border-radius: 4px; font-size: 13px; color: #666; text-align: center;">
                     💡 提示：保存配置后，需点击页面顶部的"重启服务"按钮使新配置生效
                 </div>
+                </div>
+                <div class="settings-subpanel" id="settingsSub1">
+                <!-- 频道别名（issue #56）：自定义批量统一规则 -->
+                <div style="margin-top: 4px;">
+                    <div>
+                        <div style="font-size:16px; font-weight:600; color:#333;">🔤 频道别名（统一命名规则）</div>
+                        <div class="system-config-hint">给上面的「统一频道显示名」加自定义规则：把若干<strong>别名</strong>都归到一个<strong>规范名</strong>下（如 规范名 <code>CCTV5体育</code>，别名 <code>央视5套, 体育频道</code>）。内置规则（CCTV 系列、清晰度后缀等）已覆盖大部分，这里只补兜不住的写法。保存后下次刷新播放列表即生效。</div>
+                    </div>
+                    <div id="aliasList" style="margin-top:14px; max-height:320px; overflow-y:auto;"></div>
+                    <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap; align-items:flex-end;">
+                        <div style="min-width:150px;">
+                            <label style="display:block; font-size:12px; color:#888;">规范名（统一后的名字）</label>
+                            <input type="text" id="aliasNewCanonical" placeholder="例如 CCTV5体育" style="width:100%;">
+                        </div>
+                        <div style="flex:1; min-width:200px;">
+                            <label style="display:block; font-size:12px; color:#888;">别名（多个用逗号分隔）</label>
+                            <input type="text" id="aliasNewList" placeholder="例如 央视5套, 体育频道" style="width:100%;">
+                        </div>
+                        <button class="btn btn-sm btn-success" onclick="addAliasRule()">➕ 添加规则</button>
+                    </div>
+                </div>
+                </div>
+                <div class="settings-subpanel" id="settingsSub2">
+                <!-- 关键字自动分组（issue #69）：按频道名关键字把「未分组」频道自动归类 -->
+                <div style="margin-top: 4px;">
+                    <div>
+                        <div style="font-size:16px; font-weight:600; color:#333;">🗂️ 关键字自动分组</div>
+                        <div class="system-config-hint">自定义订阅源里没写分组的频道会落到「未分组」，每次刷新又回到未分组。这里按<strong>频道名关键字</strong>配规则，名字含关键字的<strong>未分组</strong>频道会自动归到对应分组（多条规则按从上到下、首条命中生效）——刷新也不丢，且<strong>不影响源已分好的分组、手动移动优先</strong>。如 分组 <code>央视</code> ← 关键字 <code>CCTV, 央视</code>。保存后下次刷新播放列表即生效。</div>
+                    </div>
+                    <div id="groupRuleList" style="margin-top:14px; max-height:320px; overflow-y:auto;"></div>
+                    <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap; align-items:flex-end;">
+                        <div style="min-width:150px;">
+                            <label style="display:block; font-size:12px; color:#888;">分组名</label>
+                            <input type="text" id="groupRuleName" placeholder="例如 央视" style="width:100%;">
+                        </div>
+                        <div style="flex:1; min-width:200px;">
+                            <label style="display:block; font-size:12px; color:#888;">关键字（多个用逗号分隔，名字含其一即归此组）</label>
+                            <input type="text" id="groupRuleKeywords" placeholder="例如 CCTV, 央视" style="width:100%;">
+                        </div>
+                        <button class="btn btn-sm btn-success" onclick="addGroupRule()">➕ 添加规则</button>
+                    </div>
+                </div>
+                </div>
+                <div class="settings-subpanel" id="settingsSub3">
+                <!-- EPG 节目单聚合（issue #38）：独立保存，无需重启 -->
+                <div style="margin-top: 4px;">
+                    <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;">
+                        <div>
+                            <div style="font-size:16px; font-weight:600; color:#333;">📅 EPG 节目单源（聚合）</div>
+                            <div class="system-config-hint">把外部 XMLTV 源的节目单归一后合并进 <code>/playback.xml</code>，给咪咕未覆盖的频道补节目单。默认已开启、内置默认源，开箱即用。改动即时保存、无需重启，下次更新生效（或点「立即刷新」）。</div>
+                        </div>
+                        <label style="display:flex; align-items:center; gap:6px; white-space:nowrap;">
+                            <input type="checkbox" id="epgEnabled" onchange="setEpgEnabled(this.checked)">
+                            启用 EPG 聚合
+                        </label>
+                    </div>
+
+                    <div id="epgSourceList" style="margin-top:14px;"></div>
+
+                    <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap; align-items:flex-end;">
+                        <div style="flex:1; min-width:120px;">
+                            <label style="display:block; font-size:12px; color:#888;">名称</label>
+                            <input type="text" id="epgNewName" placeholder="例如 我的EPG" style="width:100%;">
+                        </div>
+                        <div style="flex:2; min-width:200px;">
+                            <label style="display:block; font-size:12px; color:#888;">XMLTV 地址（支持 .xml / .xml.gz）</label>
+                            <input type="text" id="epgNewUrl" placeholder="http://.../epg.xml.gz" style="width:100%;">
+                        </div>
+                        <div style="width:110px;">
+                            <label style="display:block; font-size:12px; color:#888;">间隔(分钟)</label>
+                            <input type="number" id="epgNewInterval" value="720" style="width:100%;">
+                        </div>
+                        <div style="width:90px;">
+                            <label style="display:block; font-size:12px; color:#888;">优先级</label>
+                            <input type="number" id="epgNewPriority" value="10" style="width:100%;">
+                        </div>
+                        <button class="btn btn-sm btn-success" onclick="addEpgSource()">➕ 添加源</button>
+                    </div>
+
+                    <div style="margin-top:14px; display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+                        <button class="btn btn-sm" onclick="refreshEpgNow()">🔄 立即刷新并应用</button>
+                        <span class="system-config-hint" style="margin:0;">优先级数字小者优先；多源命中同一频道取高优先级。咪咕已有的频道始终优先，外部不会覆盖。</span>
+                    </div>
+                </div>
+                </div>
+                <div class="settings-subpanel" id="settingsSub4">
+                <!-- 用户访问令牌（一人一源）-->
+                <div style="margin-top: 4px;">
+                    <div>
+                        <div style="font-size:16px; font-weight:600; color:#333;">👤 用户管理（一人一源） <span style="font-size:12px; font-weight:600; color:#fff; background:#fa8c16; padding:1px 8px; border-radius:10px; vertical-align:middle;">测试中 Beta</span></div>
+                        <div class="system-config-hint">给每个家人 / 朋友生成独立的源地址 <code>/u/&lt;令牌&gt;/m3u</code>，可单独停用、泄露可追溯，且<strong>令牌进不了本后台</strong>。不新增用户则对现有链接零影响。<br>🧪 本功能仍在测试中，建议先小范围试用，遇到问题欢迎反馈。</div>
+                    </div>
+
+                    <div style="margin-top:10px; padding:12px 14px; background:#f7f9fc; border:1px solid #eef1f6; border-radius:6px; font-size:13px; color:#555; line-height:1.7;">
+                        <div style="font-weight:600; color:#333; margin-bottom:4px;">怎么用</div>
+                        <div>① 点「➕ 新增用户」，给每个人起个名（如「客厅电视」「老王」）；</div>
+                        <div>② 用每行的「📋 复制 m3u」把各自的源地址发给对应的人；</div>
+                        <div>③ 谁的链接泄露 / 不想给了 → 关掉那一行的开关（或「🔁 重置令牌」），<strong>只影响他一个</strong>，其他人照常。</div>
+                        <div style="font-weight:600; color:#333; margin:8px 0 4px;">注意</div>
+                        <div>• 这是「<strong>可追溯 + 可单独吊销</strong>」，不是「漏了也用不了」——发现异常停掉即可；</div>
+                        <div>• 你自己的<strong>站长密码不要外发</strong>（它能进后台）；发出去的只该是 <code>/u/&lt;令牌&gt;/…</code>；</div>
+                        <div>• 「绑定档」可给不同人不同频道，不选就是默认全量。</div>
+                    </div>
+
+                    <div id="userList" style="margin-top:14px;"></div>
+
+                    <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap; align-items:flex-end;">
+                        <div style="flex:1; min-width:140px;">
+                            <label style="display:block; font-size:12px; color:#888;">用户名称</label>
+                            <input type="text" id="userNewName" placeholder="例如 客厅电视 / 张三" style="width:100%;">
+                        </div>
+                        <div style="min-width:150px;">
+                            <label style="display:block; font-size:12px; color:#888;">绑定档（频道内容）</label>
+                            <select id="userNewProfile" style="width:100%;"></select>
+                        </div>
+                        <button class="btn btn-sm btn-success" onclick="addUser()">➕ 新增用户</button>
+                    </div>
+                </div>
+                </div>
             </div>
-            
+
             <!-- 关于我们面板 -->
             <div class="panel">
                 <div style="max-width: 800px; margin: 0 auto; padding: 40px 20px;">
@@ -1789,7 +2203,7 @@
                                 <strong style="color: #333; font-size: 16px;">当前版本</strong>
                             </div>
                             <div style="padding-left: 30px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-                                <span id="versionText" style="font-size: 15px; color: #333; font-weight: 600;">v1.8.2</span>
+                                <span id="versionText" style="font-size: 15px; color: #333; font-weight: 600;">v3.13.0</span>
                                 <button class="btn btn-sm" onclick="checkUpdate()" id="checkUpdateBtn">检查更新</button>
                             </div>
                             <div id="updateInfo" style="padding-left: 30px; margin-top: 8px; font-size: 13px; display: none;"></div>
@@ -1857,6 +2271,18 @@
     </div>
 
     <script>
+        // 管理页位于 /<adminPath> 或 /<pass>/<adminPath>，API 前缀 = 去掉 URL 最后一段（管理页路径段）。
+        // 这样无论管理页改成什么名字都成立：/admin→''，/secret→''，/密码/secret→'/密码'。
+        const API_PREFIX = window.location.pathname.replace(/\/[^/]+$/, '');
+
+        // 清洗管理页面路径段（与后端 config.js sanitizeSegment 保持一致）
+        function sanitizeAdminPath(v) {
+            if (!v) return 'admin';
+            const s = String(v).trim().replace(/^\/+|\/+$/g, '');
+            if (!s || /[\/\s]/.test(s) || ['api', 'player', 'favicon.ico'].includes(s.toLowerCase())) return 'admin';
+            return s;
+        }
+
         let allChannels = [];
         let externalConfig = {
             enabled: false,
@@ -1869,6 +2295,7 @@
         };
         let systemConfig = {};
         let updatingSourceIndex = null; // 记录正在更新的源索引
+        let epgConfig = { enabled: true, sources: [] }; // EPG 聚合源配置（issue #38）
 
         // Tab 切换功能
         async function switchTab(index) {
@@ -1898,6 +2325,426 @@
                 isViewingDeleted = false;
                 await loadMyPlaylist();
             }
+            // 切换到系统配置Tab时刷新 EPG 源状态（抓取时间/匹配数等）、用户列表、频道别名
+            if (index === 2) {
+                loadEpgSources();
+                loadUsers();
+                loadAliases();
+                loadGroupRules();
+            }
+        }
+
+        // 设置页二级标签切换（issue #72）：只做显隐，各卡片数据在进入设置页(switchTab(2))时已统一刷新
+        function switchSettingsTab(index) {
+            document.querySelectorAll('.settings-subtabs .mode-switch-btn').forEach((b, i) => b.classList.toggle('active', i === index));
+            document.querySelectorAll('.settings-subpanel').forEach((p, i) => p.classList.toggle('active', i === index));
+        }
+
+        // ===== EPG 节目单聚合（issue #38）=====
+        async function loadEpgSources() {
+            try {
+                const res = await fetch(API_PREFIX + '/api/epg-sources');
+                const payload = await res.json();
+                if (payload && payload.success && payload.data) {
+                    epgConfig = payload.data;
+                    if (!Array.isArray(epgConfig.sources)) epgConfig.sources = [];
+                    renderEpgSources();
+                }
+            } catch (e) {
+                console.error('加载 EPG 源失败', e);
+            }
+        }
+
+        function epgStatusHtml(s) {
+            let color = '#999', text = '未抓取';
+            if (s.lastStatus === 'ok') { color = '#52c41a'; text = '正常'; }
+            else if (typeof s.lastStatus === 'string' && s.lastStatus.indexOf('失败') >= 0) { color = '#ff4d4f'; text = s.lastStatus; }
+            const when = s.lastUpdated ? new Date(s.lastUpdated).toLocaleString() : '从未';
+            return `<span style="color:${color};">● ${escapeHtml(text)}</span>` +
+                `<span style="color:#888;"> · 频道 ${s.channelCount || 0} · 已匹配 ${s.matchedCount || 0} · 上次 ${escapeHtml(when)}</span>`;
+        }
+
+        function renderEpgSources() {
+            const box = document.getElementById('epgSourceList');
+            if (!box) return;
+            const cb = document.getElementById('epgEnabled');
+            if (cb) cb.checked = epgConfig.enabled !== false;
+            const sources = epgConfig.sources || [];
+            if (!sources.length) {
+                box.innerHTML = '<div class="system-config-hint" style="margin:0;">暂无 EPG 源，可在下方添加。</div>';
+                return;
+            }
+            box.innerHTML = sources.map((s, i) => `
+                <div style="border:1px solid #eee; border-radius:6px; padding:10px; margin-bottom:8px;">
+                    <div style="display:flex; align-items:center; justify-content:space-between; gap:8px;">
+                        <label style="display:flex; align-items:center; gap:6px; min-width:0;">
+                            <input type="checkbox" ${s.enabled !== false ? 'checked' : ''} onchange="toggleEpgSource(${i}, this.checked)">
+                            <strong style="word-break:break-all;">${escapeHtml(s.name || '未命名')}</strong>
+                        </label>
+                        <button class="btn btn-sm btn-danger" onclick="deleteEpgSource(${i})">🗑️ 删除</button>
+                    </div>
+                    <div style="font-size:12px; color:#888; word-break:break-all; margin:4px 0;">${escapeHtml(s.url || '')}</div>
+                    <div style="font-size:12px; margin-bottom:6px;">${epgStatusHtml(s)}</div>
+                    <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center; font-size:12px; color:#888;">
+                        <span>间隔(分钟) <input type="number" value="${s.refreshInterval || 720}" style="width:84px;" onchange="updateEpgSource(${i}, { refreshInterval: this.value })"></span>
+                        <span>优先级 <input type="number" value="${s.priority != null ? s.priority : 10}" style="width:64px;" onchange="updateEpgSource(${i}, { priority: this.value })"></span>
+                    </div>
+                </div>`).join('');
+        }
+
+        async function epgPost(body) {
+            const res = await fetch(API_PREFIX + '/api/epg-sources', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body)
+            });
+            return res.json();
+        }
+
+        async function setEpgEnabled(enabled) {
+            const r = await epgPost({ action: 'setEnabled', enabled });
+            if (r.success) { epgConfig = r.data; renderEpgSources(); showStatus(enabled ? '已启用 EPG 聚合' : '已关闭 EPG 聚合', 'success'); }
+            else { showStatus(r.message || '操作失败', 'error'); loadEpgSources(); }
+        }
+
+        async function addEpgSource() {
+            const source = {
+                name: document.getElementById('epgNewName').value,
+                url: document.getElementById('epgNewUrl').value,
+                refreshInterval: document.getElementById('epgNewInterval').value,
+                priority: document.getElementById('epgNewPriority').value
+            };
+            const r = await epgPost({ action: 'add', source });
+            if (r.success) {
+                epgConfig = r.data; renderEpgSources();
+                document.getElementById('epgNewName').value = '';
+                document.getElementById('epgNewUrl').value = '';
+                showStatus('已添加 EPG 源，下次更新生效（或点「立即刷新」）', 'success');
+            } else {
+                showStatus(r.message || '添加失败', 'error');
+            }
+        }
+
+        async function toggleEpgSource(i, enabled) {
+            const r = await epgPost({ action: 'update', index: i, fields: { enabled } });
+            if (r.success) epgConfig = r.data; else { showStatus(r.message || '操作失败', 'error'); loadEpgSources(); }
+        }
+
+        async function updateEpgSource(i, fields) {
+            const r = await epgPost({ action: 'update', index: i, fields });
+            if (r.success) epgConfig = r.data; else { showStatus(r.message || '操作失败', 'error'); loadEpgSources(); }
+        }
+
+        async function deleteEpgSource(i) {
+            const confirmed = await showConfirm('确定要删除这个 EPG 源吗？');
+            if (!confirmed) return;
+            const r = await epgPost({ action: 'remove', index: i });
+            if (r.success) { epgConfig = r.data; renderEpgSources(); showStatus('已删除', 'success'); }
+            else showStatus(r.message || '删除失败', 'error');
+        }
+
+        async function refreshEpgNow() {
+            const r = await epgPost({ action: 'refresh' });
+            showStatus(r.message || (r.success ? '已触发刷新' : '操作失败'), r.success ? 'info' : 'error');
+        }
+
+        // ===== 用户管理（一人一源，访问令牌）=====
+        let usersConfig = { requireToken: false, users: [] };
+
+        async function loadUsers() {
+            try {
+                if (typeof loadProfiles === 'function') { try { await loadProfiles(); } catch (e) {} }
+                const res = await fetch(API_PREFIX + '/api/users');
+                const payload = await res.json();
+                if (payload && payload.success && payload.data) {
+                    usersConfig = payload.data;
+                    if (!Array.isArray(usersConfig.users)) usersConfig.users = [];
+                    renderUsers();
+                    fillUserProfileSelect(document.getElementById('userNewProfile'), '');
+                }
+            } catch (e) { console.error('加载用户失败', e); }
+        }
+
+        function userProfileOptionList() {
+            const list = (typeof profileList !== 'undefined' && Array.isArray(profileList)) ? profileList : [];
+            const opts = [{ value: '', name: '默认（全量）' }];
+            for (const p of list) {
+                if (p && p.id && p.id !== 'default') opts.push({ value: p.id, name: p.name || p.id });
+            }
+            return opts;
+        }
+
+        function fillUserProfileSelect(sel, selected) {
+            if (!sel) return;
+            sel.innerHTML = userProfileOptionList()
+                .map(o => `<option value="${escapeHtml(o.value)}"${o.value === (selected || '') ? ' selected' : ''}>${escapeHtml(o.name)}</option>`)
+                .join('');
+        }
+
+        function userLink(token, kind) {
+            return window.location.origin + '/u/' + token + '/' + kind;
+        }
+
+        function renderUsers() {
+            const box = document.getElementById('userList');
+            if (!box) return;
+            const users = usersConfig.users || [];
+            if (!users.length) {
+                box.innerHTML = '<div class="system-config-hint" style="margin:0;">还没有用户。新增后会得到一个独立的 /u/&lt;令牌&gt;/m3u 源地址，发给对应的人即可。</div>';
+                return;
+            }
+            box.innerHTML = users.map(u => {
+                const m3u = userLink(u.token, 'm3u');
+                const pb = userLink(u.token, 'playback.xml');
+                const txt = userLink(u.token, 'txt');
+                const last = u.lastSeenAt ? new Date(u.lastSeenAt).toLocaleString() : '从未';
+                const profOpts = userProfileOptionList()
+                    .map(o => `<option value="${escapeHtml(o.value)}"${o.value === (u.profile || '') ? ' selected' : ''}>${escapeHtml(o.name)}</option>`).join('');
+                return `
+                <div style="border:1px solid #eee;border-radius:6px;padding:10px;margin-bottom:8px;${u.enabled === false ? 'opacity:.6;' : ''}">
+                    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;">
+                        <label style="display:flex;align-items:center;gap:6px;">
+                            <input type="checkbox" ${u.enabled !== false ? 'checked' : ''} onchange="toggleUser('${u.id}', this.checked)">
+                            <strong>${escapeHtml(u.name || '未命名')}</strong>
+                        </label>
+                        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                            <button class="btn btn-sm" onclick="regenUserToken('${u.id}')" title="生成新令牌，旧链接立即失效">🔁 重置令牌</button>
+                            <button class="btn btn-sm btn-danger" onclick="deleteUser('${u.id}')">删除</button>
+                        </div>
+                    </div>
+                    <div style="font-size:12px;color:#888;margin:6px 0;word-break:break-all;">源地址：<span style="font-family:monospace;">${escapeHtml(m3u)}</span></div>
+                    <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;">
+                        <button class="btn btn-sm" onclick="copyToClipboard('${m3u.replace(/'/g, "\\'")}', 'm3u 源地址')">📋 复制 m3u</button>
+                        <button class="btn btn-sm" onclick="copyToClipboard('${pb.replace(/'/g, "\\'")}', 'EPG 地址')">📋 复制 EPG</button>
+                        <button class="btn btn-sm" onclick="copyToClipboard('${txt.replace(/'/g, "\\'")}', 'txt 地址')">📋 复制 txt</button>
+                        <span style="font-size:12px;color:#888;">绑定档 <select onchange="updateUserProfile('${u.id}', this.value)" style="font-size:12px;">${profOpts}</select></span>
+                    </div>
+                    <div style="font-size:12px;color:#999;margin-top:6px;">最近访问：${escapeHtml(last)} · 请求数 ${u.reqCount || 0}</div>
+                </div>`;
+            }).join('');
+        }
+
+        async function usersPost(body) {
+            const res = await fetch(API_PREFIX + '/api/users', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body)
+            });
+            return res.json();
+        }
+
+        async function addUser() {
+            const name = document.getElementById('userNewName').value;
+            const profile = document.getElementById('userNewProfile').value;
+            const r = await usersPost({ action: 'add', user: { name, profile } });
+            if (r.success) {
+                usersConfig = r.data; renderUsers();
+                document.getElementById('userNewName').value = '';
+                showStatus('已新增用户，可复制其源地址发给对方', 'success');
+            } else showStatus(r.message || '新增失败', 'error');
+        }
+
+        async function toggleUser(id, enabled) {
+            const r = await usersPost({ action: 'update', id, fields: { enabled } });
+            if (r.success) { usersConfig = r.data; renderUsers(); showStatus(enabled ? '已启用' : '已停用（该链接立即失效）', 'success'); }
+            else { showStatus(r.message || '操作失败', 'error'); loadUsers(); }
+        }
+
+        async function updateUserProfile(id, profile) {
+            const r = await usersPost({ action: 'update', id, fields: { profile } });
+            if (r.success) usersConfig = r.data; else { showStatus(r.message || '操作失败', 'error'); loadUsers(); }
+        }
+
+        async function deleteUser(id) {
+            const confirmed = await showConfirm('确定删除这个用户吗？其源地址将立即失效。');
+            if (!confirmed) return;
+            const r = await usersPost({ action: 'remove', id });
+            if (r.success) { usersConfig = r.data; renderUsers(); showStatus('已删除', 'success'); }
+            else showStatus(r.message || '删除失败', 'error');
+        }
+
+        async function regenUserToken(id) {
+            const confirmed = await showConfirm('重置令牌后，该用户旧的源地址会立即失效，需要把新地址重新发给他。继续？');
+            if (!confirmed) return;
+            const r = await usersPost({ action: 'regenToken', id });
+            if (r.success) { usersConfig = r.data; renderUsers(); showStatus('已重置令牌，请把新地址重新发给对方', 'success'); }
+            else showStatus(r.message || '操作失败', 'error');
+        }
+
+        // ===== 频道别名（统一命名规则，issue #56）=====
+        let aliasesData = {};
+
+        async function loadAliases() {
+            try {
+                const res = await fetch(API_PREFIX + '/api/channel-aliases');
+                const p = await res.json();
+                if (p && p.success && p.data) { aliasesData = p.data || {}; renderAliases(); }
+            } catch (e) { console.error('加载频道别名失败', e); }
+        }
+
+        function renderAliases() {
+            const box = document.getElementById('aliasList');
+            if (!box) return;
+            const keys = Object.keys(aliasesData);
+            if (!keys.length) {
+                box.innerHTML = '<div class="system-config-hint" style="margin:0;">还没有自定义规则。内置规则已覆盖 CCTV / 清晰度等常见情况，这里只在有源对不上时补充。</div>';
+                return;
+            }
+            box.innerHTML = keys.map(k => {
+                const aliases = Array.isArray(aliasesData[k]) ? aliasesData[k] : [];
+                return `<div style="border:1px solid #eee;border-radius:6px;padding:10px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;">
+                    <div style="min-width:0;"><strong>${escapeHtml(k)}</strong> <span style="color:#888;font-size:12px;">←</span> <span style="font-size:13px;color:#555;word-break:break-all;">${escapeHtml(aliases.join('、'))}</span></div>
+                    <div style="display:flex;gap:6px;flex-shrink:0;">
+                        <button class="btn btn-sm" onclick="editAliasRule('${k.replace(/'/g, "\\'")}')">编辑</button>
+                        <button class="btn btn-sm btn-danger" onclick="removeAliasRule('${k.replace(/'/g, "\\'")}')">删除</button>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        async function aliasesPost(body) {
+            const res = await fetch(API_PREFIX + '/api/channel-aliases', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body)
+            });
+            return res.json();
+        }
+
+        async function addAliasRule() {
+            const canonical = document.getElementById('aliasNewCanonical').value;
+            const aliases = document.getElementById('aliasNewList').value;
+            const r = await aliasesPost({ action: 'setRule', canonical, aliases });
+            if (r.success) {
+                aliasesData = r.data; renderAliases();
+                document.getElementById('aliasNewCanonical').value = '';
+                document.getElementById('aliasNewList').value = '';
+                showStatus('已添加规则，下次刷新播放列表生效', 'success');
+            } else showStatus(r.message || '添加失败', 'error');
+        }
+
+        // 编辑一条规则（issue #56）：把规则回填到下方输入框，改完点「添加规则」即按规范名覆盖更新（后端 setRule 为 upsert）
+        function editAliasRule(canonical) {
+            const aliases = Array.isArray(aliasesData[canonical]) ? aliasesData[canonical] : [];
+            const cEl = document.getElementById('aliasNewCanonical');
+            const aEl = document.getElementById('aliasNewList');
+            if (!cEl || !aEl) return;
+            cEl.value = canonical;
+            aEl.value = aliases.join(', ');
+            cEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            aEl.focus();
+            showStatus('已载入到下方，可修改后点「添加规则」保存（同名规范名会覆盖更新）', 'info');
+        }
+
+        async function removeAliasRule(canonical) {
+            const confirmed = await showConfirm('确定删除这条别名规则吗？');
+            if (!confirmed) return;
+            const r = await aliasesPost({ action: 'removeRule', canonical });
+            if (r.success) { aliasesData = r.data; renderAliases(); showStatus('已删除', 'success'); }
+            else showStatus(r.message || '删除失败', 'error');
+        }
+
+        // ===== 关键字自动分组（issue #69）=====
+        let groupRulesData = [];
+
+        async function loadGroupRules() {
+            try {
+                const res = await fetch(API_PREFIX + '/api/group-keyword-rules');
+                const p = await res.json();
+                if (p && p.success && Array.isArray(p.data)) { groupRulesData = p.data; renderGroupRules(); }
+            } catch (e) { console.error('加载关键字分组规则失败', e); }
+        }
+
+        function renderGroupRules() {
+            const box = document.getElementById('groupRuleList');
+            if (!box) return;
+            if (!groupRulesData.length) {
+                box.innerHTML = '<div class="system-config-hint" style="margin:0;">还没有规则。添加后，名字含关键字的「未分组」频道会自动归到对应分组（刷新也不丢）。</div>';
+                return;
+            }
+            box.innerHTML = groupRulesData.map((r, i) => {
+                const kws = Array.isArray(r.keywords) ? r.keywords : [];
+                const g = String(r.group || '');
+                const gEsc = g.replace(/'/g, "\\'");
+                // 上移/下移调整优先级（issue #69）：顺序即优先级，首条命中胜；顶/底禁用对应按钮
+                const upDisabled = i === 0 ? 'disabled style="opacity:.4;cursor:not-allowed;"' : '';
+                const downDisabled = i === groupRulesData.length - 1 ? 'disabled style="opacity:.4;cursor:not-allowed;"' : '';
+                return `<div style="border:1px solid #eee;border-radius:6px;padding:10px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;">
+                    <div style="min-width:0;"><span style="color:#bbb;font-size:12px;margin-right:6px;">${i + 1}.</span><strong>${escapeHtml(g)}</strong> <span style="color:#888;font-size:12px;">←</span> <span style="font-size:13px;color:#555;word-break:break-all;">${escapeHtml(kws.join('、'))}</span></div>
+                    <div style="display:flex;gap:6px;flex-shrink:0;">
+                        <button class="btn btn-sm" title="上移（提高优先级）" onclick="moveGroupRule('${gEsc}', 'up')" ${upDisabled}>↑</button>
+                        <button class="btn btn-sm" title="下移（降低优先级）" onclick="moveGroupRule('${gEsc}', 'down')" ${downDisabled}>↓</button>
+                        <button class="btn btn-sm" onclick="editGroupRule('${gEsc}')">编辑</button>
+                        <button class="btn btn-sm btn-danger" onclick="removeGroupRule('${gEsc}')">删除</button>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        async function groupRulesPost(body) {
+            const res = await fetch(API_PREFIX + '/api/group-keyword-rules', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body)
+            });
+            return res.json();
+        }
+
+        async function addGroupRule() {
+            const group = document.getElementById('groupRuleName').value;
+            const keywords = document.getElementById('groupRuleKeywords').value;
+            const r = await groupRulesPost({ action: 'setRule', group, keywords });
+            if (r.success) {
+                groupRulesData = r.data; renderGroupRules();
+                document.getElementById('groupRuleName').value = '';
+                document.getElementById('groupRuleKeywords').value = '';
+                showStatus('已添加规则，下次刷新播放列表生效', 'success');
+            } else showStatus(r.message || '添加失败', 'error');
+        }
+
+        function editGroupRule(group) {
+            const rule = groupRulesData.find(r => r.group === group);
+            if (!rule) return;
+            document.getElementById('groupRuleName').value = rule.group;
+            document.getElementById('groupRuleKeywords').value = (rule.keywords || []).join(', ');
+            document.getElementById('groupRuleName').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            document.getElementById('groupRuleKeywords').focus();
+            showStatus('已载入到下方，可修改后点「添加规则」保存（同名分组会覆盖更新）', 'info');
+        }
+
+        async function moveGroupRule(group, direction) {
+            const r = await groupRulesPost({ action: 'moveRule', group, direction });
+            if (r.success) { groupRulesData = r.data; renderGroupRules(); }
+            else showStatus(r.message || '调整失败', 'error');
+        }
+
+        async function removeGroupRule(group) {
+            const confirmed = await showConfirm('确定删除这条分组规则吗？');
+            if (!confirmed) return;
+            const r = await groupRulesPost({ action: 'removeRule', group });
+            if (r.success) { groupRulesData = r.data; renderGroupRules(); showStatus('已删除', 'success'); }
+            else showStatus(r.message || '删除失败', 'error');
+        }
+
+        // 在「频道详情」里直接给本频道设别名（issue #62）：把本频道名追加到指定规范名下（不覆盖已有别名），
+        // 保存后重新加载「我的频道」即时重算配对状态（别名即时进 getCanonicalMap）。
+        async function setAliasFromDetail() {
+            const el = document.getElementById('detailAliasCanonical');
+            const canonical = el ? el.value.trim() : '';
+            if (!canonical) { showStatus('请填写规范名', 'error'); return; }
+            if (!currentChannelDetail) return;
+            const alias = (currentChannelDetail.tvgName || currentChannelDetail.name || '').trim();
+            if (!alias) { showStatus('该频道无可用名称', 'error'); return; }
+            // 取该规范名现有别名，合并追加（不覆盖）
+            let existing = [];
+            try {
+                const res = await fetch(API_PREFIX + '/api/channel-aliases');
+                const p = await res.json();
+                if (p && p.success && p.data && Array.isArray(p.data[canonical])) existing = p.data[canonical];
+            } catch (e) { /* 取不到就按空处理 */ }
+            const merged = [...new Set([...existing, alias])];
+            const r = await aliasesPost({ action: 'setRule', canonical, aliases: merged });
+            if (r.success) {
+                aliasesData = r.data;
+                showStatus(`已设别名「${alias}」→「${canonical}」，正在刷新配对状态…`, 'success');
+                try { await loadMyPlaylist(false); } catch (e) { /* 刷新失败不影响别名已保存 */ }
+            } else {
+                showStatus(r.message || '保存别名失败', 'error');
+            }
         }
 
         // 加载数据
@@ -1907,7 +2754,7 @@
                 
                 // 加载所有频道
                 console.log('请求频道列表...');
-                const channelsRes = await fetch('/api/channels');
+                const channelsRes = await fetch(API_PREFIX + '/api/channels');
                 if (!channelsRes.ok) {
                     throw new Error(`频道API请求失败: ${channelsRes.status}`);
                 }
@@ -1916,7 +2763,7 @@
                 
                 // 加载外部源配置
                 console.log('请求外部源配置...');
-                const externalRes = await fetch('/api/external-sources');
+                const externalRes = await fetch(API_PREFIX + '/api/external-sources');
                 if (!externalRes.ok) {
                     throw new Error(`外部源API请求失败: ${externalRes.status}`);
                 }
@@ -1926,7 +2773,7 @@
                 
                 // 加载内置源配置
                 console.log('请求内置源配置...');
-                const builtInRes = await fetch('/api/built-in-sources');
+                const builtInRes = await fetch(API_PREFIX + '/api/built-in-sources');
                 if (!builtInRes.ok) {
                     throw new Error(`内置源API请求失败: ${builtInRes.status}`);
                 }
@@ -1936,14 +2783,27 @@
                 
                 // 加载系统配置
                 console.log('请求系统配置...');
-                const systemRes = await fetch('/api/system-config');
+                const systemRes = await fetch(API_PREFIX + '/api/system-config');
                 if (!systemRes.ok) {
                     throw new Error(`系统配置API请求失败: ${systemRes.status}`);
                 }
                 systemConfig = await systemRes.json();
                 console.log('系统配置加载成功');
+                renderSubscribeBar();  // 配置加载后重渲染订阅栏，让「公网地址」按钮按 mhost 出现（issue #62）
+
+                // 加载 EPG 聚合源配置（issue #38）；失败不影响其余加载
+                loadEpgSources();
+
+                // 加载用户管理（一人一源）；失败不影响其余加载
+                loadUsers();
+
+                // 加载频道别名规则（issue #56）；失败不影响其余加载
+                loadAliases();
+                loadGroupRules();
                 
-                // 加载我的频道配置
+                // 加载配置档列表（多套 m3u），再加载当前档的我的频道配置
+                console.log('请求配置档列表...');
+                await loadProfiles();
                 console.log('请求我的频道配置...');
                 await loadMyPlaylistConfig();
                 console.log('我的频道配置加载成功');
@@ -2298,6 +3158,10 @@
                             <input type="number" min="60" step="60" value="${source.refreshInterval || 240}" oninput="updateExternalField(${index}, 'refreshInterval', parseInt(this.value) || 240)" placeholder="240">
                             <div class="form-hint">每隔多少分钟自动重新抓取m3u8链接，默认240分钟（4小时），步幅1小时</div>
                         </div>
+                        <div class="external-field">
+                            <label>📡 在哪些配置档显示</label>
+                            <div id="srcProfRow_${index}" class="form-hint" style="margin-top:2px;">${source.id ? '加载中…' : '新源「保存」后即可设置（默认所有配置档可见）'}</div>
+                        </div>
                     </div>
                     <div class="external-detail-footer">
                         <div class="external-switches">
@@ -2338,15 +3202,34 @@
                             <input type="text" value="${source.name || ''}" oninput="updateExternalField(${index}, 'name', this.value)" placeholder="例：广东电视台直播源">
                         </div>
                         <div class="external-field">
-                            <label>m3u 播放列表地址 *</label>
-                            <input type="text" value="${source.subscriptionUrl || ''}" oninput="updateExternalField(${index}, 'subscriptionUrl', this.value)" placeholder="例：https://example.com/playlist.m3u">
-                            <div class="form-hint">填写包含多个频道的 m3u/m3u8 播放列表地址，系统会自动解析其中的所有频道</div>
+                            <label>来源 *</label>
+                            <div class="mode-switcher" style="margin-bottom: 8px;">
+                                <button class="mode-switch-btn ${!source.localImport ? 'active' : ''}" onclick="setSubImportType(${index}, false)">🌐 在线 URL</button>
+                                <button class="mode-switch-btn ${source.localImport ? 'active' : ''}" onclick="setSubImportType(${index}, true)">📁 本地文件 / 粘贴</button>
+                            </div>
+                            ${!source.localImport ? `
+                            <input type="text" value="${source.subscriptionUrl || ''}" oninput="updateExternalField(${index}, 'subscriptionUrl', this.value)" placeholder="例：https://example.com/playlist.m3u 或 .txt">
+                            <div class="form-hint">填写包含多个频道的 m3u/m3u8 或 txt（频道名,地址）播放列表地址，系统会自动识别格式并解析其中的所有频道</div>
+                            ` : `
+                            <input type="file" accept=".m3u,.m3u8,.txt,text/plain" onchange="onLocalFilePicked(${index}, this)" style="margin-bottom: 8px;">
+                            <textarea oninput="updateExternalField(${index}, 'subscriptionContent', this.value)" placeholder="选择本地 .m3u/.m3u8/.txt 文件，或直接把播放列表内容粘贴到这里（支持 m3u/m3u8 与 txt「频道名,地址」格式，自动识别 GBK/UTF-8 编码）" style="width: 100%; min-height: 120px; font-family: monospace; font-size: 12px; box-sizing: border-box;">${(source.subscriptionContent || '').replace(/&/g, '&amp;').replace(/</g, '&lt;')}</textarea>
+                            <div class="form-hint">选择文件或粘贴内容后，点下方「📥 导入并保存」即可解析入库；本地导入不发起网络请求</div>
+                            `}
                             ${channelInfo}
+                        </div>
+                        <div class="external-field">
+                            <label>默认分组</label>
+                            ${renderGroupSelect(index, source.group || '未分组')}
+                            <div class="form-hint">订阅里<strong>没自带分组</strong>的频道统一归到这个分组（频道自带分组的保持不变）。保持「未分组」则不归类，可在「🗂️ 关键字自动分组」里按频道名细分。</div>
                         </div>
                         <div class="external-field">
                             <label>自动刷新间隔（分钟）</label>
                             <input type="number" min="60" step="60" value="${source.refreshInterval || 1440}" oninput="updateExternalField(${index}, 'refreshInterval', parseInt(this.value) || 1440)" placeholder="1440">
                             <div class="form-hint">每隔多少分钟自动重新获取播放列表，默认1440分钟（24小时）</div>
+                        </div>
+                        <div class="external-field">
+                            <label>📡 在哪些配置档显示</label>
+                            <div id="srcProfRow_${index}" class="form-hint" style="margin-top:2px;">${source.id ? '加载中…' : '新源「导入并保存」后即可设置（默认所有配置档可见）'}</div>
                         </div>
                     </div>
                     <div class="external-detail-footer">
@@ -2396,6 +3279,10 @@
                             <input type="text" value="${source.m3u8Url || ''}" oninput="updateExternalField(${index}, 'm3u8Url', this.value)" placeholder="例：https://example.com/live.m3u8">
                             <div class="form-hint">直接填写m3u8直播流地址</div>
                         </div>
+                        <div class="external-field">
+                            <label>📡 在哪些配置档显示</label>
+                            <div id="srcProfRow_${index}" class="form-hint" style="margin-top:2px;">${source.id ? '加载中…' : '新源「保存」后即可设置（默认所有配置档可见）'}</div>
+                        </div>
                     </div>
                     <div class="external-detail-footer">
                         <div class="external-switches">
@@ -2413,6 +3300,35 @@
                     </div>
                 `;
             }
+
+            // 源 ↔ 配置档（issue #68）：已保存(有稳定 id)的源，异步填充「在哪些配置档显示」勾选行
+            fillSourceProfilesRow(index);
+        }
+
+        // v2 入口（issue #68）：外部源表单里按档勾选。数据惰性加载，与 v1 档弹窗共用 sourceProfileData
+        async function fillSourceProfilesRow(index) {
+            const source = externalConfig.sources[index];
+            if (!source || !source.id || !document.getElementById('srcProfRow_' + index)) return;
+            if (!sourceProfileData) {
+                try { await loadSourceProfiles(); } catch (e) {
+                    const box = document.getElementById('srcProfRow_' + index);
+                    if (box) box.textContent = '加载失败，请刷新重试';
+                    return;
+                }
+            }
+            renderSourceProfilesRow(index);
+        }
+
+        function renderSourceProfilesRow(index) {
+            const box = document.getElementById('srcProfRow_' + index);
+            const source = externalConfig.sources[index];
+            if (!box || !source || !source.id || !sourceProfileData) return;
+            const sid = 'ext:' + source.id;
+            box.innerHTML = sourceProfileData.profiles.map(p => {
+                const dis = (sourceProfileData.disabled[p.id] || []).includes(sid);
+                const pEsc = p.id.replace(/'/g, "\\'");
+                return `<label style="display:inline-flex; align-items:center; gap:4px; margin-right:12px; cursor:pointer; color:#333;"><input type="checkbox" ${dis ? '' : 'checked'} onchange="toggleProfileSource('${pEsc}', '${sid}', this.checked, ${index})">${escapeHtml(p.name)}</label>`;
+            }).join('') + '<div class="form-hint" style="margin-top:4px;">默认全部勾选（所有配置档可见）；取消勾选＝该档不出现本源频道。改动即时保存。</div>';
         }
 
         function addExternalSource() {
@@ -2438,7 +3354,10 @@
             
             // 切换模式
             source.mode = newMode;
-            
+            // 切换模式时清掉本地导入内容/标记（订阅模式内再单独选「URL / 本地」）
+            source.subscriptionContent = '';
+            source.localImport = false;
+
             // 根据新模式清空对应的URL字段
             if (newMode === 'fetch') {
                 // 切换到抓取模式，清空m3u8Url
@@ -2473,6 +3392,55 @@
             
             // 重新渲染详情面板
             renderExternalDetail(index);
+        }
+
+        // 订阅源「来源」切换：在线 URL / 本地文件·粘贴（issue #43）
+        function setSubImportType(index, isLocal) {
+            const source = externalConfig.sources[index];
+            if (!source) return;
+            source.localImport = !!isLocal;
+            renderExternalDetail(index);
+        }
+
+        // ArrayBuffer -> base64（分块，避免大文件 String.fromCharCode 爆栈）
+        function arrayBufferToBase64(buffer) {
+            const bytes = new Uint8Array(buffer);
+            let binary = '';
+            const chunk = 0x8000;
+            for (let i = 0; i < bytes.length; i += chunk) {
+                binary += String.fromCharCode.apply(null, bytes.subarray(i, i + chunk));
+            }
+            return btoa(binary);
+        }
+
+        // 选择本地 m3u/txt 文件：读原始字节交后端解码(GBK/UTF/BOM)并预览频道数，结果填入内容框
+        async function onLocalFilePicked(index, inputEl) {
+            const file = inputEl.files && inputEl.files[0];
+            if (!file) return;
+            const source = externalConfig.sources[index];
+            if (!source) return;
+            try {
+                showStatus('正在读取文件...', 'info');
+                const base64 = arrayBufferToBase64(await file.arrayBuffer());
+                const resp = await fetch(API_PREFIX + '/api/external-sources', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'parseLocalContent', contentBase64: base64 })
+                });
+                const result = await resp.json();
+                if (result.success === false) {
+                    showStatus('文件解析失败: ' + (result.message || ''), 'error');
+                    return;
+                }
+                source.subscriptionContent = result.text || '';
+                if (!source.name || !source.name.trim()) {
+                    source.name = file.name.replace(/\.(m3u8?|txt)$/i, '');
+                }
+                renderExternalDetail(index);
+                showStatus(`已读取「${file.name}」，识别到 ${result.channelCount || 0} 个频道，点「📥 导入并保存」入库`, 'success');
+            } catch (e) {
+                showStatus('读取文件失败: ' + e.message, 'error');
+            }
         }
 
         // 自定义确认对话框
@@ -2510,7 +3478,7 @@
                 externalConfig.sources.splice(index, 1);
                 
                 // 调用保存API，服务器会自动重新生成播放列表
-                const response = await fetch('/api/external-sources', {
+                const response = await fetch(API_PREFIX + '/api/external-sources', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -2533,7 +3501,7 @@
                     renderExternalSources();
                     
                     // 重新加载所有频道数据以刷新显示
-                    const channelsRes = await fetch('/api/channels');
+                    const channelsRes = await fetch(API_PREFIX + '/api/channels');
                     if (channelsRes.ok) {
                         allChannels = await channelsRes.json();
                         renderChannels();
@@ -2541,7 +3509,7 @@
                 } else {
                     // 删除失败，恢复数据（需要重新加载配置）
                     showStatus(result.message || '删除失败', 'error');
-                    const externalRes = await fetch('/api/external-sources');
+                    const externalRes = await fetch(API_PREFIX + '/api/external-sources');
                     const externalPayload = await externalRes.json();
                     externalConfig = normalizeExternalConfig(externalPayload);
                     renderExternalSources();
@@ -2549,7 +3517,7 @@
             } catch (error) {
                 showStatus('删除失败: ' + error.message, 'error');
                 // 恢复数据
-                const externalRes = await fetch('/api/external-sources');
+                const externalRes = await fetch(API_PREFIX + '/api/external-sources');
                 const externalPayload = await externalRes.json();
                 externalConfig = normalizeExternalConfig(externalPayload);
                 renderExternalSources();
@@ -2593,7 +3561,7 @@
             try {
                 // 先保存配置，确保后端索引同步
                 showStatus(`正在保存配置...`, 'info');
-                const saveResponse = await fetch('/api/external-sources', {
+                const saveResponse = await fetch(API_PREFIX + '/api/external-sources', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -2609,7 +3577,7 @@
                 // 保存成功后执行更新
                 showStatus(`正在提取 ${sourceName} 的 m3u8 链接...`, 'info');
                 
-                const response = await fetch('/api/external-sources', {
+                const response = await fetch(API_PREFIX + '/api/external-sources', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -2620,7 +3588,7 @@
                 const result = await response.json();
                 
                 // 重新加载配置确保UI同步（无论成功失败都加载）
-                const externalRes = await fetch('/api/external-sources');
+                const externalRes = await fetch(API_PREFIX + '/api/external-sources');
                 const externalPayload = await externalRes.json();
                 externalConfig = normalizeExternalConfig(externalPayload);
                 
@@ -2632,7 +3600,7 @@
                     showStatus(message, 'success');
                     
                     // 重新加载所有频道数据以刷新显示
-                    const channelsRes = await fetch('/api/channels');
+                    const channelsRes = await fetch(API_PREFIX + '/api/channels');
                     if (channelsRes.ok) {
                         allChannels = await channelsRes.json();
                         renderChannels();
@@ -2678,7 +3646,7 @@
             try {
                 // 先保存配置
                 showStatus(`正在保存配置...`, 'info');
-                const saveResponse = await fetch('/api/external-sources', {
+                const saveResponse = await fetch(API_PREFIX + '/api/external-sources', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -2694,7 +3662,7 @@
                 // 执行抓取
                 showStatus(`正在抓取 ${sourceName} 的 m3u8 链接...`, 'info');
                 
-                const response = await fetch('/api/external-sources', {
+                const response = await fetch(API_PREFIX + '/api/external-sources', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -2705,7 +3673,7 @@
                 const result = await response.json();
                 
                 // 重新加载配置确保UI同步
-                const externalRes = await fetch('/api/external-sources');
+                const externalRes = await fetch(API_PREFIX + '/api/external-sources');
                 const externalPayload = await externalRes.json();
                 externalConfig = normalizeExternalConfig(externalPayload);
                 
@@ -2717,7 +3685,7 @@
                     showStatus(message, 'success');
                     
                     // 重新加载所有频道数据以刷新显示
-                    const channelsRes = await fetch('/api/channels');
+                    const channelsRes = await fetch(API_PREFIX + '/api/channels');
                     if (channelsRes.ok) {
                         allChannels = await channelsRes.json();
                         renderChannels();
@@ -2754,7 +3722,7 @@
             try {
                 showStatus('正在保存...', 'info');
                 
-                const response = await fetch('/api/external-sources', {
+                const response = await fetch(API_PREFIX + '/api/external-sources', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -2765,10 +3733,18 @@
                 const result = await response.json();
                 if (response.ok && result.success !== false) {
                     showStatus(`${source.name} 保存成功并已同步到频道列表`, 'success');
+                    // 回读配置：拿到服务端为新源分配的稳定 id（否则下次整份保存会让 id 重新生成、
+                    // 「档 ↔ 源」绑定失效），也让「在哪些配置档显示」勾选行立即可用（issue #29/#68）
+                    try {
+                        const externalRes = await fetch(API_PREFIX + '/api/external-sources');
+                        externalConfig = normalizeExternalConfig(await externalRes.json());
+                        sourceProfileData = null;   // 源列表变了，绑定矩阵下次打开时重新拉
+                    } catch (e) { /* 回读失败不影响已保存 */ }
                     renderExternalSources(); // 保存成功后刷新UI
-                    
+                    renderExternalDetail(index);
+
                     // 重新加载所有频道数据以刷新显示
-                    const channelsRes = await fetch('/api/channels');
+                    const channelsRes = await fetch(API_PREFIX + '/api/channels');
                     if (channelsRes.ok) {
                         allChannels = await channelsRes.json();
                         renderChannels();
@@ -2795,8 +3771,10 @@
                 showStatus('请填写订阅名称', 'error');
                 return;
             }
-            if (!source.subscriptionUrl || !source.subscriptionUrl.trim()) {
-                showStatus('请填写m3u播放列表地址', 'error');
+            const hasUrl = source.subscriptionUrl && source.subscriptionUrl.trim();
+            const hasContent = source.subscriptionContent && source.subscriptionContent.trim();
+            if (!hasUrl && !hasContent) {
+                showStatus(source.localImport ? '请选择本地文件或粘贴播放列表内容' : '请填写订阅地址', 'error');
                 return;
             }
             
@@ -2807,7 +3785,7 @@
             try {
                 // 先保存配置
                 showStatus('正在保存配置...', 'info');
-                const saveResponse = await fetch('/api/external-sources', {
+                const saveResponse = await fetch(API_PREFIX + '/api/external-sources', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ action: 'save', sources: externalConfig })
@@ -2821,7 +3799,7 @@
                 // 执行导入
                 showStatus(`正在获取并解析 ${sourceName} 的播放列表...`, 'info');
                 
-                const response = await fetch('/api/external-sources', {
+                const response = await fetch(API_PREFIX + '/api/external-sources', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ action: 'importSubscription', index })
@@ -2830,7 +3808,7 @@
                 const result = await response.json();
                 
                 // 重新加载配置
-                const externalRes = await fetch('/api/external-sources');
+                const externalRes = await fetch(API_PREFIX + '/api/external-sources');
                 const externalPayload = await externalRes.json();
                 externalConfig = normalizeExternalConfig(externalPayload);
                 
@@ -2838,7 +3816,7 @@
                     showStatus(`${sourceName} 导入成功！共 ${result.channelCount || 0} 个频道，已同步到频道列表`, 'success');
                     
                     // 刷新频道列表
-                    const channelsRes = await fetch('/api/channels');
+                    const channelsRes = await fetch(API_PREFIX + '/api/channels');
                     if (channelsRes.ok) {
                         allChannels = await channelsRes.json();
                         renderChannels();
@@ -2879,9 +3857,50 @@
             document.getElementById('sysHost').value = systemConfig.host || '';
             document.getElementById('sysRateType').value = systemConfig.rateType || 3;
             document.getElementById('sysPass').value = systemConfig.pass || '';
+            document.getElementById('sysAdminPath').value = systemConfig.adminPath || 'admin';
             document.getElementById('sysProgramInterval').value = systemConfig.programInfoUpdateInterval || '8';
             document.getElementById('sysEnableHDR').checked = systemConfig.enableHDR !== false;
             document.getElementById('sysEnableH265').checked = systemConfig.enableH265 !== false;
+            document.getElementById('sysEnableMigu').checked = systemConfig.enableMigu !== false;
+            document.getElementById('sysEnableBuiltInSources').checked = systemConfig.enableBuiltInSources !== false;
+            document.getElementById('sysEnableBuiltInSubscriptions').checked = systemConfig.enableBuiltInSubscriptions !== false;
+            document.getElementById('sysEnableDisplayNameUnify').checked = systemConfig.enableDisplayNameUnify === true;
+            renderEnvOverrideWarning();
+        }
+
+        // 提示：哪些项是被 docker-compose 环境变量控制的（此处修改/清空可能不生效，需改 compose）
+        function renderEnvOverrideWarning() {
+            const box = document.getElementById('envOverrideWarning');
+            if (!box) return;
+            const labels = {
+                userId: '咪咕账号ID', token: '咪咕Token', port: '端口', host: '公网地址',
+                rateType: '画质', pass: '访问密码', enableHDR: 'HDR', enableH265: 'H.265',
+                programInfoUpdateInterval: '更新间隔', refreshToken: 'token刷新', adminPath: '管理页面路径',
+                enableMigu: '启用咪咕源', enableBuiltInSources: '启用内置单频道源', enableBuiltInSubscriptions: '启用内置订阅源'
+            };
+            const overrides = systemConfig.envOverrides || {};
+            const names = Object.keys(overrides).filter(k => overrides[k]).map(k => labels[k] || k);
+            const parts = [];
+            if (names.length > 0) {
+                parts.push(
+                    '⚠️ 以下配置由 <strong>docker-compose 环境变量</strong> 设置：<strong>' + names.join('、') + '</strong><br>' +
+                    '在此填入新值可临时覆盖，但<strong>清空后保存会回退到环境变量的值</strong>（环境变量为兜底）。' +
+                    '要彻底修改或移除，请改 <code>docker-compose.yml</code> 里对应的 <code>m*</code> 变量后重启容器。'
+                );
+            }
+            if (systemConfig.blankModeEnv) {
+                parts.push(
+                    '🧹 已通过环境变量 <code>mblank</code> 开启<strong>空白模式</strong>：咪咕 / 内置单频道源 / 内置订阅源默认关闭。' +
+                    '可在上方单独勾选并保存以覆盖（保存后以你的勾选为准）。'
+                );
+            }
+            if (parts.length === 0) {
+                box.style.display = 'none';
+                box.innerHTML = '';
+                return;
+            }
+            box.style.display = 'block';
+            box.innerHTML = parts.join('<hr style="border:none;border-top:1px solid #ffd591;margin:8px 0">');
         }
 
         // 初始化咪咕账号获取Bookmarklet
@@ -2989,6 +4008,7 @@ if(success){
                     host = `${host}:${port}`;
                 }
                 
+                const adminPathInput = document.getElementById('sysAdminPath').value;
                 const config = {
                     userId: document.getElementById('sysUserId').value,
                     token: document.getElementById('sysToken').value,
@@ -2996,12 +4016,17 @@ if(success){
                     host: host,
                     rateType: parseInt(document.getElementById('sysRateType').value) || 3,
                     pass: document.getElementById('sysPass').value,
+                    adminPath: adminPathInput,
                     programInfoUpdateInterval: document.getElementById('sysProgramInterval').value || '8',
                     enableHDR: document.getElementById('sysEnableHDR').checked,
-                    enableH265: document.getElementById('sysEnableH265').checked
+                    enableH265: document.getElementById('sysEnableH265').checked,
+                    enableMigu: document.getElementById('sysEnableMigu').checked,
+                    enableBuiltInSources: document.getElementById('sysEnableBuiltInSources').checked,
+                    enableBuiltInSubscriptions: document.getElementById('sysEnableBuiltInSubscriptions').checked,
+                    enableDisplayNameUnify: document.getElementById('sysEnableDisplayNameUnify').checked
                 };
 
-                const response = await fetch('/api/system-config', {
+                const response = await fetch(API_PREFIX + '/api/system-config', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -3012,12 +4037,37 @@ if(success){
                 const result = await response.json();
 
                 if (result.success) {
+                    // 管理页面路径变更：旧地址即时失效，跳转到新地址避免用户被卡住
+                    const newAdminPath = sanitizeAdminPath(adminPathInput);
+                    const currentSeg = window.location.pathname.replace(/.*\//, '');
+                    if (newAdminPath !== currentSeg) {
+                        const newUrl = window.location.origin + API_PREFIX + '/' + newAdminPath;
+                        showStatus(`管理页面路径已改为 /${newAdminPath}，3 秒后跳转到新地址…`, 'success');
+                        setTimeout(() => { window.location.href = newUrl; }, 3000);
+                        return 'redirect'; // 页面即将跳转，「保存并重启」此时不能跟着重启
+                    }
                     showStatus(result.message, 'success');
+                    return true;
                 } else {
                     showStatus(result.message || '保存失败', 'error');
+                    return false;
                 }
             } catch (error) {
                 showStatus('保存失败: ' + error.message, 'error');
+                return false;
+            }
+        }
+
+        // 保存并重启（issue #72）：一次确认 → 保存成功才重启；保存失败或触发管理路径跳转则不重启
+        async function saveAndRestartService() {
+            const confirmed = await showConfirm(
+                '保存系统配置并立即重启服务？\n\n重启期间服务将暂时不可用（约5-10秒）；Docker/PM2 会自动重启，直接运行 node 需要手动重启。',
+                '保存并重启'
+            );
+            if (!confirmed) return;
+            const saved = await saveSystemConfig();
+            if (saved === true) {
+                await restartService(true); // 已确认过，跳过二次确认
             }
         }
 
@@ -3031,7 +4081,7 @@ if(success){
             updateInfo.style.display = 'none';
 
             try {
-                const response = await fetch('/api/check-update');
+                const response = await fetch(API_PREFIX + '/api/check-update');
                 const result = await response.json();
 
                 if (!result.success) {
@@ -3061,19 +4111,21 @@ if(success){
         }
 
         // 重启服务
-        async function restartService() {
-            const confirmed = await showConfirm(
-                '确定要重启服务吗？\n\n注意：\n1. 重启期间服务将暂时不可用（约5-10秒）\n2. 请确保已保存所有配置\n3. Docker/PM2 会自动重启，直接运行 node 需要手动重启',
-                '重启服务'
-            );
-            if (!confirmed) {
-                return;
+        async function restartService(skipConfirm = false) {
+            if (!skipConfirm) {
+                const confirmed = await showConfirm(
+                    '确定要重启服务吗？\n\n注意：\n1. 重启期间服务将暂时不可用（约5-10秒）\n2. 请确保已保存所有配置\n3. Docker/PM2 会自动重启，直接运行 node 需要手动重启',
+                    '重启服务'
+                );
+                if (!confirmed) {
+                    return;
+                }
             }
 
             try {
                 showStatus('正在重启服务，请稍候...', 'success');
 
-                const response = await fetch('/api/restart', {
+                const response = await fetch(API_PREFIX + '/api/restart', {
                     method: 'POST'
                 });
 
@@ -3099,20 +4151,286 @@ if(success){
         let myPlaylistOriginalData = []; // 原始完整数据（用于显示被删除的频道）
         let myPlaylistConfig = {
             channelGroupMap: {},
+            channelRenameMap: {},
+            channelOrder: {},
             hiddenChannels: [],
             customGroups: [],
             groupOrder: [],
             deletedGroups: [],
-            groupRenameMap: {}
+            groupRenameMap: {},
+            groupSortMode: {}
         };
+        // 多套 m3u 配置档：当前编辑/查看的档 + 档列表（default 恒在首位）
+        let activeProfile = 'default';
+        let profileList = [{ id: 'default', name: '默认' }];
         let selectedGroupIndex = 0; // 当前选中的分组索引
         let isViewingDeleted = false; // 是否正在查看被删除区域
         let isBatchMode = false; // 是否处于批量管理模式
         let selectedChannels = new Set(); // 批量选中的频道ID
+        let draggedChannelId = null; // 拖拽排序中被拖动的频道ID
+        let lastEditedChannelId = null; // 最近编辑过的频道ID（重命名/移动后），用于重渲染后临时高亮定位 (issue #50)
+        let editHighlightTimer = null;  // 临时高亮自动消退的定时器句柄
+
+        // ---- 多套 m3u 配置档 ----
+        // 默认档不带 query（兼容旧地址）；其余档统一带 ?profile=，所有读写都按当前档走。
+        // 注意：URL 用 '/api/' + '...' 拼接，避免被后续对 API_PREFIX + '/api/my-playlist...' 的批量替换误伤。
+        function profileQuery() {
+            return (activeProfile && activeProfile !== 'default') ? ('?profile=' + encodeURIComponent(activeProfile)) : '';
+        }
+        function mpListUrl() { return API_PREFIX + '/api/' + 'my-playlist' + profileQuery(); }
+        function mpConfigUrl() { return API_PREFIX + '/api/' + 'my-playlist-config' + profileQuery(); }
+
+        function escapeHtml(s) {
+            return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+        }
+        function currentProfileName() {
+            const p = profileList.find(x => x.id === activeProfile);
+            return p ? p.name : activeProfile;
+        }
+        // 中文无法转拼音：尽量取已有英文/数字做短名，取不到则交给用户自己填
+        function slugify(s) {
+            return String(s).toLowerCase().replace(/[^a-z0-9_-]+/g, '');
+        }
+
+        async function loadProfiles() {
+            try {
+                const res = await fetch(API_PREFIX + '/api/' + 'my-playlist-profiles');
+                const result = await res.json();
+                if (result.success && Array.isArray(result.data) && result.data.length) {
+                    profileList = result.data;
+                    // 恢复上次选择的档（记在本浏览器），刷新后不再跳回默认；不存在则回默认
+                    let saved = null;
+                    try { saved = localStorage.getItem('iptv_active_profile'); } catch (e) {}
+                    if (saved && profileList.some(p => p.id === saved)) {
+                        activeProfile = saved;
+                    } else if (!profileList.some(p => p.id === activeProfile)) {
+                        activeProfile = 'default';
+                    }
+                    renderProfileUI();
+                }
+            } catch (error) {
+                console.error('加载配置档列表失败:', error);
+            }
+        }
+
+        // 顶部主按钮显示当前档名；弹窗打开时同步刷新档列表
+        function renderProfileUI() {
+            const label = document.getElementById('currentProfileLabel');
+            if (label) label.textContent = currentProfileName();
+            renderSubscribeBar();   // 当前档变化时同步刷新订阅地址栏（issue #38）
+            const modal = document.getElementById('profileModal');
+            if (modal && modal.style.display === 'block') renderProfileList();
+        }
+
+        function openProfileModal() {
+            renderProfileList();
+            document.getElementById('profileModal').style.display = 'block';
+            // 源 ↔ 档 绑定矩阵惰性加载（issue #29）：到手后重渲染补出「📡 源」按钮
+            loadSourceProfiles().then(() => renderProfileList()).catch(() => {});
+        }
+
+        // ===== 源 ↔ 配置档 绑定（issue #29/#68）=====
+        // 数据：{ sources:[{id,name,type}], profiles:[{id,name}], disabled:{profileId:[sourceId]} }
+        let sourceProfileData = null;
+        const expandedSourceRows = new Set();   // 档弹窗里展开了「源」面板的档 id
+
+        async function loadSourceProfiles() {
+            const res = await fetch(API_PREFIX + '/api/source-profiles');
+            const p = await res.json();
+            if (p && p.success && p.data) sourceProfileData = p.data;
+        }
+
+        function toggleProfileSourcesRow(pid) {
+            if (!expandedSourceRows.delete(pid)) expandedSourceRows.add(pid);
+            renderProfileList();
+        }
+
+        // 勾/取消某档的某个源（v1 档弹窗与 v2 源表单共用）。enabled=false → 加入该档 disabledSources
+        async function toggleProfileSource(profileId, sourceId, enabled, extIndex) {
+            try {
+                const res = await fetch(API_PREFIX + '/api/source-profiles', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ profileId, sourceId, enabled })
+                });
+                const r = await res.json();
+                if (!r.success) { showStatus(r.message || '保存失败', 'error'); return; }
+                if (sourceProfileData) sourceProfileData.disabled[profileId] = r.data.disabledSources;
+                // 同步本地整份配置副本：避免「我的频道」后续整份保存把刚设置的禁源带回旧值
+                //（服务端已把 disabledSources 设为 source-profiles 单一写者，这里是双保险）
+                if (profileId === activeProfile && typeof myPlaylistConfig === 'object' && myPlaylistConfig) {
+                    myPlaylistConfig.disabledSources = r.data.disabledSources;
+                }
+                showStatus(enabled ? '已在该档启用此源' : '已在该档禁用此源（该源频道不再出现）', 'success');
+                // 同步刷新两个入口的视图
+                const modal = document.getElementById('profileModal');
+                if (modal && modal.style.display === 'block') renderProfileList();
+                if (typeof extIndex === 'number') renderSourceProfilesRow(extIndex);
+                // 动的是当前档 → 即时重载「我的频道」体现增减
+                if (profileId === activeProfile) { try { await loadMyPlaylist(false); } catch (e) {} }
+            } catch (e) {
+                showStatus('保存失败: ' + e.message, 'error');
+            }
+        }
+        function closeProfileModal() {
+            document.getElementById('profileModal').style.display = 'none';
+        }
+
+        // 渲染弹窗里的档列表：每档 名称 + 访问地址(可复制) + 切换/改名/删除
+        function renderProfileList() {
+            const box = document.getElementById('profileListBox');
+            if (!box) return;
+            const base = window.location.origin + API_PREFIX;
+            box.innerHTML = profileList.map(p => {
+                const isActive = p.id === activeProfile;
+                const isDefault = p.id === 'default';
+                // 默认展示带 .m3u 后缀的别名地址：内容与 /m3u 完全相同，但能被「按后缀校验订阅链接」的 App 接受；
+                // 普通播放器忽略后缀、行为不变。裸 /m3u 仍有效，老用户已配置的地址不受影响。
+                const url = base + '/interface.m3u' + (isDefault ? '' : '?profile=' + p.id);
+                const slugHtml = isDefault ? '' : ` <span style="color:#999;font-weight:normal;font-size:12px;">(${escapeHtml(p.id)})</span>`;
+                // 改名按钮紧跟档名右侧（默认档不可改名）
+                const renameBtn = isDefault ? '' :
+                    ` <button class="btn btn-sm" onclick="renameProfilePrompt('${p.id}')" title="重命名该档" style="padding:2px 8px; font-size:12px;">改名</button>`;
+                // 「源」按钮（issue #29）：选择本档启用哪些源；有禁用时按钮上带数量提示
+                const disCount = sourceProfileData ? (sourceProfileData.disabled[p.id] || []).length : 0;
+                const srcBtn = sourceProfileData ?
+                    ` <button class="btn btn-sm" onclick="toggleProfileSourcesRow('${p.id}')" title="选择本档启用哪些源" style="padding:2px 8px; font-size:12px;">📡 源${disCount ? `（禁${disCount}）` : ''}</button>` : '';
+                // 展开的源勾选面板：取消勾选＝该源频道不在本档出现
+                const srcPanel = (sourceProfileData && expandedSourceRows.has(p.id)) ?
+                    `<div style="margin-top:6px; padding:8px 10px; background:#fafafa; border:1px solid #eee; border-radius:6px; font-size:13px;">
+                        ${sourceProfileData.sources.map(s => {
+                            const dis = (sourceProfileData.disabled[p.id] || []).includes(s.id);
+                            const sEsc = s.id.replace(/'/g, "\\'");
+                            const pEsc2 = p.id.replace(/'/g, "\\'");
+                            return `<label style="display:inline-flex; align-items:center; gap:4px; margin-right:12px; margin-bottom:4px; cursor:pointer;"><input type="checkbox" ${dis ? '' : 'checked'} onchange="toggleProfileSource('${pEsc2}', '${sEsc}', this.checked)">${escapeHtml(s.name)}</label>`;
+                        }).join('')}
+                        <div class="form-hint" style="margin:4px 0 0;">取消勾选＝该源频道不在本档出现（多源提供的同一频道，只要还有一个来源勾选就保留）。改动即时保存。</div>
+                    </div>` : '';
+                // 右侧竖排：当前档=重置，其它档=切换；非默认档另有删除
+                const left = isActive
+                    ? '<button class="btn btn-sm btn-warning" onclick="closeProfileModal(); resetMyPlaylist();" title="重置本档：重命名 / 隐藏 / 排序">🔄 重置</button>'
+                    : `<button class="btn btn-sm btn-primary" onclick="switchProfile('${p.id}')">切换</button>`;
+                const del = isDefault ? '' :
+                    `<button class="btn btn-sm btn-danger" onclick="deleteProfilePrompt('${p.id}')">删除</button>`;
+                return `<div class="profile-row${isActive ? ' active' : ''}">
+                    <div style="flex:1; min-width:0;">
+                        <div style="font-weight:600; display:flex; align-items:center; flex-wrap:wrap; gap:6px;">${escapeHtml(p.name)}${slugHtml}${renameBtn}${srcBtn}</div>
+                        <div class="profile-url"><code>${escapeHtml(url)}</code><button class="btn btn-sm" onclick="copyToClipboard('${url}', '播放地址')">复制</button></div>
+                        ${srcPanel}
+                    </div>
+                    <div class="profile-row-actions">${left}${del}</div>
+                </div>`;
+            }).join('');
+        }
+
+        // 切换配置档：复用现有三栏编辑器，只重载该档的配置与频道
+        async function switchProfile(id) {
+            activeProfile = id || 'default';
+            try { localStorage.setItem('iptv_active_profile', activeProfile); } catch (e) {}
+            selectedGroupIndex = 0;
+            isViewingDeleted = false;
+            lastEditedChannelId = null; // 切档清除编辑高亮，避免跨档误高亮同 id 频道 (issue #50)
+            await loadMyPlaylistConfig();
+            await loadMyPlaylist();
+            // 同步顶部主按钮档名 + 弹窗列表高亮（弹窗若开着）
+            renderProfileUI();
+        }
+
+        // 新建档 = 复制当前档（用户选定的语义）。打开两输入框弹窗：显示名 + 选填地址短名。
+        function createProfilePrompt() {
+            const hint = document.getElementById('createProfileHint');
+            if (hint) hint.textContent = `将复制当前档「${currentProfileName()}」的隐藏/分组/排序设置，作为新的一档。`;
+            document.getElementById('newProfileName').value = '';
+            document.getElementById('newProfileId').value = '';
+            document.getElementById('createProfileModal').style.display = 'block';
+            setTimeout(() => { const el = document.getElementById('newProfileName'); if (el) el.focus(); }, 50);
+        }
+
+        function closeCreateProfileModal() {
+            document.getElementById('createProfileModal').style.display = 'none';
+        }
+
+        async function confirmCreateProfile() {
+            const displayName = document.getElementById('newProfileName').value.trim();
+            if (!displayName) { showStatus('请填写显示名称', 'error'); return; }
+            if (displayName.length > 20) { showStatus('档名请控制在 20 个字符以内', 'error'); return; }
+            let id = document.getElementById('newProfileId').value.trim().toLowerCase();
+            if (id && !/^[a-z0-9_-]{1,64}$/.test(id)) { showStatus('地址短名只能用字母、数字、_ 或 -', 'error'); return; }
+            // 留空：自动生成短名（中文无法转拼音，用时间戳兜底）
+            if (!id) id = slugify(displayName) || ('p' + Date.now().toString(36));
+            if (!/^[a-z0-9_-]{1,64}$/.test(id)) { showStatus('地址短名只能用字母、数字、_ 或 -', 'error'); return; }
+            try {
+                const res = await fetch(API_PREFIX + '/api/' + 'my-playlist-profiles', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'create', id, name: displayName, from: activeProfile })
+                });
+                const result = await res.json();
+                if (result.success) {
+                    closeCreateProfileModal();
+                    showStatus(`已新建配置档：${displayName}（地址 ?profile=${id}）`, 'success');
+                    await loadProfiles();
+                    await switchProfile(id);
+                } else {
+                    showStatus(result.message || '新建失败', 'error');
+                }
+            } catch (error) {
+                showStatus('新建失败: ' + error.message, 'error');
+            }
+        }
+
+        async function renameProfilePrompt(id) {
+            id = id || activeProfile;
+            if (id === 'default') { showStatus('默认档不可改名', 'error'); return; }
+            const cur = (profileList.find(p => p.id === id) || {}).name || id;
+            const name = prompt('重命名配置档显示名：', cur);
+            if (name === null) return;
+            const displayName = name.trim();
+            if (!displayName) { showStatus('档名不能为空', 'error'); return; }
+            if (displayName.length > 20) { showStatus('档名请控制在 20 个字符以内', 'error'); return; }
+            try {
+                const res = await fetch(API_PREFIX + '/api/' + 'my-playlist-profiles', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'rename', id, name: displayName })
+                });
+                const result = await res.json();
+                if (result.success) { showStatus('已重命名', 'success'); await loadProfiles(); }
+                else showStatus(result.message || '重命名失败', 'error');
+            } catch (error) {
+                showStatus('重命名失败: ' + error.message, 'error');
+            }
+        }
+
+        async function deleteProfilePrompt(id) {
+            id = id || activeProfile;
+            if (id === 'default') { showStatus('默认档不可删除', 'error'); return; }
+            const nm = (profileList.find(p => p.id === id) || {}).name || id;
+            if (!confirm(`确定删除配置档「${nm}」？\n该档的隐藏/分组/排序设置会一并删除（不影响其它档和底层频道）。`)) return;
+            try {
+                const res = await fetch(API_PREFIX + '/api/' + 'my-playlist-profiles', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'delete', id })
+                });
+                const result = await res.json();
+                if (result.success) {
+                    showStatus('已删除配置档', 'success');
+                    // 删的是当前档 → 切回默认；删的是其它档 → 只刷新列表，当前编辑不变
+                    if (id === activeProfile) {
+                        await loadProfiles();
+                        await switchProfile('default');
+                    } else {
+                        await loadProfiles();
+                    }
+                } else showStatus(result.message || '删除失败', 'error');
+            } catch (error) {
+                showStatus('删除失败: ' + error.message, 'error');
+            }
+        }
 
         async function loadMyPlaylist(resetView = true) {
             try {
-                const response = await fetch('/api/my-playlist');
+                const response = await fetch(mpListUrl());
                 const result = await response.json();
                 console.log('我的播放列表API返回:', result);
                 
@@ -3144,7 +4462,7 @@ if(success){
 
         async function loadMyPlaylistConfig() {
             try {
-                const response = await fetch('/api/my-playlist-config');
+                const response = await fetch(mpConfigUrl());
                 const result = await response.json();
                 
                 if (result.success) {
@@ -3155,9 +4473,71 @@ if(success){
             }
         }
 
+        // 顶部内联订阅地址栏（issue #38）：当前档的 m3u 与 EPG 地址，一键复制，免点「编辑」。
+        function renderSubscribeBar() {
+            const bar = document.getElementById('subscribeBar');
+            if (!bar) return;
+            const base = window.location.origin + API_PREFIX;
+            const q = (activeProfile && activeProfile !== 'default') ? ('?profile=' + encodeURIComponent(activeProfile)) : '';
+            const m3u = base + '/interface.m3u' + q;
+            const epg = base + '/playback.xml';
+            let html =
+                `<span class="sb-label">📡 订阅地址</span>`
+                + `<code title="${escapeHtml(m3u)}">${escapeHtml(m3u)}</code>`
+                + `<button class="sb-copy" onclick="copyToClipboard('${m3u.replace(/'/g, "\\'")}', '订阅地址')">📋 复制</button>`
+                + `<span class="sb-sep">节目单 EPG</span>`
+                + `<code class="sb-epg" title="${escapeHtml(epg)}">${escapeHtml(epg)}</code>`
+                + `<button class="sb-copy sb-copy-muted" onclick="copyToClipboard('${epg.replace(/'/g, "\\'")}', 'EPG 地址')">📋 复制</button>`;
+            // 公网地址（系统配置里的「公网地址」mhost）：给别人用时复制公网版，免得复制出内网 IP 还要手动替换（issue #62）
+            const cfgHost = (systemConfig && (systemConfig.host || (systemConfig.data && systemConfig.data.host))) || '';
+            if (cfgHost) {
+                const pub = String(cfgHost).replace(/\/+$/, '') + API_PREFIX;
+                const pubM3u = pub + '/interface.m3u' + q;
+                const pubEpg = pub + '/playback.xml';
+                html += `<span class="sb-sep" title="来自「系统配置 → 公网地址」，分享给外网用户用这个">🌐 公网</span>`
+                    + `<button class="sb-copy" onclick="copyToClipboard('${pubM3u.replace(/'/g, "\\'")}', '公网订阅地址')" title="${escapeHtml(pubM3u)}">📋 复制公网订阅</button>`
+                    + `<button class="sb-copy sb-copy-muted" onclick="copyToClipboard('${pubEpg.replace(/'/g, "\\'")}', '公网 EPG 地址')" title="${escapeHtml(pubEpg)}">📋 公网 EPG</button>`;
+            }
+            bar.innerHTML = html;
+        }
+
+        // 频道列表「配对状态」双圆点（issue #62）：左=节目单(epgMatched) 右=台标。
+        // 台标点用真实图片加载结果判定（绿=能加载到 / 红=加载失败或无图），比单看 logoStatus 更准。
+        // 含义由上方常驻图例 + 每点 hover 文字说明；详情里仍有完整文字。
+        function channelStatusDots(channel) {
+            const base = window.location.origin + API_PREFIX;
+            const src = channel.logo ? String(channel.logo).replace(/\$\{replace\}/g, base) : '';
+            const epgOk = !!channel.epgMatched;
+            const epgTip = epgOk ? ('节目单：已匹配' + (channel.epgName ? ' · ' + channel.epgName : '')) : '节目单：未匹配';
+            const logoTip = '台标：' + ({ local: '本地上传', source: '源自带', auto: '公共库', none: '无' }[channel.logoStatus] || '未知');
+            let logoDot;
+            if (src) {
+                // 先按已匹配渲染绿点，再用隐藏 img 实测；加载失败则把点转红
+                logoDot = `<span class="dot ok" title="${escapeHtml(logoTip)}"></span>`
+                    + `<img src="${escapeHtml(src)}" alt="" loading="lazy" style="display:none" `
+                    + `onload="this.remove()" onerror="this.previousElementSibling.className='dot no';this.previousElementSibling.title='台标：未匹配';this.remove()">`;
+            } else {
+                logoDot = `<span class="dot no" title="台标：无"></span>`;
+            }
+            return `<span class="ch-status" aria-hidden="true">`
+                + `<span class="dot ${epgOk ? 'ok' : 'no'}" title="${escapeHtml(epgTip)}"></span>`
+                + logoDot
+                + `</span>`;
+        }
+
         function renderMyPlaylist() {
+            renderSubscribeBar();   // 默认档用户不触发 renderProfileUI，这里兜底渲染订阅地址栏（issue #38）
             renderGroupLists();
             renderGroupDetail();
+            updateMyChannelTotal();
+        }
+
+        // 更新"我的频道"标题后的总频道数
+        function updateMyChannelTotal() {
+            const el = document.getElementById('myChannelTotal');
+            if (!el) return;
+            const total = myPlaylistData.reduce((sum, g) => sum + (g.channels ? g.channels.length : 0), 0);
+            el.textContent = `（共 ${total} 个频道）`;
         }
 
         function renderGroupLists() {
@@ -3308,7 +4688,7 @@ if(success){
                 
                 // 根据批量模式显示不同的操作按钮
                 if (isBatchMode && group.isPartialDelete) {
-                    // 批量模式，仅对包含隐藏频道的分组显示
+                    // 部分隐藏分组 · 批量：恢复选中
                     const selectedCount = selectedChannels.size;
                     actions.innerHTML = `
                         <button class="btn btn-sm" onclick="selectAllChannels()">全选</button>
@@ -3316,15 +4696,33 @@ if(success){
                         <button class="btn btn-success btn-sm" onclick="restoreSelectedChannels()" ${selectedCount === 0 ? 'disabled' : ''}>恢复选中 (${selectedCount})</button>
                         <button class="btn btn-primary btn-sm" onclick="toggleBatchMode()">退出批量</button>
                     `;
+                } else if (isBatchMode) {
+                    // 完整隐藏分组 · 批量：把选中频道移到可见分组（从隐藏组里捞出来，无需先恢复整组）
+                    const selectedCount = selectedChannels.size;
+                    const moveOpts = myPlaylistData.map(g => {
+                        const v = String(g.name).replace(/"/g, '&quot;');
+                        return `<option value="${v}">${g.name}</option>`;
+                    }).join('');
+                    actions.innerHTML = `
+                        <button class="btn btn-sm" onclick="selectAllChannels()">全选</button>
+                        <button class="btn btn-sm" onclick="deselectAllChannels()">取消全选</button>
+                        <span style="margin-left: 6px; color: #555; font-size: 13px;">移动选中到</span>
+                        <select id="hiddenMoveSelect" style="padding: 3px 6px; border-radius: 4px; border: 1px solid #ddd; max-width: 160px;" ${selectedCount === 0 ? 'disabled' : ''}>${moveOpts}</select>
+                        <button class="btn btn-success btn-sm" onclick="moveSelectedFromHidden()" ${selectedCount === 0 ? 'disabled' : ''}>移动 (${selectedCount})</button>
+                        <button class="btn btn-primary btn-sm" onclick="toggleBatchMode()">退出批量</button>
+                    `;
                 } else if (group.isPartialDelete) {
-                    // 非批量模式，包含隐藏频道的分组
+                    // 部分隐藏分组 · 非批量
                     actions.innerHTML = `
                         <button class="btn btn-primary btn-sm" onclick="restoreAllChannelsInGroup()">恢复所有频道</button>
                         <button class="btn btn-primary btn-sm" onclick="toggleBatchMode()">批量管理</button>
                     `;
                 } else {
-                    // 被隐藏的完整分组
-                    actions.innerHTML = '<button class="btn btn-primary btn-sm" onclick="restoreGroup()">恢复分组</button>';
+                    // 完整隐藏分组 · 非批量：恢复整组，或进批量把个别频道移出去（不必先恢复整组）
+                    actions.innerHTML = `
+                        <button class="btn btn-primary btn-sm" onclick="restoreGroup()">恢复分组</button>
+                        <button class="btn btn-primary btn-sm" onclick="toggleBatchMode()">批量移动频道</button>
+                    `;
                 }
 
                 // 对于被隐藏的完整分组，不显示单个频道的恢复按钮
@@ -3332,12 +4730,13 @@ if(success){
                 container.innerHTML = `
                     <div class="my-playlist-channels">
                         ${group.channels.map(channel => `
-                            <div class="my-playlist-channel deleted ${isBatchMode ? 'batch-mode' : ''}" data-channel-id="${channel.id}">
-                                ${isBatchMode && group.isPartialDelete ? `
-                                    <input type="checkbox" class="my-playlist-channel-checkbox" 
-                                           onchange="toggleChannelSelection('${channel.id}')" 
+                            <div class="my-playlist-channel deleted ${isBatchMode ? 'batch-mode' : ''} ${channel.id === lastEditedChannelId ? 'recently-edited' : ''}" data-channel-id="${channel.id}">
+                                ${isBatchMode ? `
+                                    <input type="checkbox" class="my-playlist-channel-checkbox"
+                                           onchange="toggleChannelSelection('${channel.id}')"
                                            ${selectedChannels.has(channel.id) ? 'checked' : ''}>
                                 ` : ''}
+                                ${channelStatusDots(channel)}
                                 <div class="my-playlist-channel-name" title="点击查看详情：${channel.name}" onclick="showChannelDetail('${channel.id}', true)" style="cursor: pointer;">
                                     <span class="channel-detail-hint" aria-hidden="true">ⓘ</span>${channel.name}
                                 </div>
@@ -3364,15 +4763,23 @@ if(success){
                 title.textContent = `${group.name} (${group.channels.length}个频道)`;
                 const isUngrouped = group.name === '未分组';
                 const isCustomGroup = isCustomGroupName(group.name);
-                
+                const isNameSorted = !!(myPlaylistConfig.groupSortMode && myPlaylistConfig.groupSortMode[group.name] === 'name');
+
                 // 根据批量模式显示不同的操作按钮
                 if (isBatchMode) {
                     const selectedCount = selectedChannels.size;
+                    const batchMoveOpts = myPlaylistData.map(g => {
+                        const v = String(g.name).replace(/"/g, '&quot;');
+                        return `<option value="${v}">${g.name}</option>`;
+                    }).join('');
                     actions.innerHTML = `
                         <button class="btn btn-sm" onclick="selectAllChannels()">全选</button>
                         <button class="btn btn-sm" onclick="deselectAllChannels()">取消全选</button>
                         <button class="btn btn-warning btn-sm" onclick="hideSelectedChannels()" ${selectedCount === 0 ? 'disabled' : ''}>隐藏选中 (${selectedCount})</button>
                         <button class="btn btn-danger btn-sm" onclick="keepSelectedChannels()" ${selectedCount === 0 ? 'disabled' : ''}>只保留选中 (${selectedCount})</button>
+                        <span style="margin-left: 6px; color: #555; font-size: 13px;">移动选中到</span>
+                        <select id="batchMoveSelect" style="padding: 3px 6px; border-radius: 4px; border: 1px solid #ddd; max-width: 160px;" ${selectedCount === 0 ? 'disabled' : ''}>${batchMoveOpts}</select>
+                        <button class="btn btn-success btn-sm" onclick="moveSelectedChannels()" ${selectedCount === 0 ? 'disabled' : ''}>移动 (${selectedCount})</button>
                         <button class="btn btn-primary btn-sm" onclick="toggleBatchMode()">退出批量</button>
                     `;
                 } else {
@@ -3381,7 +4788,8 @@ if(success){
                         <button class="btn btn-sm" onclick="renameGroup(${groupIndex})" ${isUngrouped ? 'disabled' : ''}>重命名</button>
                         <button class="btn btn-sm" onclick="moveGroupUp(${groupIndex})" ${isUngrouped || groupIndex === 0 ? 'disabled' : ''}>↑ 上移</button>
                         <button class="btn btn-sm" onclick="moveGroupDown(${groupIndex})" ${isUngrouped || groupIndex === myPlaylistData.length - 1 ? 'disabled' : ''}>↓ 下移</button>
-                        <button class="btn btn-danger btn-sm" onclick="deleteGroup(${groupIndex})" ${isUngrouped || isCustomGroup ? 'disabled' : ''}>隐藏分组</button>
+                        <button class="btn btn-sm" onclick="toggleGroupSort()" title="点击切换：手动拖拽 ⇄ 按名称自动排序（中文按拼音、含数字按数值）">📑 排序：${isNameSorted ? '名称' : '手动'}</button>
+                        <button class="btn btn-danger btn-sm" onclick="deleteGroup(${groupIndex})" ${isUngrouped || isCustomGroup ? 'disabled' : ''} title="${isCustomGroup ? '自定义分组无需隐藏：「删除分组」即彻底移除；想隐藏其中的频道请用「批量管理 → 隐藏」' : isUngrouped ? '「未分组」不可隐藏' : '隐藏整个分组，可在右侧「已隐藏」里恢复'}">隐藏分组</button>
                         <button class="btn btn-primary btn-sm" onclick="toggleBatchMode()">批量管理</button>
                     `;
                 }
@@ -3392,12 +4800,14 @@ if(success){
                     ` : `
                         <div class="my-playlist-channels">
                             ${group.channels.map(channel => `
-                                <div class="my-playlist-channel ${isBatchMode ? 'batch-mode' : ''}" data-channel-id="${channel.id}">
+                                <div class="my-playlist-channel ${isBatchMode ? 'batch-mode' : ''} ${channel.id === lastEditedChannelId ? 'recently-edited' : ''}" data-channel-id="${channel.id}"
+                                     ${!isBatchMode && !isNameSorted ? `draggable="true" ondragstart="onChannelDragStart(event, '${channel.id}')" ondragend="onChannelDragEnd(event)" ondragover="onChannelDragOver(event)" ondrop="onChannelDrop(event, '${channel.id}')"` : ''}>
                                     ${isBatchMode ? `
-                                        <input type="checkbox" class="my-playlist-channel-checkbox" 
-                                               onchange="toggleChannelSelection('${channel.id}')" 
+                                        <input type="checkbox" class="my-playlist-channel-checkbox"
+                                               onchange="toggleChannelSelection('${channel.id}')"
                                                ${selectedChannels.has(channel.id) ? 'checked' : ''}>
-                                    ` : ''}
+                                    ` : (isNameSorted ? `<span class="channel-drag-handle" aria-hidden="true"></span>` : `<span class="channel-drag-handle" aria-hidden="true" title="拖拽排序">⠿</span>`)}
+                                    ${channelStatusDots(channel)}
                                     <div class="my-playlist-channel-name" title="点击查看详情：${channel.name}" onclick="showChannelDetail('${channel.id}', false)" style="cursor: pointer;">
                                         <span class="channel-detail-hint" aria-hidden="true">ⓘ</span>${channel.name}
                                     </div>
@@ -3412,6 +4822,24 @@ if(success){
                     `}
                 `;
             }
+
+            // 刚编辑过的频道：重渲染后滚动定位 + 启动临时高亮自动消退（issue #50）。
+            // 只在该频道确实渲染进了当前可见集合时才定位/计时；否则保留 lastEditedChannelId，
+            // 等用户切到包含它的分组时再命中高亮。
+            if (lastEditedChannelId) {
+                const el = container.querySelector(`[data-channel-id="${lastEditedChannelId}"]`);
+                if (el) {
+                    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    if (editHighlightTimer) clearTimeout(editHighlightTimer);
+                    const targetId = lastEditedChannelId;
+                    editHighlightTimer = setTimeout(() => {
+                        document.querySelectorAll('.my-playlist-channel.recently-edited')
+                            .forEach(n => n.classList.remove('recently-edited'));
+                        if (lastEditedChannelId === targetId) lastEditedChannelId = null;
+                        editHighlightTimer = null;
+                    }, 4000);
+                }
+            }
         }
 
         async function moveGroupUp(index) {
@@ -3421,11 +4849,12 @@ if(success){
             }
             if (index === 0) return;
             [myPlaylistData[index], myPlaylistData[index - 1]] = [myPlaylistData[index - 1], myPlaylistData[index]];
+            selectedGroupIndex = index - 1; // 选中跟随被移动的分组，便于连续移动
             updateGroupOrder();
             
             // 自动保存配置
             try {
-                const response = await fetch('/api/my-playlist-config', {
+                const response = await fetch(mpConfigUrl(), {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(myPlaylistConfig)
@@ -3449,11 +4878,12 @@ if(success){
             }
             if (index === myPlaylistData.length - 1) return;
             [myPlaylistData[index], myPlaylistData[index + 1]] = [myPlaylistData[index + 1], myPlaylistData[index]];
+            selectedGroupIndex = index + 1; // 选中跟随被移动的分组，便于连续移动
             updateGroupOrder();
             
             // 自动保存配置
             try {
-                const response = await fetch('/api/my-playlist-config', {
+                const response = await fetch(mpConfigUrl(), {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(myPlaylistConfig)
@@ -3504,23 +4934,17 @@ if(success){
             if (!trimmedName) return false;
             if (trimmedName === '未分组') return true;
 
-            const { excludeOriginalName = null, excludeCustomName = null } = options;
+            const { excludeDisplayName = null } = options;
 
-            if (getCustomGroupNames().some(groupName => groupName !== excludeCustomName && groupName === trimmedName)) {
-                return true;
-            }
-
-            return myPlaylistOriginalData.some(group => {
-                if (group.name === excludeOriginalName) {
-                    return false;
-                }
-                const effectiveName = myPlaylistConfig.groupRenameMap?.[group.name] || group.name;
-                return effectiveName === trimmedName;
-            });
+            // 只按「当前可见分组」(myPlaylistData) 判重：被移空 / 隐藏 / 删除而在列表里看不到的分组，
+            // 不再占用其分组名，避免「提示分组已存在，但左侧列表里根本找不到它」的矛盾（issue #35）。
+            // myPlaylistData 已含自定义空分组，故无需再单独对照 customGroups。
+            // 仍会拦截改名 / 新建到一个当前可见的同名分组；excludeDisplayName 用于排除正在改名的自身。
+            return myPlaylistData.some(group => group.name !== excludeDisplayName && group.name === trimmedName);
         }
 
         async function fetchExternalConfigSnapshot() {
-            const response = await fetch('/api/external-sources');
+            const response = await fetch(API_PREFIX + '/api/external-sources');
             const payload = await response.json();
             if (!response.ok || payload.success === false) {
                 throw new Error(payload.message || '获取自定义源配置失败');
@@ -3529,7 +4953,7 @@ if(success){
         }
 
         async function saveExternalConfigSnapshot(config) {
-            const response = await fetch('/api/external-sources', {
+            const response = await fetch(API_PREFIX + '/api/external-sources', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ action: 'save', sources: config })
@@ -3539,7 +4963,7 @@ if(success){
                 throw new Error(result.message || '保存自定义源配置失败');
             }
             externalConfig = await fetchExternalConfigSnapshot();
-            const channelsResponse = await fetch('/api/channels');
+            const channelsResponse = await fetch(API_PREFIX + '/api/channels');
             if (channelsResponse.ok) {
                 allChannels = await channelsResponse.json();
             }
@@ -3603,7 +5027,7 @@ if(success){
             }
 
             try {
-                const response = await fetch('/api/my-playlist-config', {
+                const response = await fetch(mpConfigUrl(), {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(myPlaylistConfig)
@@ -3648,10 +5072,7 @@ if(success){
 
             const trimmed = newName.trim();
 
-            if (groupNameExists(trimmed, {
-                excludeOriginalName: isCustomGroup ? null : originalName,
-                excludeCustomName: isCustomGroup ? currentName : null
-            })) {
+            if (groupNameExists(trimmed, { excludeDisplayName: currentName })) {
                 showStatus(`分组 "${trimmed}" 已存在`, 'error');
                 return;
             }
@@ -3684,6 +5105,18 @@ if(success){
                 const idx = myPlaylistConfig.groupOrder.indexOf(currentName);
                 if (idx !== -1) {
                     myPlaylistConfig.groupOrder[idx] = trimmed;
+                }
+            }
+
+            // 同步「组内排序方式 groupSortMode」「组内频道顺序 channelOrder」中以显示名为 key 的项，改名后不丢
+            if (trimmed !== currentName) {
+                if (myPlaylistConfig.groupSortMode && currentName in myPlaylistConfig.groupSortMode) {
+                    myPlaylistConfig.groupSortMode[trimmed] = myPlaylistConfig.groupSortMode[currentName];
+                    delete myPlaylistConfig.groupSortMode[currentName];
+                }
+                if (myPlaylistConfig.channelOrder && currentName in myPlaylistConfig.channelOrder) {
+                    myPlaylistConfig.channelOrder[trimmed] = myPlaylistConfig.channelOrder[currentName];
+                    delete myPlaylistConfig.channelOrder[currentName];
                 }
             }
 
@@ -3799,7 +5232,7 @@ if(success){
             
             // 自动保存配置并重新加载数据
             try {
-                const response = await fetch('/api/my-playlist-config', {
+                const response = await fetch(mpConfigUrl(), {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(myPlaylistConfig)
@@ -3816,9 +5249,17 @@ if(success){
             }
         }
 
+        // 隐藏/归类统一用频道「真实原始分组」(channel.originalGroup) 算 key：移动过的频道其显示分组 ≠ 原始分组，
+        // 而服务端 applyConfig 按 `${originalGroup}::${id}` 判定隐藏；用显示分组会写错 key，导致隐藏对移动过的频道不生效
+        // （issue #42）。找不到频道对象时退回按显示分组推算（兼容旧行为）。
+        function channelOriginalGroupName(channel, displayGroupName) {
+            return channel?.originalGroup || getOriginalGroupName(displayGroupName);
+        }
+
         async function hideChannel(channelId) {
             const group = myPlaylistData[selectedGroupIndex];
-            const originalGroupName = getOriginalGroupName(group.name);
+            const channel = group?.channels.find(c => c.id === channelId);
+            const originalGroupName = channelOriginalGroupName(channel, group.name);
             const hiddenKey = `${originalGroupName}::${channelId}`;
             if (!myPlaylistConfig.hiddenChannels.includes(hiddenKey)) {
                 myPlaylistConfig.hiddenChannels.push(hiddenKey);
@@ -3826,7 +5267,7 @@ if(success){
             
             // 自动保存配置并重新加载数据
             try {
-                const response = await fetch('/api/my-playlist-config', {
+                const response = await fetch(mpConfigUrl(), {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(myPlaylistConfig)
@@ -3869,7 +5310,7 @@ if(success){
 
             // 先保存配置到服务器
             try {
-                const response = await fetch('/api/my-playlist-config', {
+                const response = await fetch(mpConfigUrl(), {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(myPlaylistConfig)
@@ -3902,7 +5343,7 @@ if(success){
 
             // 先保存配置到服务器
             try {
-                const response = await fetch('/api/my-playlist-config', {
+                const response = await fetch(mpConfigUrl(), {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(myPlaylistConfig)
@@ -3956,7 +5397,7 @@ if(success){
 
             // 先保存配置到服务器
             try {
-                const response = await fetch('/api/my-playlist-config', {
+                const response = await fetch(mpConfigUrl(), {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(myPlaylistConfig)
@@ -3965,7 +5406,7 @@ if(success){
                 if (result.success) {
                     // 重新加载数据但保持当前视图
                     await loadMyPlaylist(false);
-                    showStatus(`已恢复 ${channelIds.length} 个频道`, 'success');
+                    showStatus(`已恢复 ${hiddenKeys.length} 个频道`, 'success');
                 } else {
                     showStatus('恢复失败', 'error');
                 }
@@ -3979,7 +5420,7 @@ if(success){
 
         async function saveMyPlaylist() {
             try {
-                const response = await fetch('/api/my-playlist-config', {
+                const response = await fetch(mpConfigUrl(), {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(myPlaylistConfig)
@@ -4001,7 +5442,28 @@ if(success){
             }
         }
 
+        // 切换当前分组的「组内排序方式」：按名称自动 ↔ 手动拖拽
+        async function toggleGroupSort() {
+            if (isViewingDeleted || myPlaylistData.length === 0 || selectedGroupIndex >= myPlaylistData.length) return;
+            const group = myPlaylistData[selectedGroupIndex];
+            if (!myPlaylistConfig.groupSortMode) myPlaylistConfig.groupSortMode = {};
+            if (myPlaylistConfig.groupSortMode[group.name] === 'name') {
+                delete myPlaylistConfig.groupSortMode[group.name];   // 改回手动
+            } else {
+                myPlaylistConfig.groupSortMode[group.name] = 'name'; // 按名称自动排序
+                // 切到自动排序时清掉该组残留的手动顺序，避免歧义
+                if (myPlaylistConfig.channelOrder) delete myPlaylistConfig.channelOrder[group.name];
+            }
+            await saveMyPlaylist();
+            await loadMyPlaylist(false);
+        }
+
         function resetMyPlaylist() {
+            // 标题/说明带上当前档名，明确「只重置当前档」
+            const t = document.getElementById('resetModalTitle');
+            if (t) t.textContent = `🔄 重置「${currentProfileName()}」配置`;
+            const h = document.getElementById('resetModalHint');
+            if (h) h.textContent = '选择要重置的配置项，未选中的保留不变。仅重置当前档，其它档不受影响。';
             document.getElementById('resetRename').checked = true;
             document.getElementById('resetHidden').checked = true;
             document.getElementById('resetOrder').checked = true;
@@ -4025,6 +5487,7 @@ if(success){
             const parts = [];
             if (resetRename) {
                 myPlaylistConfig.groupRenameMap = {};
+                myPlaylistConfig.channelRenameMap = {};
                 parts.push('重命名');
             }
             if (resetHidden) {
@@ -4109,8 +5572,9 @@ if(success){
 
             // 将选中的频道添加到hiddenChannels（使用 分组名::频道ID 格式）
             const group = myPlaylistData[selectedGroupIndex];
-            const originalGroupName = getOriginalGroupName(group.name);
             selectedChannels.forEach(channelId => {
+                const channel = group?.channels.find(c => c.id === channelId);
+                const originalGroupName = channelOriginalGroupName(channel, group.name);
                 const hiddenKey = `${originalGroupName}::${channelId}`;
                 if (!myPlaylistConfig.hiddenChannels.includes(hiddenKey)) {
                     myPlaylistConfig.hiddenChannels.push(hiddenKey);
@@ -4118,7 +5582,7 @@ if(success){
             });
 
             try {
-                const response = await fetch('/api/my-playlist-config', {
+                const response = await fetch(mpConfigUrl(), {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(myPlaylistConfig)
@@ -4138,6 +5602,52 @@ if(success){
             }
         }
 
+        // 批量把选中的频道移动到所选分组
+        async function moveSelectedChannels() {
+            if (selectedChannels.size === 0) return;
+            if (isViewingDeleted || myPlaylistData.length === 0 || selectedGroupIndex >= myPlaylistData.length) return;
+            const sel = document.getElementById('batchMoveSelect');
+            if (!sel) return;
+            const target = sel.value;
+            const group = myPlaylistData[selectedGroupIndex];
+
+            if (!myPlaylistConfig.channelGroupMap) myPlaylistConfig.channelGroupMap = {};
+            selectedChannels.forEach(channelId => {
+                // 用频道真实原始分组算 moveKey：再次移动一个「已移动过」的频道时，显示分组 ≠ 原始分组，
+                // 必须按原始分组改写同一条 channelGroupMap 记录，否则会留下孤儿键、移动/移回失效（issue #42）。
+                const channel = group?.channels.find(c => c.id === channelId);
+                const chOriginal = channel?.originalGroup || getOriginalGroupName(group.name);
+                const chRenamedOriginal = (myPlaylistConfig.groupRenameMap && myPlaylistConfig.groupRenameMap[chOriginal]) || chOriginal;
+                const moveKey = `${chOriginal}::${channelId}`;
+                if (target === chRenamedOriginal || target === chOriginal) {
+                    // 移回原分组 = 取消归类
+                    delete myPlaylistConfig.channelGroupMap[moveKey];
+                } else {
+                    myPlaylistConfig.channelGroupMap[moveKey] = target;
+                }
+            });
+
+            try {
+                const n = selectedChannels.size;
+                const response = await fetch(mpConfigUrl(), {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(myPlaylistConfig)
+                });
+                const result = await response.json();
+                if (result.success) {
+                    selectedChannels.clear();
+                    isBatchMode = false;
+                    await loadMyPlaylist(false);
+                    showStatus(`已移动 ${n} 个频道到「${target}」`, 'success');
+                } else {
+                    showStatus('移动失败', 'error');
+                }
+            } catch (error) {
+                showStatus('移动失败: ' + error.message, 'error');
+            }
+        }
+
         async function keepSelectedChannels() {
             if (selectedChannels.size === 0) return;
             if (isViewingDeleted || myPlaylistData.length === 0 || selectedGroupIndex >= myPlaylistData.length) return;
@@ -4151,10 +5661,10 @@ if(success){
             );
             if (!confirmed) return;
 
-            // 隐藏未选中的频道（使用 分组名::频道ID 格式）
-            const originalGroupName = getOriginalGroupName(group.name);
+            // 隐藏未选中的频道（按频道真实原始分组算 key，移动过的频道才能正确隐藏，见 issue #42）
             group.channels.forEach(channel => {
                 if (!selectedChannels.has(channel.id)) {
+                    const originalGroupName = channelOriginalGroupName(channel, group.name);
                     const hiddenKey = `${originalGroupName}::${channel.id}`;
                     if (!myPlaylistConfig.hiddenChannels.includes(hiddenKey)) {
                         myPlaylistConfig.hiddenChannels.push(hiddenKey);
@@ -4163,7 +5673,7 @@ if(success){
             });
 
             try {
-                const response = await fetch('/api/my-playlist-config', {
+                const response = await fetch(mpConfigUrl(), {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(myPlaylistConfig)
@@ -4220,7 +5730,7 @@ if(success){
             });
 
             try {
-                const response = await fetch('/api/my-playlist-config', {
+                const response = await fetch(mpConfigUrl(), {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(myPlaylistConfig)
@@ -4237,6 +5747,50 @@ if(success){
             } catch (error) {
                 console.error('恢复频道失败:', error);
                 showStatus('恢复失败: ' + error.message, 'error');
+            }
+        }
+
+        // 把「完整隐藏分组」里选中的频道移到某个可见分组（channelGroupMap 的 movedTo 会让其脱离隐藏组、出现在目标组）
+        // 无需先恢复整组——选 1 个=单独移、选多个=批量移
+        async function moveSelectedFromHidden() {
+            if (selectedChannels.size === 0 || !isViewingDeleted) return;
+            const sel = document.getElementById('hiddenMoveSelect');
+            if (!sel || !sel.value) return;
+            const target = sel.value;
+            // 定位当前查看的隐藏分组（与 restoreSelectedChannels 同逻辑）
+            const isGroupDeletedCheck = (groupName) => myPlaylistConfig.deletedGroups.some(p =>
+                p.endsWith('*') ? groupName.startsWith(p.slice(0, -1)) : p === groupName);
+            const deletedGroupsList = myPlaylistOriginalData.filter(g => isGroupDeletedCheck(g.name));
+            const hiddenGroupsList = myPlaylistOriginalData.map(g => {
+                const hc = g.channels.filter(ch =>
+                    myPlaylistConfig.hiddenChannels.includes(`${g.name}::${ch.id}`) && !isGroupDeletedCheck(g.name));
+                return hc.length > 0 ? { ...g, channels: hc, isPartialDelete: true } : null;
+            }).filter(Boolean);
+            const currentGroup = [...deletedGroupsList, ...hiddenGroupsList][selectedGroupIndex];
+            if (!currentGroup) return;
+
+            if (!myPlaylistConfig.channelGroupMap) myPlaylistConfig.channelGroupMap = {};
+            const n = selectedChannels.size;
+            selectedChannels.forEach(channelId => {
+                myPlaylistConfig.channelGroupMap[`${currentGroup.name}::${channelId}`] = target;
+            });
+            try {
+                const response = await fetch(mpConfigUrl(), {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(myPlaylistConfig)
+                });
+                const result = await response.json();
+                if (result.success) {
+                    selectedChannels.clear();
+                    isBatchMode = false;
+                    await loadMyPlaylist(false);
+                    showStatus(`已移动 ${n} 个频道到「${target}」`, 'success');
+                } else {
+                    showStatus('移动失败', 'error');
+                }
+            } catch (error) {
+                showStatus('移动失败: ' + error.message, 'error');
             }
         }
 
@@ -4302,17 +5856,35 @@ if(success){
                         <strong style="color: #667eea;">频道ID：</strong>
                         <span style="font-family: monospace; background: #f5f5f5; padding: 2px 6px; border-radius: 3px;">${channel.id || '未知'}</span>
                     </div>
+                    <div style="margin-bottom: 15px;">
+                        <strong style="color: #667eea;">配对状态：</strong>
+                        ${channel.epgMatched
+                            ? `<span style="display:inline-flex;align-items:center;gap:4px;background:#f6ffed;color:#52a30d;border:1px solid #d6f0bd;border-radius:4px;padding:2px 9px;font-size:12px;margin-right:6px;">📅 节目单已匹配${channel.epgName ? ' · ' + channel.epgName : ''}</span>`
+                            : `<span style="display:inline-flex;align-items:center;gap:4px;background:#fafafa;color:#999;border:1px solid #eee;border-radius:4px;padding:2px 9px;font-size:12px;margin-right:6px;">📅 未匹配节目单</span>`}
+                        <span style="display:inline-flex;align-items:center;gap:4px;background:#e6f2ff;color:#1166c7;border:1px solid #cfe5ff;border-radius:4px;padding:2px 9px;font-size:12px;">🖼️ 台标 · ${({ local: '本地上传', source: '源自带', auto: '公共库', none: '无' })[channel.logoStatus] || '—'}</span>
+                        ${(channel.epgName && channel.epgName !== channel.name)
+                            ? `<div style="color:#999;font-size:12px;margin-top:6px;line-height:1.6;">显示名「${channel.name}」已自动归一到「${channel.epgName}」匹配节目单，显示名本身不变。</div>`
+                            : ''}
+                        ${!channel.epgMatched
+                            ? `<div style="margin-top:8px;padding:8px 10px;background:#fffbe6;border:1px solid #ffe58f;border-radius:4px;">
+                                <div style="font-size:12px;color:#8a5a00;margin-bottom:6px;">节目单没匹配上？给它设个<strong>别名</strong>归一到正确的频道名（保存后刷新播放列表生效，不用去配置页）：</div>
+                                <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;">
+                                    <span style="font-size:12px;color:#888;flex:0 0 auto;">规范名</span>
+                                    <input id="detailAliasCanonical" type="text" placeholder="统一后的频道名，如 CCTV5体育" style="flex:1;min-width:150px;padding:4px 8px;border:1px solid #ddd;border-radius:4px;font-size:13px;">
+                                    <button class="btn btn-sm btn-primary" onclick="setAliasFromDetail()">保存别名</button>
+                                </div>
+                                <div style="font-size:11px;color:#aaa;margin-top:5px;">别名 = 本频道名「${channel.tvgName || channel.name}」，追加到该规范名下（不覆盖已有别名）</div>
+                            </div>`
+                            : ''}
+                    </div>
             `;
 
-            // 显示URL
+            // 播放地址 + 播放器预览：置于基础信息之后、管理操作之前，避免被下方功能挤到底部
             if (channel.url) {
-                // 获取当前页面的base URL（去掉/admin后的部分）
-                const baseUrl = window.location.origin + window.location.pathname.replace(/\/admin$/, '');
-                // 替换URL中的${replace}占位符为实际的base URL
+                // 获取当前页面的base URL（去掉 URL 最后一段，即管理页路径段），并替换 ${replace} 占位符
+                const baseUrl = window.location.origin + window.location.pathname.replace(/\/[^/]+$/, '');
                 const actualUrl = channel.url.replace(/\$\{replace\}/g, baseUrl);
-                // 构建播放器URL
-                const playerUrl = baseUrl + '/player?url=' + encodeURIComponent(actualUrl) + '&name=' + encodeURIComponent(channel.name || '未知频道');
-                
+
                 detailHTML += `
                     <div style="margin-bottom: 15px;">
                         <strong style="color: #667eea;">播放地址：</strong>
@@ -4350,6 +5922,73 @@ if(success){
                     </div>
                 `;
             }
+
+            // 单频道归类：移动到其它分组（隐藏/已删除视图下不提供）
+            if (!isDeleted) {
+                const moveKey = `${groupName}::${channelId}`;
+                const renamedOriginal = (myPlaylistConfig.groupRenameMap && myPlaylistConfig.groupRenameMap[groupName]) || groupName;
+                const currentTarget = (myPlaylistConfig.channelGroupMap && myPlaylistConfig.channelGroupMap[moveKey]) || renamedOriginal;
+                const moveNames = myPlaylistData.map(g => g.name);
+                if (!moveNames.includes(currentTarget)) moveNames.unshift(currentTarget);
+                const moveOpts = moveNames.map(n => {
+                    const v = String(n).replace(/"/g, '&quot;');
+                    return `<option value="${v}"${n === currentTarget ? ' selected' : ''}>${n}</option>`;
+                }).join('');
+                detailHTML += `
+                    <div style="margin-bottom: 15px;">
+                        <strong style="color: #667eea;">移动到分组：</strong>
+                        <select id="channelMoveSelect" style="padding: 4px 8px; border-radius: 4px; border: 1px solid #ddd; max-width: 200px;">${moveOpts}</select>
+                        <button class="btn btn-sm btn-primary" style="margin-left: 8px;" onclick="moveCurrentChannel()">移动</button>
+                        <div style="margin-top: 6px; color: #999; font-size: 12px;">将此频道单独归入所选分组（选回原分组即取消归类）</div>
+                    </div>
+                `;
+
+                // 单频道重命名
+                const renameKey = `${groupName}::${channelId}`;
+                const currentName = (myPlaylistConfig.channelRenameMap && myPlaylistConfig.channelRenameMap[renameKey]) || channel.name || '';
+                detailHTML += `
+                    <div style="margin-bottom: 15px;">
+                        <strong style="color: #667eea;">重命名：</strong>
+                        <input id="channelRenameInput" type="text" value="${String(currentName).replace(/"/g, '&quot;')}" style="padding: 4px 8px; border-radius: 4px; border: 1px solid #ddd; max-width: 200px;">
+                        <button class="btn btn-sm btn-primary" style="margin-left: 8px;" onclick="renameCurrentChannel()">保存</button>
+                        <div style="margin-top: 6px; color: #999; font-size: 12px;">修改此频道的显示名（清空或改回原名即恢复；不影响 EPG 匹配）</div>
+                    </div>
+                `;
+
+                // 复制到分组（issue #37）：仅对地址固定的非咪咕频道提供
+                if (channel.url && !String(channel.url).includes('${replace}')) {
+                    const _copyGroups = myPlaylistData.map(g => g.name).filter(n => n !== groupName);
+                    if (_copyGroups.length) {
+                        const _copyOpts = _copyGroups.map(n => `<option value="${String(n).replace(/"/g, '&quot;')}">${n}</option>`).join('');
+                        detailHTML += `
+                            <div style="margin-bottom: 15px;">
+                                <strong style="color: #667eea;">复制到分组：</strong>
+                                <select id="channelCopySelect" multiple size="4" style="min-width:200px;padding:4px;border-radius:4px;border:1px solid #ddd;vertical-align:top;">${_copyOpts}</select>
+                                <button class="btn btn-sm btn-primary" style="margin-left:8px;vertical-align:top;" onclick="copyCurrentChannelToGroups()">复制</button>
+                                <div style="margin-top:6px;color:#999;font-size:12px;">把本频道（同名同地址）复制一份到所选分组（按住 Ctrl/Cmd 可多选）。复制出的是<b>固定地址的独立频道</b>，适合地址不变的频道；可在「外部源管理」里删除。</div>
+                            </div>
+                        `;
+                    }
+                }
+
+                // 台标：预览 + 上传 / 移除（issue #40）
+                const _logoBaseUrl = window.location.origin + window.location.pathname.replace(/\/[^/]+$/, '');
+                const _logoSrc = channel.logo ? String(channel.logo).replace(/\$\{replace\}/g, _logoBaseUrl) : '';
+                detailHTML += `
+                    <div style="margin-bottom: 15px;">
+                        <strong style="color: #667eea;">台标：</strong>
+                        <div style="display:flex; align-items:center; gap:10px; margin-top:6px;">
+                            <img id="channelLogoPreview" src="${_logoSrc}" alt="" style="width:120px;height:120px;object-fit:contain;border:1px solid #eee;border-radius:8px;background:#fafafa;padding:6px;${_logoSrc ? '' : 'display:none;'}" onerror="this.style.display='none';var e=document.getElementById('channelLogoEmpty');if(e)e.style.display='';">
+                            <span id="channelLogoEmpty" style="color:#999;font-size:12px;${_logoSrc ? 'display:none;' : ''}">暂无台标</span>
+                            <input type="file" accept="image/png,image/jpeg,image/webp" onchange="uploadCurrentChannelLogo(this)">
+                            <button class="btn btn-sm btn-danger" onclick="removeCurrentChannelLogo()">移除</button>
+                        </div>
+                        <div style="margin-top:6px;color:#999;font-size:12px;">上传图片保存为 data/logos/「${String(channel.name || '').replace(/&/g, '&amp;').replace(/</g, '&lt;')}」，优先级最高、保存即生效（支持 png/jpg/webp，&lt;3MB）</div>
+                    </div>
+                `;
+            }
+
+            // 播放地址区块已上移到「频道ID」之后（管理操作之前）
 
             // 显示其他可用信息
             if (channel.tvgId) {
@@ -4408,6 +6047,232 @@ if(success){
         function closeChannelDetail() {
             document.getElementById('channelDetailModal').style.display = 'none';
             currentChannelDetail = null;
+        }
+
+        // 上传当前频道台标（issue #40）：存 data/logos/<频道名>.<ext>，最高优先级、保存即生效
+        async function uploadCurrentChannelLogo(inputEl) {
+            const file = inputEl.files && inputEl.files[0];
+            if (!file || !currentChannelDetail) return;
+            if (file.size > 3 * 1024 * 1024) { showStatus('图片过大（请小于 3MB）', 'error'); inputEl.value = ''; return; }
+            const name = currentChannelDetail.name;
+            const ext = (file.name.split('.').pop() || 'png').toLowerCase();
+            try {
+                showStatus('正在上传台标...', 'info');
+                const base64 = arrayBufferToBase64(await file.arrayBuffer());
+                const resp = await fetch(API_PREFIX + '/api/upload-logo', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, imageBase64: base64, ext })
+                });
+                const result = await resp.json();
+                if (result.success === false) { showStatus('上传失败: ' + (result.message || ''), 'error'); return; }
+                const baseUrl = window.location.origin + window.location.pathname.replace(/\/[^/]+$/, '');
+                const img = document.getElementById('channelLogoPreview');
+                const empty = document.getElementById('channelLogoEmpty');
+                if (img) { img.src = baseUrl + result.url + '?t=' + Date.now(); img.style.display = ''; }
+                if (empty) empty.style.display = 'none';
+                showStatus('台标已上传并生效', 'success');
+                const channelsRes = await fetch(API_PREFIX + '/api/channels');
+                if (channelsRes.ok) { allChannels = await channelsRes.json(); }
+            } catch (e) { showStatus('上传失败: ' + e.message, 'error'); }
+        }
+
+        // 移除当前频道的本地上传台标
+        async function removeCurrentChannelLogo() {
+            if (!currentChannelDetail) return;
+            try {
+                const resp = await fetch(API_PREFIX + '/api/remove-logo', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name: currentChannelDetail.name })
+                });
+                const result = await resp.json();
+                if (result.success === false) { showStatus('移除失败: ' + (result.message || ''), 'error'); return; }
+                const img = document.getElementById('channelLogoPreview');
+                const empty = document.getElementById('channelLogoEmpty');
+                if (img) { img.src = ''; img.style.display = 'none'; }
+                if (empty) empty.style.display = '';
+                showStatus(result.removed > 0 ? '已移除上传的台标' : '该频道没有本地上传的台标', result.removed > 0 ? 'success' : 'info');
+                const channelsRes = await fetch(API_PREFIX + '/api/channels');
+                if (channelsRes.ok) { allChannels = await channelsRes.json(); }
+            } catch (e) { showStatus('移除失败: ' + e.message, 'error'); }
+        }
+
+        // 复制当前频道到所选分组（issue #37）：后端为每个目标分组建一条独立的直连副本
+        async function copyCurrentChannelToGroups() {
+            if (!currentChannelDetail) return;
+            const sel = document.getElementById('channelCopySelect');
+            if (!sel) return;
+            const groups = Array.from(sel.selectedOptions).map(o => o.value);
+            if (!groups.length) { showStatus('请先选择目标分组', 'error'); return; }
+            try {
+                showStatus('正在复制...', 'info');
+                const resp = await fetch(API_PREFIX + '/api/copy-channel', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name: currentChannelDetail.name, url: currentChannelDetail.url, logo: currentChannelDetail.logo || '', groups })
+                });
+                const result = await resp.json();
+                if (result.success === false) { showStatus('复制失败: ' + (result.message || ''), 'error'); return; }
+                showStatus(`已复制到 ${result.added} 个分组`, 'success');
+                closeChannelDetail();
+                const externalRes = await fetch(API_PREFIX + '/api/external-sources');
+                if (externalRes.ok) { externalConfig = normalizeExternalConfig(await externalRes.json()); }
+                await loadMyPlaylist(false);
+                const channelsRes = await fetch(API_PREFIX + '/api/channels');
+                if (channelsRes.ok) { allChannels = await channelsRes.json(); }
+            } catch (e) { showStatus('复制失败: ' + e.message, 'error'); }
+        }
+
+        // 将当前详情中的频道移动到所选分组（单频道归类）
+        async function moveCurrentChannel() {
+            if (!currentChannelDetail) return;
+            const sel = document.getElementById('channelMoveSelect');
+            if (!sel) return;
+            const target = sel.value;
+            const groupName = currentChannelDetail.groupName; // 频道原始分组
+            const id = currentChannelDetail.id;
+            const moveKey = `${groupName}::${id}`;
+            const renamedOriginal = (myPlaylistConfig.groupRenameMap && myPlaylistConfig.groupRenameMap[groupName]) || groupName;
+
+            if (!myPlaylistConfig.channelGroupMap) myPlaylistConfig.channelGroupMap = {};
+            if (target === renamedOriginal || target === groupName) {
+                // 选回原分组 = 取消归类
+                delete myPlaylistConfig.channelGroupMap[moveKey];
+            } else {
+                myPlaylistConfig.channelGroupMap[moveKey] = target;
+            }
+
+            try {
+                const response = await fetch(mpConfigUrl(), {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(myPlaylistConfig)
+                });
+                const result = await response.json();
+                if (result.success) {
+                    lastEditedChannelId = id; // 记录被编辑频道 (issue #50)，须在 closeChannelDetail 前取值
+                    closeChannelDetail();
+                    await loadMyPlaylist(false);
+                    // 移动后频道归到目标分组，而 loadMyPlaylist(false) 不会切组，需主动切到目标分组否则高亮不在可见集 (issue #50)
+                    const ti = myPlaylistData.findIndex(g => g.name === target);
+                    if (ti !== -1) { isViewingDeleted = false; selectedGroupIndex = ti; renderMyPlaylist(); }
+                    showStatus(`已移动到「${target}」`, 'success');
+                } else {
+                    showStatus('移动失败: ' + (result.message || ''), 'error');
+                }
+            } catch (error) {
+                showStatus('移动失败: ' + error.message, 'error');
+            }
+        }
+
+        // 重命名当前详情中的频道（单频道重命名）
+        async function renameCurrentChannel() {
+            if (!currentChannelDetail) return;
+            const inp = document.getElementById('channelRenameInput');
+            if (!inp) return;
+            const newName = inp.value.trim();
+            const groupName = currentChannelDetail.groupName; // 频道原始分组
+            const id = currentChannelDetail.id;
+            const renameKey = `${groupName}::${id}`;
+            const originalName = currentChannelDetail.name; // 原始名（来自未改写的原始数据）
+
+            if (!myPlaylistConfig.channelRenameMap) myPlaylistConfig.channelRenameMap = {};
+            if (!newName || newName === originalName) {
+                // 清空或改回原名 = 恢复
+                delete myPlaylistConfig.channelRenameMap[renameKey];
+            } else {
+                myPlaylistConfig.channelRenameMap[renameKey] = newName;
+            }
+
+            try {
+                const response = await fetch(mpConfigUrl(), {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(myPlaylistConfig)
+                });
+                const result = await response.json();
+                if (result.success) {
+                    lastEditedChannelId = id; // 记录被编辑频道，重渲染后高亮定位 (issue #50)。须在 closeChannelDetail 清空 currentChannelDetail 前取值
+                    closeChannelDetail();
+                    await loadMyPlaylist(false);
+                    showStatus(newName && newName !== originalName ? `已重命名为「${newName}」` : '已恢复原名', 'success');
+                } else {
+                    showStatus('重命名失败: ' + (result.message || ''), 'error');
+                }
+            } catch (error) {
+                showStatus('重命名失败: ' + error.message, 'error');
+            }
+        }
+
+        // ===== 频道拖拽排序 =====
+        function onChannelDragStart(event, channelId) {
+            draggedChannelId = channelId;
+            event.dataTransfer.effectAllowed = 'move';
+            try { event.dataTransfer.setData('text/plain', channelId); } catch (_) {}
+            event.currentTarget.classList.add('dragging');
+        }
+
+        function onChannelDragEnd(event) {
+            event.currentTarget.classList.remove('dragging');
+            draggedChannelId = null;
+            clearDropIndicators();
+        }
+
+        // 清除所有落点指示线
+        function clearDropIndicators() {
+            document.querySelectorAll('.my-playlist-channel.drag-over-top, .my-playlist-channel.drag-over-bottom')
+                .forEach(el => el.classList.remove('drag-over-top', 'drag-over-bottom'));
+        }
+
+        function onChannelDragOver(event) {
+            event.preventDefault();
+            event.dataTransfer.dropEffect = 'move';
+            const row = event.currentTarget;
+            clearDropIndicators();
+            // 被拖动的行本身不显示指示线
+            if (!draggedChannelId || row.getAttribute('data-channel-id') === draggedChannelId) return;
+            // 与 onChannelDrop 的插入判定一致：上半插前(线在上)，下半插后(线在下)
+            const rect = row.getBoundingClientRect();
+            const after = (event.clientY - rect.top) > rect.height / 2;
+            row.classList.add(after ? 'drag-over-bottom' : 'drag-over-top');
+        }
+
+        async function onChannelDrop(event, targetId) {
+            event.preventDefault();
+            event.stopPropagation();
+            clearDropIndicators();
+            if (!draggedChannelId || draggedChannelId === targetId) return;
+
+            const group = myPlaylistData[selectedGroupIndex];
+            if (!group || !Array.isArray(group.channels)) return;
+            const chans = group.channels;
+            const from = chans.findIndex(c => c.id === draggedChannelId);
+            if (from === -1) return;
+
+            // 落点在目标行上半/下半 → 插入到目标前/后
+            const rect = event.currentTarget.getBoundingClientRect();
+            const after = (event.clientY - rect.top) > rect.height / 2;
+
+            const [moved] = chans.splice(from, 1);
+            const to = chans.findIndex(c => c.id === targetId);
+            if (to === -1) { chans.splice(from, 0, moved); return; } // 异常回退
+            chans.splice(after ? to + 1 : to, 0, moved);
+
+            // 持久化该显示分组的频道顺序（键为 原始分组::频道ID）
+            if (!myPlaylistConfig.channelOrder) myPlaylistConfig.channelOrder = {};
+            myPlaylistConfig.channelOrder[group.name] = chans.map(c => `${c.originalGroup}::${c.id}`);
+
+            renderMyPlaylist(); // 拖拽不涉及输入焦点，直接重渲染
+
+            try {
+                const response = await fetch(mpConfigUrl(), {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(myPlaylistConfig)
+                });
+                const result = await response.json();
+                if (!result.success) showStatus('排序保存失败', 'error');
+            } catch (error) {
+                showStatus('排序保存失败: ' + error.message, 'error');
+            }
         }
 
         function previewPlay(actualUrl, playerUrl, channelName, sourceType) {

@@ -7,11 +7,25 @@ node_modules
 # 个人配置文件
 external-sources.json
 system-config.json
+epg-sources.json
+users.json
 
 # 生成的播放列表文件（根据配置自动生成）
 interface.txt
 interfaceTXT.txt
 playback.xml
 my-playlist-config.json
+my-playlist-config.*.json
+my-playlist-profiles.json
 built-in-sources-cache.json
+built-in-sources-remote.json
 pe-cache.json
+
+# 外部 EPG 源下载缓存（issue #38）
+epg-cache/
+
+# 持久化数据目录（mdataDir 指向时）
+data/
+
+# probe-m3u.mjs 探活脚本生成的报告
+probe-report.md

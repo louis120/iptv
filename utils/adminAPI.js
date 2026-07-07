@@ -1,14 +1,15 @@
-import { readFileSync, writeFileSync, existsSync } from "node:fs"
+import { readFileSync, writeFileSync, existsSync, unlinkSync, mkdirSync } from "node:fs"
 import { getAllChannels, externalSourceManager, builtInSourceManager } from "./channelMerger.js"
-import { BUILT_IN_SUBSCRIPTIONS } from "./externalSources.js"
-import update from "./updateData.js"
+import { BUILT_IN_SUBSCRIPTIONS, parsePlaylistContent, decodeAndParseLocalContent } from "./externalSources.js"
+import { dataPath } from "./paths.js"
+import update, { LOGO_EXTS } from "./updateData.js"
 
 /**
  * 从interface.txt解析体育赛事数据
  */
 function parsePEChannels() {
   try {
-    const interfacePath = `${process.cwd()}/interface.txt`
+    const interfacePath = dataPath('interface.txt')
     if (!existsSync(interfacePath)) {
       return []
     }
@@ -102,6 +103,14 @@ export function getExternalSourcesAPI() {
  */
 export async function saveExternalSourcesAPI(sources) {
   try {
+    // 本地导入源（内联 subscriptionContent）：保存前用内容重新解析出频道，保证 parsedChannels 与内容一致（issue #43）
+    if (sources && Array.isArray(sources.sources)) {
+      for (const s of sources.sources) {
+        if (s && s.mode === 'subscription' && typeof s.subscriptionContent === 'string' && s.subscriptionContent.trim()) {
+          s.parsedChannels = parsePlaylistContent(s.subscriptionContent)
+        }
+      }
+    }
     const result = externalSourceManager.saveSources(sources)
     if (result.success !== false) {
       // 保存成功后自动触发更新，仅重新生成播放列表（不重新抓取咪咕数据）
@@ -177,6 +186,98 @@ export function setExternalSourceM3u8API(index, m3u8Url) {
       success: false,
       message: error.message
     }
+  }
+}
+
+/**
+ * 校验台标文件名（= 频道名）：不能含路径分隔符 / 控制字符，避免目录穿越
+ */
+function sanitizeLogoName(name) {
+  const n = String(name || '').trim()
+  if (!n || n.includes('/') || n.includes('\\') || n.includes('..')) return null
+  for (let i = 0; i < n.length; i++) { if (n.charCodeAt(i) < 32) return null } // 拒绝控制字符
+  return n
+}
+
+/**
+ * 上传频道台标（issue #40）：把图片存为 data/logos/<频道名>.<ext>，最高优先级、即时生效。
+ * 同一频道只保留一个台标（先删其它扩展名），保存后重新生成播放列表。
+ */
+export async function uploadLogoAPI(name, imageBase64, ext) {
+  try {
+    const safe = sanitizeLogoName(name)
+    if (!safe) return { success: false, message: '频道名含非法字符，无法作为台标文件名' }
+    let e = String(ext || 'png').toLowerCase().replace(/[^a-z0-9]/g, '')
+    if (!LOGO_EXTS.includes(e)) e = 'png'
+    const buffer = Buffer.from(String(imageBase64 || ''), 'base64')
+    if (!buffer.length) return { success: false, message: '图片内容为空' }
+    if (buffer.length > 3 * 1024 * 1024) return { success: false, message: '图片过大（请小于 3MB）' }
+    const dir = dataPath('logos')
+    if (!existsSync(dir)) mkdirSync(dir, { recursive: true })
+    // 一个频道只保留一个台标：先清掉同名其它扩展，避免 findLocalLogo 命中旧的
+    for (const x of LOGO_EXTS) {
+      const p = dataPath(`logos/${safe}.${x}`)
+      if (existsSync(p)) { try { unlinkSync(p) } catch { /* ignore */ } }
+    }
+    writeFileSync(dataPath(`logos/${safe}.${e}`), buffer)
+    await update(0, { regenerateOnly: true }).catch(err => console.error('上传台标后重新生成失败:', err))
+    return { success: true, url: `/logos/${encodeURIComponent(safe)}.${e}` }
+  } catch (error) {
+    return { success: false, message: error.message }
+  }
+}
+
+/**
+ * 移除频道的本地上传台标（删 data/logos/<频道名>.* 后重新生成）
+ */
+export async function removeLogoAPI(name) {
+  try {
+    const safe = sanitizeLogoName(name)
+    if (!safe) return { success: false, message: '非法名称' }
+    let removed = 0
+    for (const x of LOGO_EXTS) {
+      const p = dataPath(`logos/${safe}.${x}`)
+      if (existsSync(p)) { try { unlinkSync(p); removed++ } catch { /* ignore */ } }
+    }
+    if (removed > 0) await update(0, { regenerateOnly: true }).catch(err => console.error('移除台标后重新生成失败:', err))
+    return { success: true, removed }
+  } catch (error) {
+    return { success: false, message: error.message }
+  }
+}
+
+/**
+ * 把一个频道（同名同地址）复制到一个或多个分组（issue #37）：每个目标分组建一条独立的「直连」副本。
+ * 副本是固定地址的独立频道（独立隐藏/排序/删除）；咪咕频道地址为服务端跳转，暂不支持。
+ */
+export async function copyChannelToGroupsAPI({ name, url, logo, groups } = {}) {
+  try {
+    if (!name || !url) return { success: false, message: '缺少频道名或地址' }
+    if (String(url).includes('${replace}')) return { success: false, message: '咪咕频道暂不支持复制（地址为服务端跳转）' }
+    const targets = Array.isArray(groups) ? [...new Set(groups.map(g => String(g || '').trim()).filter(Boolean))] : []
+    if (!targets.length) return { success: false, message: '未选择目标分组' }
+    const safeLogo = (typeof logo === 'string' && /^https?:\/\//.test(logo)) ? logo : ''
+    let added = 0
+    for (const group of targets) {
+      externalSourceManager.addSource({ name, group, m3u8Url: url, logo: safeLogo, enabled: true, autoRefresh: false })
+      added++
+    }
+    await update(0, { regenerateOnly: true }).catch(err => console.error('复制频道后重新生成失败:', err))
+    return { success: true, added }
+  } catch (error) {
+    return { success: false, message: error.message }
+  }
+}
+
+/**
+ * 解析本地导入的播放列表内容（base64 字节）：解码（GBK/UTF/BOM）+ 解析 m3u/txt，返回解码后文本与频道数（issue #43）
+ */
+export function parseLocalContentAPI(contentBase64) {
+  try {
+    const { text, channels } = decodeAndParseLocalContent(contentBase64)
+    return { success: true, text, channelCount: channels.length }
+  } catch (error) {
+    return { success: false, message: error.message }
   }
 }
 

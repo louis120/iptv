@@ -5,6 +5,7 @@ import { gunzipSync } from "node:zlib"
 import { debug } from "../config.js"
 import { domainWhiteList, repoLinkUpdateTimestamp } from "./datas.js"
 import { readFileSync } from "./fileUtil.js"
+import { dataPath } from "./paths.js"
 
 const KEY_ARRAY = [121, 111, 117, 33, 106, 101, 64, 49, 57, 114, 114, 36, 50, 48, 121, 35]
 const IV_ARRAY = [65, 114, 101, 121, 111, 117, 124, 62, 127, 110, 54, 38, 13, 97, 110, 63]
@@ -180,8 +181,8 @@ async function getAllURL() {
 }
 
 async function updateChannels() {
-  const m3uFilePath = `${process.cwd()}/interface.txt`
-  const txtFilePath = `${process.cwd()}/interfaceTXT.txt`
+  const m3uFilePath = dataPath('interface.txt')
+  const txtFilePath = dataPath('interfaceTXT.txt')
   const allURL = await getAllURL()
   if (allURL > 0) {
     return allURL

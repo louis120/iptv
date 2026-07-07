@@ -1,35 +1,82 @@
-import { readFileSync, writeFileSync, existsSync } from "node:fs"
-import path from "node:path"
+import { readFileSync, existsSync } from "node:fs"
+import { writeJsonFileSync } from "./fileUtil.js"
+import { dataPath } from "./paths.js"
+import update from "./updateData.js"
+import { clearUrlCache } from "./appUtils.js"
+import {
+  reloadConfig, sanitizeSegment,
+  userId, token, port, host, rateType, pass,
+  enableHDR, enableH265, programInfoUpdateInterval, refreshToken, adminPath,
+  enableMigu, enableBuiltInSources, enableBuiltInSubscriptions, enableDisplayNameUnify
+} from "../config.js"
 
-const SYSTEM_CONFIG_PATH = path.join(process.cwd(), 'system-config.json')
+const SYSTEM_CONFIG_PATH = dataPath('system-config.json')
 
 /**
  * 获取系统配置
  */
+// 各配置项对应的环境变量名（用于提示哪些项被环境变量控制）
+const ENV_KEY_MAP = {
+  userId: 'muserId',
+  token: 'mtoken',
+  port: 'mport',
+  host: 'mhost',
+  rateType: 'mrateType',
+  pass: 'mpass',
+  enableHDR: 'menableHDR',
+  enableH265: 'menableH265',
+  programInfoUpdateInterval: 'mupdateInterval',
+  refreshToken: 'mrefreshToken',
+  adminPath: 'madminPath',
+  enableMigu: 'menableMigu',
+  enableBuiltInSources: 'menableBuiltInSources',
+  enableBuiltInSubscriptions: 'menableBuiltInSubscriptions',
+  enableDisplayNameUnify: 'menableDisplayNameUnify'
+}
+
+// 解析环境变量布尔（与 config.js parseBool 同义）：用于判断 mblank 空白模式是否由 env 开启
+function envBool(value) {
+  if (value === undefined || value === null || value === '') return false
+  const s = String(value).trim().toLowerCase()
+  return s !== 'false' && s !== '0' && s !== 'off' && s !== 'no'
+}
+
 export function getSystemConfigAPI() {
   try {
-    if (!existsSync(SYSTEM_CONFIG_PATH)) {
-      // 返回默认配置
-      return {
-        success: true,
-        data: {
-          userId: "",
-          token: "",
-          port: 1905,
-          host: "",
-          rateType: 3,
-          pass: "",
-          enableHDR: true,
-          enableH265: true,
-          programInfoUpdateInterval: "8"
-        }
+    // 返回「实际生效」的配置：config.js 已把 system-config.json + 环境变量 + 默认值 解析合并。
+    // 这样无论 id/token 等是用环境变量(muserId/mtoken…)还是配置文件设置的，
+    // 管理页表单都能正确显示当前生效值（修复换电脑/无浏览器自动填充时表单显示为空的问题）。
+
+    // 标记哪些项被环境变量设置（前端据此提示：清空保存会回退到环境变量值，需改 compose）
+    const envOverrides = {}
+    for (const [field, envKey] of Object.entries(ENV_KEY_MAP)) {
+      if (process.env[envKey] !== undefined && process.env[envKey] !== '') {
+        envOverrides[field] = true
       }
     }
-    
-    const config = JSON.parse(readFileSync(SYSTEM_CONFIG_PATH, 'utf-8'))
+
     return {
       success: true,
-      data: config
+      data: {
+        userId,
+        token,
+        port: parseInt(port) || 1905,
+        host,
+        rateType: parseInt(rateType) || 3,
+        pass,
+        enableHDR,
+        enableH265,
+        programInfoUpdateInterval,
+        refreshToken,
+        adminPath,
+        enableMigu,
+        enableBuiltInSources,
+        enableBuiltInSubscriptions,
+        enableDisplayNameUnify
+      },
+      envOverrides,
+      // 空白模式总开关是否由环境变量 mblank 开启（前端据此提示：内容开关默认关闭，可在此单独打开覆盖）
+      blankModeEnv: envBool(process.env.mblank)
     }
   } catch (error) {
     return {
@@ -44,8 +91,18 @@ export function getSystemConfigAPI() {
  */
 export function saveSystemConfigAPI(config) {
   try {
-    // 验证配置
+    // 读取已有配置，保留表单未提交的字段（如 refreshToken 等无 UI 的开关），
+    // 避免每次保存把它们重置为默认值
+    let existing = {}
+    if (existsSync(SYSTEM_CONFIG_PATH)) {
+      try {
+        existing = JSON.parse(readFileSync(SYSTEM_CONFIG_PATH, 'utf-8'))
+      } catch { existing = {} }
+    }
+
+    // 验证配置（白名单字段做类型校验，其余沿用已有值）
     const validated = {
+      ...existing,
       userId: config.userId || "",
       token: config.token || "",
       port: parseInt(config.port) || 1905,
@@ -56,11 +113,40 @@ export function saveSystemConfigAPI(config) {
       enableH265: config.enableH265 !== false,
       programInfoUpdateInterval: config.programInfoUpdateInterval || "8"
     }
-    
-    writeFileSync(SYSTEM_CONFIG_PATH, JSON.stringify(validated, null, 2), 'utf-8')
+    if (config.refreshToken !== undefined) {
+      validated.refreshToken = config.refreshToken !== false
+    }
+    if (config.adminPath !== undefined) {
+      // 清洗为合法路径段（非法/保留字回退 admin），保证存储值与运行时一致
+      validated.adminPath = sanitizeSegment(config.adminPath, 'admin')
+    }
+    // 内容开关：显式提交才写入（避免不带这些字段的旧调用把它们重置）
+    if (config.enableMigu !== undefined) {
+      validated.enableMigu = config.enableMigu !== false
+    }
+    if (config.enableBuiltInSources !== undefined) {
+      validated.enableBuiltInSources = config.enableBuiltInSources !== false
+    }
+    if (config.enableBuiltInSubscriptions !== undefined) {
+      validated.enableBuiltInSubscriptions = config.enableBuiltInSubscriptions !== false
+    }
+    if (config.enableDisplayNameUnify !== undefined) {
+      validated.enableDisplayNameUnify = config.enableDisplayNameUnify === true
+    }
+
+    // 原子写入，避免并发保存 / 写入中断损坏文件
+    writeJsonFileSync(SYSTEM_CONFIG_PATH, validated)
+    // 热更新配置：除端口和更新间隔外即时生效，无需重启
+    reloadConfig()
+    // 清空咪咕地址缓存：H265/HDR/清晰度等改动后，旧缓存（按 pid，3h）仍会发旧编码的流，
+    // 导致开关「看起来没生效」。保存后清掉，下次播放即按新配置重新解析（issue #60）。
+    clearUrlCache()
+    // 内容开关（咪咕/内置源/内置订阅）影响频道列表，触发一次后台重新生成播放列表使其即时生效。
+    // fire-and-forget：不阻塞保存响应；update() 内部 updateQueue 串行化，并发安全。
+    update(0, { regenerateOnly: true }).catch(err => console.error('重新生成播放列表失败:', err))
     return {
       success: true,
-      message: '配置保存成功，重启服务后生效'
+      message: '配置保存成功（端口与更新间隔需重启生效；内容开关等已即时生效，播放列表正在后台刷新）'
     }
   } catch (error) {
     return {

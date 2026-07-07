@@ -1,7 +1,7 @@
 import { readFileSync, existsSync } from "node:fs"
-import path from "node:path"
+import { dataPath } from "./utils/paths.js"
 
-const SYSTEM_CONFIG_PATH = path.join(process.cwd(), 'system-config.json')
+const SYSTEM_CONFIG_PATH = dataPath('system-config.json')
 
 // 加载系统配置文件
 function loadSystemConfig() {
@@ -17,31 +17,94 @@ function loadSystemConfig() {
   return {}
 }
 
-const systemConfig = loadSystemConfig()
+// 解析布尔值：支持 system-config.json 的真布尔值，以及环境变量字符串 "false"/"0"/"off"/"no"
+// （修复历史问题：旧写法 `env || true` 导致环境变量永远无法关闭开关）
+function parseBool(value, fallback) {
+  if (value === undefined || value === null || value === "") return fallback
+  if (typeof value === 'boolean') return value
+  const str = String(value).trim().toLowerCase()
+  return str !== 'false' && str !== '0' && str !== 'off' && str !== 'no'
+}
 
-// 用户id
-const userId = systemConfig.userId || process.env.muserId || ""
-// 用户token 可以使用网页登录获取
-const token = systemConfig.token || process.env.mtoken || ""
-// 本地运行端口号
-const port = systemConfig.port || process.env.mport || 1905
-// 公网/自定义访问地址
-const host = systemConfig.host || process.env.mhost || ""
-// 画质
-// 4蓝光(1080p，需要登录且账号有VIP)
-// 3高清(720p)
-// 2标清(480p)
-const rateType = systemConfig.rateType || process.env.mrateType || 3
-// 是否刷新token，可能是导致封号的原因
-// const refreshToken = process.env.mrefreshToken || true
-const debug = process.env.mdebug || false
-// 访问密码 大小写字母和数字 添加后访问格式 http://ip:port/mpass/...
-const pass = systemConfig.pass || process.env.mpass || ""
-// 是否开启hdr
-const enableHDR = systemConfig.enableHDR !== undefined ? systemConfig.enableHDR : (process.env.menableHDR || true)
-// 是否开启h265(原画画质)，开启可能存在兼容性问题，比如浏览器播放没有画面
-const enableH265 = systemConfig.enableH265 !== undefined ? systemConfig.enableH265 : (process.env.menableH265 || true)
-// 节目信息更新间隔 单位小时 不建议设置太短
-const programInfoUpdateInterval = systemConfig.programInfoUpdateInterval || process.env.mupdateInterval || "8"
+// 清洗 URL 路径段（用于自定义管理页路径）：去首尾斜杠，禁止内部斜杠/空白，
+// 避开与内置路由冲突的保留字，非法时回退默认值
+const RESERVED_SEGMENTS = ['api', 'player', 'favicon.ico']
+function sanitizeSegment(value, fallback) {
+  if (!value) return fallback
+  const s = String(value).trim().replace(/^\/+|\/+$/g, '')
+  if (!s || /[\/\s]/.test(s) || RESERVED_SEGMENTS.includes(s.toLowerCase())) return fallback
+  return s
+}
 
-export { userId, token, port, host, rateType, debug/* , refreshToken */, pass, enableHDR, programInfoUpdateInterval, enableH265 }
+// 导出值使用 let，配合 reloadConfig() 实现热更新：
+// ESM 命名导出是实时绑定，重新赋值后所有 import 方都会读到新值。
+// 注意：port、programInfoUpdateInterval 在 server.listen / setInterval 时已被读取，
+// 热更新不会改变已启动的监听端口与定时器周期，这两项仍需重启生效。
+let userId, token, port, host, rateType, debug, pass, enableHDR, enableH265, programInfoUpdateInterval, refreshToken, adminPath, externalLogoBase, enableTvgNormalize, enableEpgAggregation, enableUserTokens, enableDisplayNameUnify
+// 内容开关：咪咕核心 / 内置单频道源 / 内置订阅源。默认全开（老用户零感知）
+let enableMigu, enableBuiltInSources, enableBuiltInSubscriptions
+
+function applyConfig(systemConfig) {
+  // 用户id
+  userId = systemConfig.userId || process.env.muserId || ""
+  // 用户token 可以使用网页登录获取
+  token = systemConfig.token || process.env.mtoken || ""
+  // 本地运行端口号
+  port = systemConfig.port || process.env.mport || 1905
+  // 公网/自定义访问地址
+  host = systemConfig.host || process.env.mhost || ""
+  // 画质
+  // 4蓝光(1080p，需要登录且账号有VIP)
+  // 3高清(720p)
+  // 2标清(480p)
+  rateType = systemConfig.rateType || process.env.mrateType || 3
+  debug = process.env.mdebug || false
+  // 访问密码 大小写字母和数字 添加后访问格式 http://ip:port/mpass/...
+  pass = systemConfig.pass || process.env.mpass || ""
+  // 是否开启hdr
+  enableHDR = systemConfig.enableHDR !== undefined ? systemConfig.enableHDR : parseBool(process.env.menableHDR, true)
+  // 是否开启h265(原画画质)，开启可能存在兼容性问题，比如浏览器播放没有画面
+  enableH265 = systemConfig.enableH265 !== undefined ? systemConfig.enableH265 : parseBool(process.env.menableH265, true)
+  // 节目信息更新间隔 单位小时 不建议设置太短
+  programInfoUpdateInterval = systemConfig.programInfoUpdateInterval || process.env.mupdateInterval || "8"
+  // 是否每月刷新token（可能是导致封号的原因，可关闭）
+  refreshToken = systemConfig.refreshToken !== undefined ? systemConfig.refreshToken : parseBool(process.env.mrefreshToken, true)
+  // 管理页面自定义路径（默认 admin）：改名后用 /<adminPath> 访问后台，裸 /admin 失效
+  adminPath = sanitizeSegment(systemConfig.adminPath || process.env.madminPath, 'admin')
+  // 外部/精选频道无台标时，按中文名兜底的台标 CDN 基址（默认 fanmingming，留空字符串则关闭）。
+  // 仅写进 m3u 由播放器侧拉取静态图，服务器不发请求；故默认开。空值用 !== undefined 判定以允许显式关闭。
+  externalLogoBase = systemConfig.externalLogoBase !== undefined
+    ? systemConfig.externalLogoBase
+    : (process.env.mexternalLogoBase !== undefined ? process.env.mexternalLogoBase : "https://live.fanmingming.com/tv/")
+  // EPG 名称规整（issue #39）：把异构源频道的 tvg-id/tvg-name 归一到规范名（EPG 频道名），默认开。
+  enableTvgNormalize = systemConfig.enableTvgNormalize !== undefined ? systemConfig.enableTvgNormalize : parseBool(process.env.menableTvgNormalize, true)
+  // EPG 聚合（issue #38）：把外部 XMLTV 源的节目单归一后合并进 playback.xml，给咪咕没覆盖的频道补节目单。默认开，
+  // 源列表见 data/epg-sources.json（内置默认源、开箱即用）。此处为部署级总开关（环境变量可关）。
+  enableEpgAggregation = systemConfig.enableEpgAggregation !== undefined ? systemConfig.enableEpgAggregation : parseBool(process.env.menableEpgAggregation, true)
+  // 用户访问令牌（一人一源）：开启后台「用户管理」生成的 /u/<token>/ 链接才生效。默认开，但无任何用户时完全不激活（对老部署零影响）。
+  enableUserTokens = systemConfig.enableUserTokens !== undefined ? systemConfig.enableUserTokens : parseBool(process.env.menableUserTokens, true)
+  // 统一频道显示名（issue #56）：按归一规则把异构源的频道显示名也统一到规范名（如 CCTV1/CCTV-1 → CCTV1综合）。
+  // 默认关（opt-in，避免改动老用户的显示名）；手动重命名优先级更高。
+  enableDisplayNameUnify = systemConfig.enableDisplayNameUnify !== undefined ? systemConfig.enableDisplayNameUnify : parseBool(process.env.menableDisplayNameUnify, false)
+
+  // 空白模式总开关：开启后下面三项内容开关「默认」翻转为关（一行得到空白 docker）。
+  // 优先级：细粒度开关显式值 > 总开关推出的默认 > 全开。所以可 mblank=true + menableMigu=true 单独留咪咕。
+  const blank = parseBool(systemConfig.blank ?? process.env.mblank, false)
+  const defOn = !blank
+  // 咪咕核心（CCTV/卫视抓取 + 体育赛事 + EPG + token刷新）
+  enableMigu = systemConfig.enableMigu !== undefined ? systemConfig.enableMigu : parseBool(process.env.menableMigu, defOn)
+  // 内置单频道源（built-in-sources.json：纬来体育/RedBull/4K卫视等）
+  enableBuiltInSources = systemConfig.enableBuiltInSources !== undefined ? systemConfig.enableBuiltInSources : parseBool(process.env.menableBuiltInSources, defOn)
+  // 内置订阅源（精选频道）
+  enableBuiltInSubscriptions = systemConfig.enableBuiltInSubscriptions !== undefined ? systemConfig.enableBuiltInSubscriptions : parseBool(process.env.menableBuiltInSubscriptions, defOn)
+}
+
+applyConfig(loadSystemConfig())
+
+// 重新加载系统配置（保存系统配置后调用，避免必须重启进程）
+function reloadConfig() {
+  applyConfig(loadSystemConfig())
+  return { userId, token, port, host, rateType, pass, enableHDR, enableH265, programInfoUpdateInterval, refreshToken, adminPath, externalLogoBase, enableTvgNormalize, enableEpgAggregation, enableUserTokens, enableDisplayNameUnify, enableMigu, enableBuiltInSources, enableBuiltInSubscriptions }
+}
+
+export { userId, token, port, host, rateType, debug, pass, enableHDR, programInfoUpdateInterval, enableH265, refreshToken, adminPath, externalLogoBase, enableTvgNormalize, enableEpgAggregation, enableUserTokens, enableDisplayNameUnify, enableMigu, enableBuiltInSources, enableBuiltInSubscriptions, reloadConfig, sanitizeSegment }

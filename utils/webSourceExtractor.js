@@ -1,5 +1,75 @@
 import puppeteer from "puppeteer"
+import { existsSync } from "node:fs"
 import { printBlue, printGreen, printRed } from "./colorOut.js"
+
+// 各平台系统已安装的 Chrome / Chromium / Edge 常见可执行路径（按优先级）
+const SYSTEM_CHROME_PATHS = {
+  darwin: [
+    '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+    '/Applications/Chromium.app/Contents/MacOS/Chromium',
+    '/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge',
+  ],
+  linux: [
+    '/usr/bin/google-chrome-stable',
+    '/usr/bin/google-chrome',
+    '/usr/bin/chromium',
+    '/usr/bin/chromium-browser',
+  ],
+  win32: [
+    'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+    'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe',
+  ],
+}
+
+// 探测系统已安装的浏览器可执行文件，找到第一个存在的返回，否则 null
+function findSystemChrome() {
+  for (const p of (SYSTEM_CHROME_PATHS[process.platform] || [])) {
+    if (existsSync(p)) return p
+  }
+  return null
+}
+
+/**
+ * 启动 Chromium / Chrome，按以下顺序尽量找到可用浏览器，降低「Could not find Chrome」的踩坑概率：
+ *   1) 环境变量 PUPPETEER_EXECUTABLE_PATH / mchromePath 显式指定（最高优先；Docker 镜像即指向 /usr/bin/chromium）
+ *   2) 系统已安装的 Google Chrome / Chromium / Edge（裸跑首选，避开 puppeteer 自带 Chrome
+ *      在部分机器上下载失败 / 被安全软件删库的坑，无需任何环境变量即可开箱即用）
+ *   3) puppeteer 自带、用 `npx puppeteer browsers install chrome` 下载的 Chrome
+ *   4) 最后兜底 channel: 'chrome'（再让 puppeteer 自己找系统 Chrome）
+ * @param {boolean} headless
+ */
+async function launchBrowser(headless) {
+  const baseArgs = ['--no-sandbox', '--disable-setuid-sandbox']
+
+  // 1) 显式指定
+  const explicit = process.env.PUPPETEER_EXECUTABLE_PATH || process.env.mchromePath
+  if (explicit) {
+    return puppeteer.launch({ headless, args: baseArgs, executablePath: explicit })
+  }
+
+  // 2) 系统已安装的浏览器
+  const systemChrome = findSystemChrome()
+  if (systemChrome) {
+    try {
+      const browser = await puppeteer.launch({ headless, args: baseArgs, executablePath: systemChrome })
+      printBlue(`使用系统浏览器: ${systemChrome}`)
+      return browser
+    } catch (err) {
+      printRed(`系统浏览器启动失败(${systemChrome})，改用 puppeteer 自带: ${(err?.message || err).split('\n')[0]}`)
+    }
+  }
+
+  // 3) puppeteer 自带；4) 失败再兜底 channel: 'chrome'
+  try {
+    return await puppeteer.launch({ headless, args: baseArgs })
+  } catch (err) {
+    if (/Could not find Chrome|Browser was not found|Failed to launch|Could not find expected browser/i.test(err?.message || '')) {
+      printRed('puppeteer 自带 Chrome 不可用，尝试 channel: chrome…')
+      return puppeteer.launch({ headless, args: baseArgs, channel: 'chrome' })
+    }
+    throw err
+  }
+}
 
 /**
  * 从网页中提取 m3u8 直播链接
@@ -24,11 +94,8 @@ async function extractM3u8FromWeb(url, options = {}) {
   try {
     printBlue(`开始提取: ${url}`)
     
-    // 启动浏览器
-    browser = await puppeteer.launch({
-      headless,
-      args: ['--no-sandbox', '--disable-setuid-sandbox']
-    })
+    // 启动浏览器（自带 Chrome 找不到时回退系统 Google Chrome）
+    browser = await launchBrowser(headless)
     
     const page = await browser.newPage()
     
@@ -113,9 +180,41 @@ async function extractM3u8FromWeb(url, options = {}) {
     printRed(`提取失败: ${error.message}`)
     return null
   } finally {
-    if (browser) {
-      await browser.close()
+    await closeBrowser(browser)
+  }
+}
+
+/**
+ * 健壮地关闭 Puppeteer 浏览器，避免 Chromium 进程泄漏 / 僵尸进程。
+ * - 给 browser.close() 设超时：无响应的 Chromium 不会卡死整个更新流程
+ *   （update() 已串行化，一次卡死会阻塞后续所有更新）
+ * - 超时或关闭异常时强杀 Chromium 进程组（POSIX 下 puppeteer 以 detached 方式
+ *   启动 chromium，其 pid 即进程组组长），连同 renderer/zygote 子进程一并清理
+ * @param {import('puppeteer').Browser|null} browser
+ */
+async function closeBrowser(browser) {
+  if (!browser) return
+  const proc = browser.process()
+  let timer
+  try {
+    await Promise.race([
+      browser.close(),
+      new Promise((_, reject) => {
+        timer = setTimeout(() => reject(new Error('browser.close() 超时')), 10000)
+      })
+    ])
+  } catch (error) {
+    printRed(`关闭浏览器异常，强制结束 Chromium 进程: ${error.message}`)
+    if (proc && proc.pid) {
+      try {
+        // 优先杀整个进程组，回收 renderer/zygote 等子进程
+        process.kill(-proc.pid, 'SIGKILL')
+      } catch (groupErr) {
+        try { proc.kill('SIGKILL') } catch (_) { /* 进程可能已退出 */ }
+      }
     }
+  } finally {
+    clearTimeout(timer)
   }
 }
 

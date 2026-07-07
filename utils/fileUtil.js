@@ -22,11 +22,8 @@ function appendFile(filePath, content) {
 }
 
 function appendFileSync(filePath, content) {
-  fs.appendFileSync(filePath, content, error => {
-    if (error) {
-      throw new Error(`${filePath}:同步追加${content}失败`)
-    }
-  })
+  // 同步 API 不接受回调，旧写法传入回调会被当成 options 参数
+  fs.appendFileSync(filePath, content)
 }
 
 function writeFileSync(filePath, content) {
@@ -38,18 +35,25 @@ function readFileSync(filePath) {
 }
 
 function renameFileSync(oldFilePath, newFilePath) {
-  fs.renameSync(oldFilePath, newFilePath, err => {
-    if (err) {
-      throw new Error(`文件重命名失败${oldFilePath} -> ${newFilePath}`)
-    }
-  })
+  // 同步 API 不接受回调
+  fs.renameSync(oldFilePath, newFilePath)
 }
 function copyFileSync(filePath, newFilePath, mode) {
-  fs.copyFileSync(filePath, newFilePath, mode, err => {
-    if (err) {
-      throw new Error(`文件复制失败${filePath} -> ${newFilePath}`)
-    }
-  })
+  // 同步 API 不接受回调
+  fs.copyFileSync(filePath, newFilePath, mode)
 }
 
-export { createFile, writeFile, appendFile, appendFileSync, writeFileSync, readFileSync, renameFileSync, copyFileSync }
+/**
+ * 原子写入 JSON 文件：先写临时文件再 rename 覆盖，
+ * 避免写入中途崩溃 / 并发写入导致 JSON 文件损坏。
+ * @param {string} filePath - 目标文件路径
+ * @param {object|string} data - 对象（自动 JSON 序列化）或已序列化的字符串
+ */
+function writeJsonFileSync(filePath, data) {
+  const content = typeof data === 'string' ? data : JSON.stringify(data, null, 2)
+  const tmpPath = `${filePath}.tmp`
+  fs.writeFileSync(tmpPath, content, 'utf-8')
+  fs.renameSync(tmpPath, filePath)
+}
+
+export { createFile, writeFile, appendFile, appendFileSync, writeFileSync, readFileSync, renameFileSync, copyFileSync, writeJsonFileSync }

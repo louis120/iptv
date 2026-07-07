@@ -1,31 +1,44 @@
 import { get302URL, getAndroidURL, getAndroidURL720p, printLoginInfo } from "./androidURL.js";
 import { readFileSync } from "./fileUtil.js";
-import { host, pass, rateType, token, userId } from "../config.js";
+import { dataPath } from "./paths.js";
+import { host, pass, rateType, token, userId, enableTvgNormalize } from "../config.js";
 import { printDebug, printGreen, printGrey, printRed, printYellow } from "./colorOut.js";
 import { readConfig, parseInterfaceTxt, applyConfig, generateM3u8, generateTxt } from "./playlistConfig.js";
 
-// url缓存 降低请求频率
+// url缓存 降低请求频率（按 pid 缓存咪咕解析出的播放地址，默认 3 小时）
 const urlCache = {}
 
-function interfaceStr(url, headers, urlUserId, urlToken) {
+// 清空咪咕地址缓存：H265/HDR/清晰度等配置变更后调用，让新设置「即时生效」，
+// 不必等旧缓存过期（3h）或重启容器——旧缓存键只含 pid、不含 H265/HDR，否则会继续发旧编码的流（issue #60）。
+function clearUrlCache() {
+  for (const k in urlCache) delete urlCache[k]
+}
+
+function interfaceStr(url, headers, urlUserId, urlToken, profile, accessPrefix) {
 
   let result = {
     content: null,
     contentType: 'text/plain;charset=UTF-8'
   }
-  let fileName = process.cwd() + "/interface.txt"
+  let fileName = dataPath("interface.txt")
   switch (url) {
     case "/playback.xml":
-      fileName = process.cwd() + "/playback.xml"
+      fileName = dataPath("playback.xml")
       result.contentType = "text/xml;charset=UTF-8"
       break;
 
     case "/txt":
-      fileName = process.cwd() + "/interfaceTXT.txt"
+      fileName = dataPath("interfaceTXT.txt")
       break;
 
     case "/m3u":
-      result.contentType = "audio/x-mpegurl; charset=utf-8"
+    case "/interface.m3u":
+      // 必须用 text/plain，不能用 audio/x-mpegurl。
+      // audio/x-mpegurl 是“可播放的 HLS 媒体”类型，浏览器和飞牛(fnOS)订阅会把它当成一个视频去播放，
+      // 而不是当成订阅文本去解析，导致飞牛无法订阅、浏览器直接弹出播放器。
+      // GitHub raw 提供的 .m3u 就是 text/plain，飞牛能正常订阅——这里与之对齐。
+      // 普通播放器按正文(#EXTM3U)解析、忽略 Content-Type，所以改成 text/plain 对它们零影响。
+      result.contentType = "text/plain;charset=UTF-8"
       break;
 
     default:
@@ -43,13 +56,26 @@ function interfaceStr(url, headers, urlUserId, urlToken) {
   }
   
   // 对于播放列表，应用用户配置
-  if (url === "/" || url === "/m3u" || url === "/interface.txt" || url === "/txt") {
+  if (url === "/" || url === "/m3u" || url === "/interface.m3u" || url === "/interface.txt" || url === "/txt") {
     try {
-      const config = readConfig()
-      
-      // 只有配置存在时才应用（避免首次访问解析失败）
-      if (config && (config.channelGroupMap || config.hiddenChannels?.length > 0 || 
-          config.deletedGroups?.length > 0 || config.groupOrder?.length > 0)) {
+      const config = readConfig(profile)
+
+      // 只有存在任意自定义配置时才应用（避免首次访问解析失败）
+      // 注意：旧写法 `config.channelGroupMap` 恒真（{} 也为真），会导致始终套用配置；
+      // 这里改为按内容判断，并补上 groupRenameMap / customGroups / groupSortMode
+      // 另外：EPG 名称规整（issue #39）默认对所有人生效，故开关开启时也要走 applyConfig（即使无任何自定义配置）
+      if (config && (
+        enableTvgNormalize ||
+        Object.keys(config.channelGroupMap || {}).length > 0 ||
+        Object.keys(config.channelRenameMap || {}).length > 0 ||
+        Object.keys(config.channelOrder || {}).length > 0 ||
+        Object.keys(config.groupRenameMap || {}).length > 0 ||
+        Object.keys(config.groupSortMode || {}).length > 0 ||
+        config.hiddenChannels?.length > 0 ||
+        config.deletedGroups?.length > 0 ||
+        config.customGroups?.length > 0 ||
+        config.groupOrder?.length > 0 ||
+        config.disabledSources?.length > 0)) {   // 按档禁用源（issue #29/#68）也需触发 applyConfig
         printGrey("应用播放列表自定义配置")
         const groups = parseInterfaceTxt()
         const configuredGroups = applyConfig(groups, config)
@@ -86,15 +112,22 @@ function interfaceStr(url, headers, urlUserId, urlToken) {
     replaceHost = `${proto}://${actualHost}`
   }
 
-  if (pass != "") {
+  // 访问前缀：调用方传入（用户令牌 `/u/<token>` 或站长 `/<pass>`）。
+  // 兼容旧调用：未传时回退到原 pass 逻辑。让令牌/密码贯穿分发出去的每个频道与 EPG 地址。
+  if (accessPrefix !== undefined) {
+    if (accessPrefix) replaceHost = `${replaceHost}${accessPrefix}`
+  } else if (pass != "") {
     replaceHost = `${replaceHost}/${pass}`
   }
 
+  // 咪咕 VIP 账号经 URL 注入（站长用 /<pass>/<userId>/<token>/m3u 的场景）；用户令牌请求已剥离成无账号段，不触发
   if (urlUserId != userId && urlToken != token) {
     replaceHost = `${replaceHost}/${urlUserId}/${urlToken}`
   }
 
-  result.content = `${result.content}`.replaceAll("${replace}", replaceHost);
+  // 剥离内部属性 source-ids（issue #29/#68 源归属标记）后再输出给播放器：
+  // 覆盖两条路径——原始 interface.txt 直出 与 applyConfig 重生成（generateM3u8 不写该属性，正则兜底无副作用）
+  result.content = `${result.content}`.replace(/ source-ids="[^"]*"/g, "").replaceAll("${replace}", replaceHost);
 
   return result
 }
@@ -241,4 +274,4 @@ function channelCache(pid, params) {
   return cache
 }
 
-export { interfaceStr, channel, channelCache }
+export { interfaceStr, channel, channelCache, clearUrlCache }
